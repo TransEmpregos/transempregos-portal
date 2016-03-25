@@ -1,5 +1,4 @@
 var router = require('koa-router')();
-
 router.get('/', function(ctx, next) {
     //  ctx.body = 'Hello World!';
     console.log(12, ctx);
@@ -7,5 +6,5 @@ router.get('/', function(ctx, next) {
     ctx.render('index.html', {
         title: 'Hello World Koa!'
     });
-})
+});
 module.exports = router;
