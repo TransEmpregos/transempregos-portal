@@ -36,3 +36,7 @@ jspm_packages
 dist
 .vscode
 .gulp-cache
+bin
+obj
+.vs
+.ntvs_analysis.dat

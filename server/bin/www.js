@@ -7,7 +7,7 @@
 require("babel-core/register");
 require("babel-polyfill");
 var app = require('../app');
-var debug = require('debug')('demo:server');
+var debug = require('debug')('server');
 var http = require('http');
 
 /**
