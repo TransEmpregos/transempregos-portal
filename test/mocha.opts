@@ -1,0 +1,3 @@
+--require test/_specHelper.js
+--reporter spec
+--ui bdd
