@@ -19,17 +19,23 @@
   "homepage": "https://github.com/TransEmpregos/transempregos-portal#readme",
   "private": true,
   "dependencies": {
+    "angular2": "^2.0.0-beta.13",
     "debug": "^2.2.0",
+    "es6-shim": "^0.35.0",
     "jade": "~1.11.0",
     "koa": "^2.0.0",
     "koa-bodyparser": "^3.0.0",
     "koa-convert": "^1.2.0",
     "koa-json": "^1.1.1",
     "koa-logger": "^2.0.0",
+    "koa-mount": "^2.0.0",
     "koa-onerror": "^1.2.1",
     "koa-router": "^7.0.0",
     "koa-static": "^3.0.0",
-    "koa-views": "^5.0.1"
+    "koa-views": "^5.0.1",
+    "reflect-metadata": "^0.1.2",
+    "rxjs": "^5.0.0-beta.2",
+    "zone.js": "^0.6.8"
   },
   "devDependencies": {
     "babel-core": "^6.7.4",

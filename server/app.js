@@ -7,16 +7,22 @@ const json = require('koa-json');
 const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser')();
 const logger = require('koa-logger');
+const mount = require('koa-mount');
+const koaStatic = require('koa-static');
 const path = require('path');
-
 const index = require('./routes/index');
 
 // middlewares
 app.use(bodyparser);
 app.use(convert(json()));
 app.use(logger());
+
 const publicPath = path.resolve(__dirname, '../public');
-app.use(require('koa-static')(publicPath));
+const nodeModulesPath = path.resolve(__dirname, '../../node_modules');
+
+app.use(koaStatic(publicPath));
+app.use(mount('/node_modules', koaStatic(nodeModulesPath)));
+
 const viewPath = path.resolve(__dirname, '../../server/views');
 app.use(views(viewPath, { extension: 'jade' }));
 
