@@ -10,7 +10,8 @@ var gulp = require("gulp"),
     less = require('gulp-less'),
     fs = require('fs'),
     path = require('path'),
-    args = require('yargs').argv;
+    args = require('yargs').argv,
+    plumber = require('gulp-plumber');
 
 
 (function createGulpCacheDir() {
@@ -52,6 +53,7 @@ gulp.task("transpile:less", transpileLess);
 function transpileLess() {
     var lessFileCache = new FileCache('.gulp-cache/.gulp-cache-less');
     return gulp.src(["public/less/**/*.less"])
+        .pipe(plumber())
         .pipe(lessFileCache.filter())
         .pipe(less())
         .pipe(lessFileCache.cache())
@@ -62,6 +64,7 @@ function transpileLess() {
 function transpileBack() {
     var backFileCache = new FileCache('.gulp-cache/.gulp-cache-back');
     return gulp.src(["server/**/*.js"])
+        .pipe(plumber())        
         .pipe(backFileCache.filter())
         .pipe(babel({
             presets: ['stage-3', 'es2015']
@@ -74,6 +77,7 @@ function transpileBack() {
 function transpileFront() {
     var frontFileCache = new FileCache('.gulp-cache/.gulp-cache-front');
     return gulp.src(["public/js/**/*.js"])
+        .pipe(plumber())        
         .pipe(frontFileCache.filter())
         .pipe(sourcemaps.init())
         .pipe(babel({
