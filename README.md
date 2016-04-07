@@ -8,7 +8,7 @@ Tecnologias que utilizamos:
 
 * Angular 2
 * Bootstrap
-* Sweet.js (ainda não)
+* Sweet.js
 * Node.js
 * Koa
 * Babel
