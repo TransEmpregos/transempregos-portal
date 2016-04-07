@@ -1,3 +1,5 @@
+[![Build Status](https://snap-ci.com/TransEmpregos/transempregos-portal/branch/master/build_image)](https://snap-ci.com/TransEmpregos/transempregos-portal/branch/master)
+
 # TransEmpregos
 
 Projeto de reformulação do site que tem como objetivo trazer empregos para o público TRANS (transexuais, travestis, homens trans e trans não bináries). Esse projeto é público e conta com a ajuda de voluntários para a sua conclusão.
