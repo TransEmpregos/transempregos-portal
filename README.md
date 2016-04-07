@@ -1,6 +1,6 @@
 # TransEmpregos
 
-Projeto de reformulação do site, que tem como objetivo trazer empregos para o público TRANS (transexuais, travestis, homens trans e trans não bináries). Esse projeto é público e conta com a ajuda de voluntários para a sua conclusão.
+Projeto de reformulação do site que tem como objetivo trazer empregos para o público TRANS (transexuais, travestis, homens trans e trans não bináries). Esse projeto é público e conta com a ajuda de voluntários para a sua conclusão.
 
 Caso ainda não conheça o site antigo, visite: [TransEmpregos](http://www.transempregos.com.br/). Em breve estaremos disponibilizando o novo link para apreciação de todos.
 
