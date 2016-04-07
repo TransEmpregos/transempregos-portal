@@ -8,6 +8,8 @@ Mais de 70% do público Trans não está empregado atualmente. Nos ajude a melho
 
 #### Tecnologias que utilizamos:
 
+    * Azure Web Apps
+    * MongoDB
     * Angular 2
     * Bootstrap
     * Sweet.js
@@ -16,4 +18,3 @@ Mais de 70% do público Trans não está empregado atualmente. Nos ajude a melho
     * Babel
     * Gulp
     * Flow
-    * MongoDB
