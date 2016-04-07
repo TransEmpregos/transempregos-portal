@@ -11,7 +11,9 @@ var gulp = require("gulp"),
     fs = require('fs'),
     path = require('path'),
     args = require('yargs').argv,
-    plumber = require('gulp-plumber');
+    plumber = require('gulp-plumber'),
+    karmaServer = require('karma').Server,
+    mocha = require('gulp-mocha');
 
 
 (function createGulpCacheDir() {
@@ -20,8 +22,8 @@ var gulp = require("gulp"),
 })()
 
 gulp.task('watch', ['transpile'], function() {
-    var watcher = gulp.watch('public/js/**/*.js', ['transpile:front']);
-    var watcher = gulp.watch('public/less/**/*.less', ['transpile:less']);
+    var watcher = gulp.watch('public/**/*.js', ['transpile:front']);
+    var watcher = gulp.watch('public/**/*.less', ['transpile:less']);
     let nodemonOpt = {
         script: 'dist/server/bin/www.js',
         ext: 'js',
@@ -50,34 +52,55 @@ gulp.task("transpile:front", transpileFront);
 gulp.task("transpile:back", transpileBack);
 gulp.task("transpile:less", transpileLess);
 
+gulp.task("test:front", function(done) {
+    new karmaServer({
+        configFile: path.resolve(__dirname, 'karma.conf.js'),
+        singleRun: true
+    }, done).start();
+});
+
+gulp.task("autotest", function(done) {
+    new karmaServer({
+        configFile: path.resolve(__dirname, 'karma.conf.js'),
+        singleRun: false
+    }, done).start();
+});
+
+gulp.task("test:back", function() {
+    return gulp.src('dist/test/**/*.spec.js', { read: false })
+        .pipe(mocha({ reporter: 'spec', require: ['./dist/test/_specHelper.js'] }));
+});
+
+gulp.task("test", ["test:back", "test:front"]);
+
 function transpileLess() {
     var lessFileCache = new FileCache('.gulp-cache/.gulp-cache-less');
-    return gulp.src(["public/less/**/*.less"])
+    return gulp.src(["public/**/*.less"])
         .pipe(plumber())
         .pipe(lessFileCache.filter())
         .pipe(less())
         .pipe(lessFileCache.cache())
         .pipe(debug({ title: 'less' }))
-        .pipe(gulp.dest("dist/public/css"));
+        .pipe(gulp.dest("dist/public"));
 }
 
 function transpileBack() {
     var backFileCache = new FileCache('.gulp-cache/.gulp-cache-back');
-    return gulp.src(["server/**/*.js"])
-        .pipe(plumber())        
+    return gulp.src(["server/**/*.js", "test/**/*.js"], { base: './'})
+        .pipe(plumber())
         .pipe(backFileCache.filter())
         .pipe(babel({
             presets: ['stage-3', 'es2015']
         }))
         .pipe(backFileCache.cache())
         .pipe(debug({ title: 'back' }))
-        .pipe(gulp.dest("dist/server"));
+        .pipe(gulp.dest("dist"));
 }
 
 function transpileFront() {
     var frontFileCache = new FileCache('.gulp-cache/.gulp-cache-front');
-    return gulp.src(["public/js/**/*.js"])
-        .pipe(plumber())        
+    return gulp.src(["public/**/*.js"])
+        .pipe(plumber())
         .pipe(frontFileCache.filter())
         .pipe(sourcemaps.init())
         .pipe(babel({
@@ -86,7 +109,9 @@ function transpileFront() {
         .pipe(frontFileCache.cache())
         .pipe(sourcemaps.write("."))
         .pipe(debug({ title: 'front' }))
-        .pipe(gulp.dest("dist/public/js"));
+        .pipe(gulp.dest("dist/public"));
 };
+
+
 
 gulp.task("default", ['transpile'])
