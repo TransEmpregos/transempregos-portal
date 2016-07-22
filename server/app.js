@@ -11,6 +11,10 @@ const mount      = require('koa-mount');
 const koaStatic  = require('koa-static');
 const path       = require('path');
 const index      = require('./routes/index');
+const mongoose   = require('mongoose');
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/test');
 
 // middlewares
 app.use(bodyparser);
@@ -24,7 +28,7 @@ app.use(koaStatic(publicPath));
 app.use(mount('/node_modules', koaStatic(nodeModulesPath)));
 
 const viewPath = path.resolve(__dirname, '../../server/views');
-app.use(views(viewPath, { extension: 'jade' }));
+app.use(views(viewPath, { extension: 'pug' }));
 
 app.use(async (ctx, next) => {
     try {
