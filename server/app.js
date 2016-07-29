@@ -11,6 +11,7 @@ const mount      = require('koa-mount');
 const koaStatic  = require('koa-static');
 const path       = require('path');
 const index      = require('./routes/index');
+const jobs       = require('./routes/jobs');
 const mongoose   = require('mongoose');
 
 mongoose.Promise = global.Promise;
@@ -50,6 +51,7 @@ app.use(async (ctx, next) => {
 });
 
 router.use('/', index.routes(), index.allowedMethods());
+router.use('/api/jobs', jobs.routes(), jobs.allowedMethods());
 
 app.use(router.routes(), router.allowedMethods());
 // response

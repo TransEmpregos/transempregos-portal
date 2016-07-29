@@ -1,0 +1,10 @@
+{
+  "globalDevDependencies": {
+    "koa": "registry:dt/koa#2.0.0+20160724024233",
+    "koa-router": "registry:dt/koa-router#7.0.0+20160314083221",
+    "node": "registry:dt/node#6.0.0+20160728152422"
+  },
+  "devDependencies": {
+    "mongoose": "registry:npm/mongoose#4.3.5+20160628072220"
+  }
+}
