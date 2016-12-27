@@ -1,7 +1,7 @@
-const router = require('koa-router')();
-const mongoose = require('mongoose');
+import * as Router from 'koa-router';
 import Job from '../models/job';
 
+const router = new Router();
 router.get('/', async (ctx, next) => {
     const jobs = await Job.find();
     ctx.body = jobs;
@@ -15,7 +15,7 @@ router.del('/:id', async (ctx, next) => {
     ctx.status = 204;
 });
 router.post('/', async (ctx, next) => {
-    var job = new Job(ctx.request.body);
+    let job = new Job(ctx.request.body);
     await job.save();
     ctx.body = job;
 });
@@ -25,4 +25,4 @@ router.put('/:id', async (ctx, next) => {
     ctx.body = job;
 });
 
-module.exports = router;
+export default router;

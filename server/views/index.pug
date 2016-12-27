@@ -1,20 +1,19 @@
 html
   head
     title Transempregos
+    base(href="/")
+    meta(charset="UTF-8")
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    link(rel='stylesheet', href='stylesheet.css')
+    link(rel='stylesheet', href='dist/public/stylesheet.css')
     script(type='text/javascript').
       var _jobs = !{JSON.stringify(jobs)};
-    // 1. Load libraries
-    // IE required polyfill
-    script(src='node_modules/es6-shim/es6-shim.min.js')
-    script(src='node_modules/angular2/es6/dev/src/testing/shims_for_IE.js')
-    script(src='node_modules/angular2/bundles/angular2-polyfills.js')
-    script(src='node_modules/rxjs/bundles/Rx.umd.js')
-    script(src='node_modules/angular2/bundles/angular2-all.umd.js')
-    // 2. Load our 'modules'
-    script(src='app.component.js')
-    script(src='main.js')
-  // 3. Display the application
+    <!-- Polyfill(s) for older browsers -->
+    script(src="node_modules/core-js/client/shim.min.js")
+    script(src="node_modules/zone.js/dist/zone.js")
+    script(src="node_modules/reflect-metadata/Reflect.js")
+    script(src="node_modules/systemjs/dist/system.src.js")
+    script(src="dist/public/systemjs.config.js")
+    script(type='text/javascript').
+      System.import('app').catch(function(err){ console.error(err); });
   body
-    my-app Loading...
+    trans-app Carregando...

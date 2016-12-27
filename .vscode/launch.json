@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "runtimeArgs": [
+                "--harmony-async-await"
+            ],
+            "name": "Launch Program",
+            "program": "${workspaceRoot}/server/bin/www.ts",
+            "sourceMaps": true,
+            "cwd": "${workspaceRoot}",
+            "env": {
+                "NODE_ENV": "development",
+                "DEBUG": "*"
+            },
+            "outFiles": [
+                "${workspaceRoot}/dist/**/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach to Process",
+            "port": 5858,
+            "sourceMaps": true
+        }
+    ]
+}

@@ -4,7 +4,7 @@ exports.config = {
     'browserName': 'chrome'
   },
   chromeDriver: require('chromedriver').path,
-  framework: 'jasmine',
+  framework: 'mocha',
   specs: ['**/*.feature.js'],
   jasmineNodeOpts: {
     defaultTimeoutInterval: 30000

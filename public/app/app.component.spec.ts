@@ -1,14 +1,12 @@
-"use strict";
-
 describe('App', function() {
-    let xpto;
+    let xpto: any;
     before(function() {
         xpto = {
             foo: sinon.spy()
         };
     });
 
-    it('Wharever', function() {
+    it('Whatever', function() {
         xpto.foo();
         xpto.foo.should.have.calledOnce;
     });
