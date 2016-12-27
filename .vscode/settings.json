@@ -4,6 +4,8 @@
         "**/.git": true,
         "**/.DS_Store": true,
         "dist": true,
-        ".gulp-cache": true
+        ".gulp-cache": true,
+        "LICENSE": true,
+        "*.log": true
     }
 }
