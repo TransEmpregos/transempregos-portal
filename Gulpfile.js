@@ -19,7 +19,8 @@ const gulp = require("gulp"),
     intoStream = require('into-stream'),
     tslint = require('tslint'),
     gulpTslint = require('gulp-tslint'),
-    gutil = require('gulp-util');
+    gutil = require('gulp-util'),
+    runSequence = require('run-sequence');
 const { protractor, webdriver_standalone, webdriver_update } = require("gulp-protractor");
 
 (function createGulpCacheDir() {
@@ -263,7 +264,7 @@ gulp.task('lint:front', () => {
         .pipe(gulpTslint.report());
 });
 
-gulp.task('ci:quick', ['ci-build', 'ci-test:quick']);
+gulp.task('ci:quick', done => runSequence('ci-build', 'ci-test:quick', done));
 gulp.task('ci:slow', ['ci-test:slow']);
 gulp.task('ci-build', ['lint', 'transpile']);
 gulp.task('ci-test:quick', ['test:quick']);
