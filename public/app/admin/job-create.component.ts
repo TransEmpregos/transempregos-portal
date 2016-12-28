@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { JobService } from '../job.service';
 import { Job } from '../job';
 
@@ -10,7 +10,7 @@ import { Job } from '../job';
 })
 export class JobCreateComponent {
     job = new Job();
-    constructor(private jobService: JobService, private route: ActivatedRoute, private router: Router) { }
+    constructor(private jobService: JobService, private router: Router) { }
 
     async save() {
         await this.jobService.createAsync(this.job);

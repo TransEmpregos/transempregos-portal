@@ -1,4 +1,4 @@
-(function (global) {
+(function () {
   System.config({
     paths: {
       'npm:': 'node_modules/'
@@ -26,4 +26,4 @@
       }
     }
   });
-})(this);
+})();

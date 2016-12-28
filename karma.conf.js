@@ -55,6 +55,9 @@ module.exports = function (config) {
             // Angular itself
             { pattern: 'node_modules/@angular/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/@angular/**/*.js.map', included: false, watched: false },
+            // Angular bootstrap
+            { pattern: 'node_modules/@ng-bootstrap/**/*.js', included: false, watched: false },
+            { pattern: 'node_modules/@ng-bootstrap/**/*.js.map', included: false, watched: false },
 
             { pattern: 'systemjs.config.js', included: false, watched: false },
             { pattern: 'systemjs.config.extras.js', included: false, watched: false },
@@ -128,6 +131,8 @@ module.exports = function (config) {
 
         // Concurrency level
         // how many browser should be started simultaneous
-        concurrency: Infinity
+        concurrency: Infinity,
+
+        autoWatchBatchDelay: 500
     })
 }

@@ -16,8 +16,10 @@ const gulp = require("gulp"),
     // ts = require("gulp-typescript"), //todo: using exec until https://github.com/ivogabe/gulp-typescript/issues/460 is resolved
     exec = require('child_process').exec,
     browserSync = require('browser-sync'),
-    intoStream = require('into-stream');
-const gutil = require('gulp-util');
+    intoStream = require('into-stream'),
+    tslint = require('tslint'),
+    gulpTslint = require('gulp-tslint'),
+    gutil = require('gulp-util');
 const { protractor, webdriver_standalone, webdriver_update } = require("gulp-protractor");
 
 (function createGulpCacheDir() {
@@ -82,21 +84,23 @@ gulp.task("transpile:front", transpileFront);
 gulp.task("transpile:back", transpileBack);
 gulp.task("transpile:sass", transpileSass);
 
-gulp.task("test:front", (done) => {
-    new karmaServer({
-        configFile: path.resolve(__dirname, 'karma.conf.js'),
-        singleRun: true
-    }, done).start();
-});
-
-gulp.task("autotest", () => {
-    gulp.watch('public/**/*.js', ['transpile:front']);
-    gulp.watch(["server/**/*.js", "test/**/*.js"], ['transpile:back']);
-    gulp.watch(["dist/server/**/*.js", "dist/test/**/*.spec.js"], ['test:back']);
+gulp.task("autotest", ['transpile:front'], () => {
+    gulp.watch('public/**/*.ts', ['transpile:front']);
+    gulp.watch(["server/**/*.ts", "test/**/*.ts"], ['transpile:back']);
+    gulp.watch(["dist/server/**/*.js", "dist/test/**/*.js"], ['test:back']);
     new karmaServer({
         configFile: path.resolve(__dirname, 'karma.conf.js'),
         singleRun: false
     }).start();
+});
+
+gulp.task("test", ["test:back", "test:front", "test:acceptance"]);
+
+gulp.task("test:front", (done) => {
+    new karmaServer({
+        configFile: path.resolve(__dirname, 'karma.conf.js'),
+        singleRun: true
+    }, () => done()).start();
 });
 
 gulp.task("test:back", () => {
@@ -114,8 +118,6 @@ gulp.task("test:acceptance", ["test:acceptance:setup"], () => {
         }))
         .on('error', (e) => { throw e; })
 });
-
-gulp.task("test", ["test:back", "test:front", "test:acceptance"]);
 
 function transpileSass() {
     var sassFileCache = new FileCache('.gulp-cache/.gulp-cache-sass');
@@ -202,4 +204,24 @@ function transpileFront() {
     //     .pipe(gulp.dest("dist/public"));
 };
 
-gulp.task("default", ['transpile'])
+gulp.task('lint', ['lint:back', 'lint:front']);
+
+gulp.task('lint:back', () => {
+    return gulp.src(['server/**/*.ts', 'test/**/*.ts'], { base: '.' })
+        .pipe(debug({ title: 'lint-back' }))
+        .pipe(gulpTslint({ program: tslint.Linter.createProgram("./tsconfig.json"), configuration: './tslint.json' }))
+        .pipe(gulpTslint.report());
+});
+
+gulp.task('lint:front', () => {
+    return gulp.src(['public/**/*.ts'], { base: '.' })
+        .pipe(debug({ title: 'lint-front' }))
+        .pipe(gulpTslint({ program: tslint.Linter.createProgram("public/tsconfig.json"), configuration: 'public/tslint.json' }))
+        .pipe(gulpTslint.report());
+});
+
+gulp.task('ci', ['ci-build', 'ci-test']);
+gulp.task('ci-build', ['lint', 'transpile']);
+gulp.task('ci-test', ['test']);
+
+gulp.task("default", ['transpile']);

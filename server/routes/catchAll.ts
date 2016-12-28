@@ -2,7 +2,7 @@ import * as Router from 'koa-router';
 import Job from '../models/job';
 
 const router = new Router();
-router.get('/', async (ctx, next) => {
+router.get('/', async (ctx) => {
     const jobs = await Job.find();
     await ctx.render('index', { jobs: jobs });
 });
