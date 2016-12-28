@@ -17,7 +17,7 @@
             "koa-pug", "koa-router", "koa-static", "mocha", "mongodb", "mongoose", "node", "promises-a-plus", "protractor",
             "q", "selenium-webdriver", "sinon", "sinon-chai", "systemjs"
         ],
-        "target": "es5",
+        "target": "ES2016", //todo: try ES2017 to use async & await with chrome
         "outDir": "../dist/public/",
         "lib": [
             "es2015",
