@@ -85,6 +85,12 @@ gulp.task("transpile", ['copy:html'], () => {
     return merged;
 });
 
+gulp.task("transpile:production", ['copy:html'], () => {
+    var merged = new mergeStream();
+    merged.add(transpileFront({ bail: true, target: 'ES5' }), transpileBack({ bail: true, target: 'ES2015' }), transpileSass({ bail: true }));
+    return merged;
+});
+
 gulp.task("transpile:front", transpileFront);
 gulp.task("transpile:back", transpileBack);
 gulp.task("transpile:sass", transpileSass);
@@ -119,20 +125,20 @@ gulp.task("test:acceptance:setup", webdriver_update);
 
 gulp.task("test:acceptance", ["test:acceptance:setup", "transpile"], done => {
     try {
-        const node = spawn('node', ['--debug', '--harmony-async-await', 'dist/server/bin/www.js'] , {
+        const node = spawn('node', ['--debug', '--harmony-async-await', 'dist/server/bin/www.js'], {
             cwd: __dirname,
             env: {
                 DEBUG: '*,-*socket*,-engine*,-koa*,-connect*,-mquery'
             }
         });
         node.stdout.on('data', data => {
-            if (typeof(data) === 'string')
+            if (typeof (data) === 'string')
                 gutil.log(data.toString());
             else
                 gutil.log(data.toString('utf8'));
         });
         node.stderr.on('data', data => {
-            if (typeof(data) === 'string')
+            if (typeof (data) === 'string')
                 gutil.log(data.toString());
             else
                 gutil.log(data.toString('utf8'));
@@ -163,24 +169,26 @@ gulp.task("test:acceptance", ["test:acceptance:setup", "transpile"], done => {
     }
 });
 
-function transpileSass() {
+function transpileSass(opt) {
     var sassFileCache = new FileCache('.gulp-cache/.gulp-cache-sass');
     return gulp.src(["public/**/*.scss"])
         .pipe(plumber())
         .pipe(sassFileCache.filter())
-        .pipe(sass().on('error', sass.logError))
+        .pipe(opt && opt.bail
+            ? sass().on('error', (error) => { throw error; })
+            : sass().on('error', sass.logError))
         .pipe(sassFileCache.cache())
         .pipe(debug({ title: 'sass' }))
         .pipe(gulp.dest("dist/public"));
 }
 
 // const tsProjectBack = ts.createProject("tsconfig.json");
-function transpileBack() {
+function transpileBack(opt) {
     //todo: using exec until https://github.com/ivogabe/gulp-typescript/issues/460 is resolved
     const promise = new Promise((resolve, reject) => {
         let resolveCalled = false;
         try {
-            exec(`tsc --pretty --project ${__dirname}`, {
+            exec(`tsc --pretty --project ${__dirname} ${opt && opt.target ? '--target ' + opt.target : ''}`, {
                 cwd: __dirname,
             }, (err, stdout, stderr) => {
                 let info = "";
@@ -190,14 +198,17 @@ function transpileBack() {
                     info += stderr;
                 if (stdout)
                     info += stdout;
-                gutil.log(info);
+                if (info)
+                    gutil.log(info);
                 resolveCalled = true;
+                if (err && opt && opt.bail)
+                    return reject(err);
                 resolve("Done.");
             });
         } catch (error) {
             gutil.log(`Error: ${error}`);
             if (!resolveCalled)
-                resolve();
+                resolve("Done.");
         }
     });
     return intoStream(promise);
@@ -212,13 +223,13 @@ function transpileBack() {
 }
 
 // const tsProjectFront = ts.createProject("public/tsconfig.json");
-function transpileFront() {
+function transpileFront(opt) {
     //todo: using exec until https://github.com/ivogabe/gulp-typescript/issues/460 is resolved
     const publicPath = path.resolve(__dirname, 'public');
     const promise = new Promise((resolve, reject) => {
         let resolveCalled = false;
         try {
-            exec(`tsc --pretty --project ${publicPath}`, {
+            exec(`tsc --pretty --project ${publicPath} ${opt && opt.target ? ' --target ' + opt.target : ''}`, {
                 cwd: publicPath,
             }, (err, stdout, stderr) => {
                 let info = "";
@@ -228,14 +239,17 @@ function transpileFront() {
                     info += stderr;
                 if (stdout)
                     info += stdout;
-                gutil.log(info);
+                if (info)
+                    gutil.log(info);
                 resolveCalled = true;
+                if (err && opt && opt.bail)
+                    return reject(err);
                 resolve("Done.");
             });
         } catch (error) {
             gutil.log(`Error: ${error}`);
             if (!resolveCalled)
-                resolve();
+                resolve("Done.");
         }
     });
     return intoStream(promise);
@@ -266,7 +280,7 @@ gulp.task('lint:front', () => {
 
 gulp.task('ci:quick', done => runSequence('ci-build', 'ci-test:quick', done));
 gulp.task('ci:slow', ['ci-test:slow']);
-gulp.task('ci-build', ['lint', 'transpile']);
+gulp.task('ci-build', ['lint', 'transpile:production']);
 gulp.task('ci-test:quick', ['test:quick']);
 gulp.task('ci-test:slow', ['test:acceptance']);
 
