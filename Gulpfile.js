@@ -100,6 +100,8 @@ gulp.task("autotest", ['transpile:front'], () => {
 
 gulp.task("test", ["test:back", "test:front", "test:acceptance"]);
 
+gulp.task("test:quick", ["test:back", "test:front"]);
+
 gulp.task("test:front", (done) => {
     new karmaServer({
         configFile: path.resolve(__dirname, 'karma.conf.js'),
@@ -261,8 +263,10 @@ gulp.task('lint:front', () => {
         .pipe(gulpTslint.report());
 });
 
-gulp.task('ci', ['ci-build', 'ci-test']);
+gulp.task('ci:quick', ['ci-build', 'ci-test:quick']);
+gulp.task('ci:slow', ['ci-test:slow']);
 gulp.task('ci-build', ['lint', 'transpile']);
-gulp.task('ci-test', ['test']);
+gulp.task('ci-test:quick', ['test:quick']);
+gulp.task('ci-test:slow', ['test:acceptance']);
 
 gulp.task("default", ['transpile']);
