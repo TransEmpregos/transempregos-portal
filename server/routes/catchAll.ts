@@ -1,5 +1,5 @@
 import * as Router from 'koa-router';
-import Job from '../models/job';
+import { Job } from '../models/job';
 
 const router = new Router();
 router.get('/', async (ctx) => {
