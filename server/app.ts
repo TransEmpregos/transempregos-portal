@@ -1,5 +1,4 @@
 import * as Koa from 'koa';
-import * as Router from 'koa-router';
 import * as json from 'koa-json';
 import * as bodyParser from 'koa-bodyparser';
 import * as logger from 'koa-logger';
@@ -9,11 +8,10 @@ import * as Pug from 'koa-pug';
 const convert = require('koa-convert');
 import * as path from 'path';
 import * as mongoose from 'mongoose';
-import index from './routes/index';
-import jobs from './routes/jobs';
+import router from './routes/router';
 
 (<any>mongoose).Promise = global.Promise;
-mongoose.connect('mongodb://localhost/test').catch(err => console.error(`Could not connect to Mongo.\n${err}`));
+mongoose.connect('mongodb://localhost/transempregos').catch(err => console.error(`Could not connect to Mongo.\n${err}`));
 
 const app = new Koa();
 
@@ -43,10 +41,6 @@ app.use(async (ctx, next) => {
         ctx.status = err.status || 500;
     }
 });
-
-const router = new Router();
-router.use('/', index.routes(), index.allowedMethods());
-router.use('/api/jobs', jobs.routes(), jobs.allowedMethods());
 
 app .use(router.routes())
     .use(router.allowedMethods());

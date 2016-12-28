@@ -1,0 +1,13 @@
+<div *ngIf="job">
+    <div class="form-group">
+        <h2>{{job.name}}</h2>
+        <div class="form-group">
+            <label for="name">Nome:</label>
+            <input [(ngModel)]="job.name" placeholder="Coloque o nome" class="form-control" type="text" id="name" />
+        </div>
+    </div>
+        <div>
+            <button (click)="goBack()" class="btn btn-secondary">Cancelar</button>
+            <button (click)="save()" class="btn btn-primary">Salvar</button>
+        </div>
+</div>

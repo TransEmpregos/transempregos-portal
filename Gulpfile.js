@@ -6,7 +6,7 @@ const gulp = require("gulp"),
     debug = require("gulp-debug"),
     nodemon = require('gulp-nodemon'),
     FileCache = require("gulp-file-cache"),
-    less = require('gulp-less'),
+    sass = require('gulp-sass'),
     fs = require('fs'),
     path = require('path'),
     args = require('yargs').argv,
@@ -17,6 +17,7 @@ const gulp = require("gulp"),
     exec = require('child_process').exec,
     browserSync = require('browser-sync'),
     intoStream = require('into-stream');
+const gutil = require('gulp-util');
 const { protractor, webdriver_standalone, webdriver_update } = require("gulp-protractor");
 
 (function createGulpCacheDir() {
@@ -26,13 +27,13 @@ const { protractor, webdriver_standalone, webdriver_update } = require("gulp-pro
 
 gulp.task('watch:front', ['transpile:front'], () => {
     gulp.watch('public/**/*.ts', ['transpile:front']);
-    gulp.watch('public/**/*.less', ['transpile:less']);
+    gulp.watch('public/**/*.scss', ['transpile:sass']);
     gulp.watch('public/**/*.html', ['copy:html']);
 });
 
 gulp.task('watch', ['transpile'], () => {
     gulp.watch('public/**/*.ts', ['transpile:front']);
-    gulp.watch('public/**/*.less', ['transpile:less']);
+    gulp.watch('public/**/*.scss', ['transpile:sass']);
     gulp.watch('public/**/*.html', ['copy:html']);
     gulp.watch('test/**/*.ts', ['transpile:back']);
     let nodemonOpt = {
@@ -41,7 +42,7 @@ gulp.task('watch', ['transpile'], () => {
         ext: 'ts',
         env: {
             'NODE_ENV': 'development',
-            'DEBUG': '*'
+            'DEBUG': '*,-*socket*,-engine*,-koa*,-connect*,-mquery'
         },
         watch: ['server/**/*.ts'],
         tasks: ['transpile:back'],
@@ -65,21 +66,21 @@ gulp.task("copy:html", () => {
     var htmlFileCache = new FileCache('.gulp-cache/.gulp-cache-html');
     return gulp.src(["public/**/*.html"])
         .pipe(plumber())
-        .pipe(htmlFileCache.filter())
-        .pipe(htmlFileCache.cache())
+        //.pipe(htmlFileCache.filter())
+        //.pipe(htmlFileCache.cache())
         .pipe(debug({ title: 'html' }))
         .pipe(gulp.dest("dist/public"));
 });
 
-gulp.task("transpile", () => {
+gulp.task("transpile", ['copy:html'], () => {
     var merged = new mergeStream();
-    merged.add(transpileFront(), transpileBack(), transpileLess());
+    merged.add(transpileFront(), transpileBack(), transpileSass());
     return merged;
 });
 
 gulp.task("transpile:front", transpileFront);
 gulp.task("transpile:back", transpileBack);
-gulp.task("transpile:less", transpileLess);
+gulp.task("transpile:sass", transpileSass);
 
 gulp.task("test:front", (done) => {
     new karmaServer({
@@ -116,14 +117,14 @@ gulp.task("test:acceptance", ["test:acceptance:setup"], () => {
 
 gulp.task("test", ["test:back", "test:front", "test:acceptance"]);
 
-function transpileLess() {
-    var lessFileCache = new FileCache('.gulp-cache/.gulp-cache-less');
-    return gulp.src(["public/**/*.less"])
+function transpileSass() {
+    var sassFileCache = new FileCache('.gulp-cache/.gulp-cache-sass');
+    return gulp.src(["public/**/*.scss"])
         .pipe(plumber())
-        .pipe(lessFileCache.filter())
-        .pipe(less())
-        .pipe(lessFileCache.cache())
-        .pipe(debug({ title: 'less' }))
+        .pipe(sassFileCache.filter())
+        .pipe(sass().on('error', sass.logError))
+        .pipe(sassFileCache.cache())
+        .pipe(debug({ title: 'sass' }))
         .pipe(gulp.dest("dist/public"));
 }
 
@@ -131,17 +132,27 @@ function transpileLess() {
 function transpileBack() {
     //todo: using exec until https://github.com/ivogabe/gulp-typescript/issues/460 is resolved
     const promise = new Promise((resolve, reject) => {
-        exec(`tsc --pretty --project ${__dirname}`, {
-            cwd: __dirname,
-        }, (err, stdout, stderr) => {
-            let info = "";
-            if (stdout)
-                info += stdout;
-            if (stderr)
-                info += stderr;
-            if (err) return reject(info + "\n" + err);
-            resolve(info);
-        })
+        let resolveCalled = false;
+        try {
+            exec(`tsc --pretty --project ${__dirname}`, {
+                cwd: __dirname,
+            }, (err, stdout, stderr) => {
+                let info = "";
+                if (err)
+                    info += err;
+                if (stderr)
+                    info += stderr;
+                if (stdout)
+                    info += stdout;
+                gutil.log(info);
+                resolveCalled = true;
+                resolve("Done.");
+            });
+        } catch (error) {
+            gutil.log(`Error: ${error}`);
+            if (!resolveCalled)
+                resolve();
+        }
     });
     return intoStream(promise);
     // return tsProjectBack.src()
@@ -159,17 +170,27 @@ function transpileFront() {
     //todo: using exec until https://github.com/ivogabe/gulp-typescript/issues/460 is resolved
     const publicPath = path.resolve(__dirname, 'public');
     const promise = new Promise((resolve, reject) => {
-        exec(`tsc --pretty --project ${publicPath}`, {
-            cwd: publicPath,
-        }, (err, stdout, stderr) => {
-            let info = "";
-            if (stdout)
-                info += stdout;
-            if (stderr)
-                info += stderr;
-            if (err) return reject(info + "\n" + err);
-            resolve(info);
-        })
+        let resolveCalled = false;
+        try {
+            exec(`tsc --pretty --project ${publicPath}`, {
+                cwd: publicPath,
+            }, (err, stdout, stderr) => {
+                let info = "";
+                if (err)
+                    info += err;
+                if (stderr)
+                    info += stderr;
+                if (stdout)
+                    info += stdout;
+                gutil.log(info);
+                resolveCalled = true;
+                resolve("Done.");
+            });
+        } catch (error) {
+            gutil.log(`Error: ${error}`);
+            if (!resolveCalled)
+                resolve();
+        }
     });
     return intoStream(promise);
     // return tsProjectFront.src()
