@@ -14,7 +14,7 @@ const gulp = require("gulp"),
     karmaServer = require('karma').Server,
     mocha = require('gulp-mocha'),
     // ts = require("gulp-typescript"), //todo: using exec until https://github.com/ivogabe/gulp-typescript/issues/460 is resolved
-    exec = require('child_process').exec,
+    { exec, spawn } = require('child_process'),
     browserSync = require('browser-sync'),
     intoStream = require('into-stream'),
     tslint = require('tslint'),
@@ -33,6 +33,10 @@ gulp.task('watch:front', ['transpile:front'], () => {
     gulp.watch('public/**/*.html', ['copy:html']);
 });
 
+gulp.task('watch:back', ['transpile:back'], () => {
+    return gulp.watch(['test/**/*.ts', 'server/**/*.ts'], ['transpile:back']);
+});
+
 gulp.task('watch', ['transpile'], () => {
     gulp.watch('public/**/*.ts', ['transpile:front']);
     gulp.watch('public/**/*.scss', ['transpile:sass']);
@@ -44,7 +48,7 @@ gulp.task('watch', ['transpile'], () => {
         ext: 'ts',
         env: {
             'NODE_ENV': 'development',
-            'DEBUG': '*,-*socket*,-engine*,-koa*,-connect*,-mquery'
+            DEBUG: '*,-*socket*,-engine*,-koa*,-connect*,-mquery'
         },
         watch: ['server/**/*.ts'],
         tasks: ['transpile:back'],
@@ -110,13 +114,50 @@ gulp.task("test:back", () => {
 
 gulp.task("test:acceptance:setup", webdriver_update);
 
-gulp.task("test:acceptance", ["test:acceptance:setup"], () => {
-    gulp.src(["./dist/test/**/*.feature.js"])
-        .pipe(protractor({
-            configFile: "dist/test/protractor.config.js",
-            //args: ['--baseUrl', 'http://127.0.0.1:8000']
-        }))
-        .on('error', (e) => { throw e; })
+gulp.task("test:acceptance", ["test:acceptance:setup", "transpile"], done => {
+    try {
+        const node = spawn('node', ['--debug', '--harmony-async-await', 'dist/server/bin/www.js'] , {
+            cwd: __dirname,
+            env: {
+                DEBUG: '*,-*socket*,-engine*,-koa*,-connect*,-mquery'
+            }
+        });
+        node.stdout.on('data', data => {
+            if (typeof(data) === 'string')
+                gutil.log(data.toString());
+            else
+                gutil.log(data.toString('utf8'));
+        });
+        node.stderr.on('data', data => {
+            if (typeof(data) === 'string')
+                gutil.log(data.toString());
+            else
+                gutil.log(data.toString('utf8'));
+            if (data.indexOf('server Listening on port') >= 0) {
+                gulp.src(["./dist/test/**/*.feature.js"])
+                    .pipe(protractor({
+                        configFile: "dist/test/protractor.config.js",
+                    }))
+                    .on('error', (error) => {
+                        gutil.log(error);
+                        done(error);
+                        node.kill();
+                    })
+                    .on('end', () => {
+                        gutil.log('Done running tests.');
+                        done();
+                        node.kill();
+                    });
+            }
+        });
+        node.on('close', code => {
+            if (code > 0)
+                gutil.log(`Running the app failed with code ${code}.`);
+        });
+    } catch (error) {
+        gutil.log(`Error: ${error}`);
+        done();
+    }
 });
 
 function transpileSass() {
