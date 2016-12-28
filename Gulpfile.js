@@ -188,7 +188,7 @@ function transpileBack(opt) {
     const promise = new Promise((resolve, reject) => {
         let resolveCalled = false;
         try {
-            exec(`tsc --pretty --project ${__dirname} ${opt && opt.target ? '--target ' + opt.target : ''}`, {
+            exec(`npm run tsc -- --pretty --project ${__dirname} ${opt && opt.target ? '--target ' + opt.target : ''}`, {
                 cwd: __dirname,
             }, (err, stdout, stderr) => {
                 let info = "";
@@ -229,7 +229,7 @@ function transpileFront(opt) {
     const promise = new Promise((resolve, reject) => {
         let resolveCalled = false;
         try {
-            exec(`tsc --pretty --project ${publicPath} ${opt && opt.target ? ' --target ' + opt.target : ''}`, {
+            exec(`npm run tsc -- --pretty --project ${publicPath} ${opt && opt.target ? ' --target ' + opt.target : ''}`, {
                 cwd: publicPath,
             }, (err, stdout, stderr) => {
                 let info = "";

@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "gulp test",
-    "start": "gulp watch"
+    "start": "gulp watch",
+    "tsc": "tsc"
   },
   "repository": {
     "type": "git",
