@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "gulp test",
-    "start": "gulp watch",
+    "start": "node dist/server/bin/www.js",
     "tsc": "tsc"
   },
   "repository": {
