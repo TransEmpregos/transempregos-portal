@@ -12,8 +12,12 @@ check () {
 MESSAGE=$(git log -1 --pretty=%B)
 echo Last commit message is "'"$MESSAGE"'"
 RELEASE_DIR="$HOME/transempregos-portal-release"
-echo Cloning to "$RELEASE_DIR"
-git clone git@github.com:TransEmpregos/transempregos-portal-release.git "$RELEASE_DIR"
+if [ -d "$RELEASE_DIR" ]; then
+    echo Deleting release dir "'"$RELEASE_DIR"'"...
+    rm -rf "$RELEASE_DIR"
+fi
+echo Cloning to "'"$RELEASE_DIR"'"...
+git clone --depth 1 git@github.com:TransEmpregos/transempregos-portal-release.git "$RELEASE_DIR"
 check $?
 echo Deleting old files...
 cd $RELEASE_DIR
