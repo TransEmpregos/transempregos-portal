@@ -20,13 +20,18 @@ cd $RELEASE_DIR
 find . -path ./.git -prune -o -exec rm -rf {} \; 2> /dev/null
 check $?
 echo Copying release files from "'"$SNAP_WORKING_DIR"'" to "'"$RELEASE_DIR"'"...
-cp -R "$SNAP_WORKING_DIR/dist/." "$RELEASE_DIR/"
+mkdir dist
+cp -R "$SNAP_WORKING_DIR/dist/." "$RELEASE_DIR/dist/"
+cp "$SNAP_WORKING_DIR/package.json" "$RELEASE_DIR/package.json"
 check $?
 echo Adding files to git...
 git add -A
 check $?
 echo Committing...
-git commit -m "$MESSAGE"
+git commit -m "#$SNAP_PIPELINE_COUNTER $MESSAGE
+
+Original commit: $SNAP_COMMIT
+On Branch: $SNAP_BRANCH"
 check $?
 echo Pushing files to git...
 git push origin master
