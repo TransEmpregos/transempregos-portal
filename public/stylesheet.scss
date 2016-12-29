@@ -3,7 +3,79 @@
 @import "scss/base";
 @import "scss/menu-top";
 
+
 .login-and-register-area {
     height: 500px;
     background-image: url('/dist/public/images/home-bg-login-register.jpg');
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 14pt;
+    color: #ececec;
+    text-align: center;
+
+    @media screen and (max-width: $break-small) {
+      font-size: 12pt;
+    }
+
+    > * {
+        z-index: 1;
+        position: relative;
+    }
+
+    .bg-black-alpha {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.70);
+        z-index: 0;
+    }
+
+    a {
+        color: #b2b2b2;
+        display: inline-block
+    }
+
+    a:active,
+    a:hover {
+        color: #ececec;
+        text-decoration: none;
+        border-bottom: 2px solid #ececec;
+        margin-bottom: -2px;
+    }
+
+    .home-text-for-recruter {
+        font-size: 22pt;
+        max-width: 700px;
+        margin-bottom: 40px;
+
+        @media screen and (max-width: $break-small) {
+            font-size: 16pt;
+            line-height: 1.4;
+        }
+
+    }
+
+    .btn-home-login {
+        width: 80%;
+        background: $green;
+        color: #fff;
+        border-radius: 0;
+    }
+
+    .max-width-700 {
+        max-width: 700px;
+    }
+
+    .margin-bottom-5 {
+        margin-bottom: 5%;
+    }
+
+    .margin-bottom-1 {
+        margin-bottom: 1%;
+    }
 }
