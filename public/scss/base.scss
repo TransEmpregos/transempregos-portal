@@ -2,16 +2,23 @@
 
 body {
     padding-top: 65px;
+    padding-bottom: 140px;
+
 }
+
 
 .txt-orange {
     color: $txt-orange;
 }
 
+.relative {
+    position: relative;
+}
+
 //  Footer
 .footer {
     position: absolute;
-    bottom: 4px;
+    bottom: -140px;
     width: 100%;
     color: #fff;
     text-align: center;
