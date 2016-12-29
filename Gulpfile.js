@@ -42,6 +42,7 @@ gulp.task('watch', ['transpile'], () => {
     gulp.watch('public/**/*.ts', ['transpile:front']);
     gulp.watch('public/**/*.scss', ['transpile:sass']);
     gulp.watch('public/**/*.html', ['copy:html']);
+    gulp.watch('server/**/*.pug', ['copy:pug']);
     gulp.watch('test/**/*.ts', ['transpile:back']);
     let nodemonOpt = {
         exec: `${process.execPath} --debug --harmony-async-await`,
@@ -67,25 +68,35 @@ gulp.task('watch', ['transpile'], () => {
     return stream;
 });
 
-gulp.task('copy', ['copy:html']);
+gulp.task('copy', ['copy:html', 'copy:pug']);
 
 gulp.task("copy:html", () => {
     var htmlFileCache = new FileCache('.gulp-cache/.gulp-cache-html');
     return gulp.src(["public/**/*.html"])
         .pipe(plumber())
-        //.pipe(htmlFileCache.filter())
-        //.pipe(htmlFileCache.cache())
+        .pipe(htmlFileCache.filter())
+        .pipe(htmlFileCache.cache())
         .pipe(debug({ title: 'html' }))
         .pipe(gulp.dest("dist/public"));
 });
 
-gulp.task("transpile", ['copy:html'], () => {
+gulp.task("copy:pug", () => {
+    var pugFileCache = new FileCache('.gulp-cache/.gulp-cache-pug');
+    return gulp.src(["server/**/*.pug"])
+        .pipe(plumber())
+        .pipe(pugFileCache.filter())
+        .pipe(pugFileCache.cache())
+        .pipe(debug({ title: 'pug' }))
+        .pipe(gulp.dest("dist/server"));
+});
+
+gulp.task("transpile", ['copy'], () => {
     var merged = new mergeStream();
     merged.add(transpileFront(), transpileBack(), transpileSass());
     return merged;
 });
 
-gulp.task("transpile:production", ['copy:html'], () => {
+gulp.task("transpile:production", ['copy'], () => {
     var merged = new mergeStream();
     merged.add(transpileFront({ bail: true, target: 'ES5' }), transpileBack({ bail: true, target: 'ES2015' }), transpileSass({ bail: true }));
     return merged;
