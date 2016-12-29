@@ -22,7 +22,6 @@ const isProdEnv = nodeEnv === 'production';
 const connectionString = process.env.MONGO_URI;
 let connectResult: mongoose.MongooseThenable;
 if (connectionString) {
-    debug('conn ' + connectionString);
     connectResult = mongoose.connect(connectionString);
 } else if (isTestEnv) {
     connectResult = mongoose.connect('mongodb://localhost/transempregos-test');
