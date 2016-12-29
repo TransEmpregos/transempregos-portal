@@ -21,7 +21,8 @@ git clone --depth 1 git@github.com:TransEmpregos/transempregos-portal-release.gi
 check $?
 echo Deleting old files...
 cd $RELEASE_DIR
-find . -path ./.git -prune -o -exec rm -rf {} \; 2> /dev/null
+shopt -s extglob
+rm !(.git|.|..) -rf
 check $?
 echo Copying release files from "'"$SNAP_WORKING_DIR"'" to "'"$RELEASE_DIR"'"...
 mkdir dist
