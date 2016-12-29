@@ -44,7 +44,7 @@ gulp.task('watch', ['transpile'], () => {
     gulp.watch('public/**/*.html', ['copy:html']);
     gulp.watch('test/**/*.ts', ['transpile:back']);
     let nodemonOpt = {
-        exec: "node --debug --harmony-async-await",
+        exec: `${process.execPath} --debug --harmony-async-await`,
         script: 'dist/server/bin/www.js',
         ext: 'ts',
         env: {
@@ -142,7 +142,7 @@ function testAcceptance(theDone) {
         }
     }
     try {
-        const node = spawn('node', ['--debug', '--harmony-async-await', 'dist/server/bin/www.js'], {
+        const node = spawn(process.execPath, ['--debug', '--harmony-async-await', 'dist/server/bin/www.js'], {
             cwd: __dirname,
             env: {
                 DEBUG: '*,-*socket*,-engine*,-koa*,-connect*,-mquery'
