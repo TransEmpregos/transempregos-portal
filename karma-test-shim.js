@@ -31,7 +31,7 @@ var allSpecFiles = Object.keys(window.__karma__.files)
     .filter(isBuiltFile);
 
 System.config({
-    baseURL: 'base',
+    baseURL: '', // removed 'base' so babel works with systemjs
     // Extend usual application package list with test folder
     packages: { 'testing': { main: 'index.js', defaultExtension: 'js' } },
 
@@ -86,6 +86,7 @@ function initTestBed() {
 function initTesting() {
     return Promise.all(
         allSpecFiles.map(function (moduleName) {
+            moduleName = moduleName.substring('/base'.length); // removing 'base' so babel works with systemjs
             return System.import(moduleName);
         })
     )

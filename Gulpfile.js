@@ -105,25 +105,42 @@ gulp.task("autotest", ['transpile:front'], () => {
     }).start();
 });
 
-gulp.task("test", ["test:back", "test:front", "test:acceptance"]);
+gulp.task('test', done => runSequence('transpile', ["test:back:notranspile", "test:front:notranspile", "test:acceptance:notranspile"], done));
 
-gulp.task("test:quick", ["test:back", "test:front"]);
+gulp.task("test:quick", ["test:back:notranspile", "test:front:notranspile"]);
 
-gulp.task("test:front", (done) => {
+gulp.task("test:front", ['transpile:front'], testFront);
+gulp.task("test:front:notranspile", testFront);
+
+function testFront(done) {
     new karmaServer({
         configFile: path.resolve(__dirname, 'karma.conf.js'),
         singleRun: true
     }, () => done()).start();
-});
+};
 
-gulp.task("test:back", () => {
+gulp.task("test:back", ['transpile:back'], testBack);
+gulp.task("test:back:notranspile", testBack);
+
+function testBack() {
     return gulp.src('dist/test/**/*.spec.js', { read: false })
         .pipe(mocha({ reporter: 'spec', require: ['./dist/test/_specHelper.js'] }));
-});
+};
 
 gulp.task("test:acceptance:setup", webdriver_update);
 
-gulp.task("test:acceptance", ["test:acceptance:setup", "transpile"], done => {
+gulp.task("test:acceptance", ["test:acceptance:setup", "transpile"], testAcceptance);
+
+gulp.task("test:acceptance:notranspile", ["test:acceptance:setup"], testAcceptance);
+
+function testAcceptance(theDone) {
+    let doneCalled = false;
+    function done() {
+        if (!doneCalled) {
+            doneCalled = true;
+            theDone(...arguments);
+        }
+    }
     try {
         const node = spawn('node', ['--debug', '--harmony-async-await', 'dist/server/bin/www.js'], {
             cwd: __dirname,
@@ -149,25 +166,28 @@ gulp.task("test:acceptance", ["test:acceptance:setup", "transpile"], done => {
                     }))
                     .on('error', (error) => {
                         gutil.log(error);
-                        done(error);
                         node.kill();
+                        done(error);
                     })
                     .on('end', () => {
                         gutil.log('Done running tests.');
-                        done();
                         node.kill();
+                        done();
                     });
             }
         });
         node.on('close', code => {
-            if (code > 0)
-                gutil.log(`Running the app failed with code ${code}.`);
+            if (code > 0) {
+                const message = `Running the app failed with code ${code}.`;
+                gutil.log(message);
+                done(message)
+            }
         });
     } catch (error) {
         gutil.log(`Error: ${error}`);
-        done();
+        done(error);
     }
-});
+};
 
 function transpileSass(opt) {
     var sassFileCache = new FileCache('.gulp-cache/.gulp-cache-sass');
@@ -282,6 +302,6 @@ gulp.task('ci:quick', done => runSequence('ci-build', 'ci-test:quick', done));
 gulp.task('ci:slow', ['ci-test:slow']);
 gulp.task('ci-build', ['lint', 'transpile:production']);
 gulp.task('ci-test:quick', ['test:quick']);
-gulp.task('ci-test:slow', ['test:acceptance']);
+gulp.task('ci-test:slow', ['test:acceptance:notranspile']);
 
 gulp.task("default", ['transpile']);
