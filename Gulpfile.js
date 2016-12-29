@@ -133,19 +133,14 @@ gulp.task("test:acceptance", ["test:acceptance:setup", "transpile"], testAccepta
 
 gulp.task("test:acceptance:notranspile", ["test:acceptance:setup"], testAcceptance);
 
-function testAcceptance(theDone) {
-    let doneCalled = false;
-    function done() {
-        if (!doneCalled) {
-            doneCalled = true;
-            theDone(...arguments);
-        }
-    }
+gulp.task('run', done => {
     try {
         const node = spawn(process.execPath, ['--debug', '--harmony-async-await', 'dist/server/bin/www.js'], {
             cwd: __dirname,
             env: {
-                DEBUG: '*,-*socket*,-engine*,-koa*,-connect*,-mquery'
+                DEBUG: '*,trans,-*socket*,-engine*,-koa*,-connect*,-mquery',
+                NODE_ENV: 'development',
+                DEBUG_COLORS: true
             }
         });
         node.stdout.on('data', data => {
@@ -159,7 +154,49 @@ function testAcceptance(theDone) {
                 gutil.log(data.toString());
             else
                 gutil.log(data.toString('utf8'));
-            if (data.indexOf('server Listening on port') >= 0) {
+        });
+        node.on('close', code => {
+            if (code > 0) {
+                const message = `Running the app failed with code ${code}.`;
+                gutil.log(message);
+                done(message)
+            }
+        });
+    } catch (error) {
+        gutil.log(`Error: ${error}`);
+        done(error);
+    }
+});
+
+function testAcceptance(theDone) {
+    let doneCalled = false;
+    function done() {
+        if (!doneCalled) {
+            doneCalled = true;
+            theDone(...arguments);
+        }
+    }
+    try {
+        const node = spawn(process.execPath, ['--debug', '--harmony-async-await', 'dist/server/bin/www.js'], {
+            cwd: __dirname,
+            env: {
+                DEBUG: '*,trans,-*socket*,-engine*,-koa*,-connect*,-mquery',
+                NODE_ENV: 'test',
+                DEBUG_COLORS: true
+            }
+        });
+        node.stdout.on('data', data => {
+            if (typeof (data) === 'string')
+                gutil.log(data.toString());
+            else
+                gutil.log(data.toString('utf8'));
+        });
+        node.stderr.on('data', data => {
+            if (typeof (data) === 'string')
+                gutil.log(data.toString());
+            else
+                gutil.log(data.toString('utf8'));
+            if (data.indexOf('Listening on port') >= 0) {
                 gulp.src(["./dist/test/**/*.feature.js"])
                     .pipe(protractor({
                         configFile: "dist/test/protractor.config.js",

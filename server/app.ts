@@ -9,13 +9,20 @@ const convert = require('koa-convert');
 import * as path from 'path';
 import * as mongoose from 'mongoose';
 import router from './routes/router';
+const debug: debug.IDebugger = require('debug')('trans');
 
 (<any>mongoose).Promise = global.Promise;
 mongoose.connect('mongodb://localhost/transempregos').catch(err => console.error(`Could not connect to Mongo.\n${err}`));
 
 const app = new Koa();
+const nodeEnv = process.env.NODE_ENV || 'development';
+debug(`Environment is '${nodeEnv}'`);
+const isDevEnv = nodeEnv === 'development';
+const isTestEnv = nodeEnv === 'test';
+// const isProdEnv = nodeEnv === 'production';
 
-app.use(logger());
+if (!isTestEnv)
+    app.use(logger());
 const publicPath = path.resolve(__dirname, '../public');
 app.use(mount('/dist/public', serve(publicPath)));
 const nodeModulesPath = path.resolve(__dirname, '../../node_modules');
@@ -24,7 +31,6 @@ app.use(convert(json()));
 app.use(bodyParser());
 
 const viewPath = path.resolve(__dirname, '../../server/views');
-const isDevEnv = process.env.NODE_ENV !== 'production';
 new Pug({
     app: app,
     viewPath: viewPath,
