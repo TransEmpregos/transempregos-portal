@@ -21,7 +21,7 @@ const gulp = require("gulp"),
     gulpTslint = require('gulp-tslint'),
     gutil = require('gulp-util'),
     runSequence = require('run-sequence');
-const { protractor, webdriver_standalone, webdriver_update } = require("gulp-protractor");
+const { protractor } = require("gulp-protractor");
 
 (function createGulpCacheDir() {
     var dir = path.resolve(__dirname, '.gulp-cache');
@@ -127,11 +127,9 @@ function testBack() {
         .pipe(mocha({ reporter: 'spec', require: ['./dist/test/_specHelper.js'] }));
 };
 
-gulp.task("test:acceptance:setup", webdriver_update);
+gulp.task("test:acceptance", ["transpile"], testAcceptance);
 
-gulp.task("test:acceptance", ["test:acceptance:setup", "transpile"], testAcceptance);
-
-gulp.task("test:acceptance:notranspile", ["test:acceptance:setup"], testAcceptance);
+gulp.task("test:acceptance:notranspile", testAcceptance);
 
 gulp.task('run', done => {
     try {

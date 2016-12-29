@@ -4,7 +4,7 @@ exports.config = {
     capabilities: {
         'browserName': 'chrome'
     },
-    chromeDriver: require('chromedriver').path,
+    chromeDriver: process.env.SNAP_CI ? '/usr/local/bin/chromedriver' : require('chromedriver').path,
     framework: 'mocha',
     specs: ['**/*.feature.js'],
     mochaOpts: {
