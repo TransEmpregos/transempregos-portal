@@ -1,0 +1,32 @@
+body {
+    padding-top: 65px;
+}
+
+.txt-orange {
+    color: $txt-orange;
+}
+
+//  Footer
+.footer {
+    position: absolute;
+    bottom: 4px;
+    width: 100%;
+    color: #fff;
+    text-align: center;
+    background: $gray;
+    border-bottom: 8px solid $grayBold;
+    height: 140px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    .footer-logo {
+        height: 40px;
+        margin: 10px 0;
+    }
+
+    > div {
+          line-height: 1.1;
+    }
+}
+//  END - Footer

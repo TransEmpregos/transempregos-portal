@@ -67,7 +67,7 @@ gulp.task('watch', ['transpile'], () => {
     return stream;
 });
 
-gulp.task('copy', ['copy:html']);
+gulp.task('copy', ['copy:html', 'copy:images']);
 
 gulp.task("copy:html", () => {
     var htmlFileCache = new FileCache('.gulp-cache/.gulp-cache-html');
@@ -79,7 +79,14 @@ gulp.task("copy:html", () => {
         .pipe(gulp.dest("dist/public"));
 });
 
-gulp.task("transpile", ['copy:html'], () => {
+gulp.task("copy:images", () => {
+    return gulp.src(["public/images/**/*"])
+        .pipe(plumber())
+        .pipe(debug({ title: 'images' }))
+        .pipe(gulp.dest("dist/public/images"));
+});
+
+gulp.task("transpile", ['copy'], () => {
     var merged = new mergeStream();
     merged.add(transpileFront(), transpileBack(), transpileSass());
     return merged;

@@ -1,7 +1,6 @@
 @import "../node_modules/bootstrap/scss/bootstrap";
-body {
-    padding-top: 65px;
-}
+@import "variables";
+@import "scss/base";
 
 .bg-inverse {
     background-color: #f8f8f7 !important;
