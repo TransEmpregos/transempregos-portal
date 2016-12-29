@@ -2,3 +2,44 @@
 body {
     padding-top: 65px;
 }
+
+.bg-inverse {
+    background-color: #f8f8f7 !important;
+}
+
+.d-inline-block {
+    margin-left: 1rem;
+}
+
+.navbar-dark .navbar-brand, .navbar-dark .navbar-toggler {
+    color: #6b6b6b;
+}
+
+.btn-outline-primary, .btn-outline-primary:focus {
+    background-color: transparent;
+}
+
+.btn-outline-primary:active, .btn-outline-primary.active, .open > .btn-outline-primary.dropdown-toggle {
+    background-color: #00af85;
+}
+.open > .btn-outline-primary.dropdown-toggle:hover, .open > .btn-outline-primary.dropdown-toggle:focus {
+    background-color: #00af85;
+}
+
+.btn-outline-primary:hover {
+    background-color: #00af85;
+}
+
+.dropdown-menu {
+    background-color: #00c39a;
+}
+
+.btn-outline-primary {
+    color: 00af85;
+    background-color: transparent;
+    border: none;
+}
+
+.dropdown-item {
+    color: #fff;
+}
