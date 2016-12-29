@@ -5,14 +5,15 @@ import * as logger from 'koa-logger';
 import * as mount from 'koa-mount';
 import * as serve from 'koa-static';
 import * as Pug from 'koa-pug';
+import { MongoError } from 'mongodb';
 const convert = require('koa-convert');
 import * as path from 'path';
 global.debug = require('debug')('trans');
 import router from './routes/router';
-import { startConnection } from './connectionManager';
+import { startConnectionAsync, rebuildConnectionAsync } from './connectionManager';
 import { Config } from './config';
 
-startConnection();
+startConnectionAsync();
 const app = new Koa();
 if (!Config.isTestEnv)
     app.use(logger());
@@ -33,11 +34,16 @@ new Pug({
 
 app.use(async (ctx, next) => {
     try {
-        await next(); // next is now a function
-    } catch (err) {
-        console.error(err);
-        ctx.body = { message: err.message };
-        ctx.status = err.status || 500;
+        await next();
+    } catch (error) {
+        if (error instanceof MongoError) {
+            debug('Got unhandled mongo error, checking connection.');
+            rebuildConnectionAsync();
+        } else {
+            debug(`Error on middleware\n${error}`);
+        }
+        ctx.body = { message: error.message };
+        ctx.status = error.status || 500;
     }
 });
 

@@ -64,6 +64,7 @@
     "@types/koa-router": "^7.0.21",
     "@types/koa-static": "^2.0.22",
     "@types/mocha": "^2.2.34",
+    "@types/mongodb": "^2.1.36",
     "@types/mongoose": "^4.7.2",
     "@types/protractor": "^4.0.0",
     "@types/sinon": "^1.16.33",

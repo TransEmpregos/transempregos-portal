@@ -8,6 +8,7 @@ html
     link(rel='stylesheet', href='dist/public/stylesheet.css')
     script(type='text/javascript').
       var _jobs = !{JSON.stringify(jobs)};
+      var _isDown = !{!!isDown};
     <!-- Polyfill(s) for older browsers -->
     script(src="node_modules/core-js/client/shim.min.js")
     script(src="node_modules/zone.js/dist/zone.js")
