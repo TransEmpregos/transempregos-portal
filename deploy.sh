@@ -36,6 +36,7 @@ echo Committing...
 git commit -m "#$SNAP_PIPELINE_COUNTER $MESSAGE
 
 Original commit: $SNAP_COMMIT
+https://github.com/TransEmpregos/transempregos-portal/commit/$SNAP_COMMIT
 On Branch: $SNAP_BRANCH"
 check $?
 echo Pushing files to git...
