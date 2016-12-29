@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin/admin.component';
-import { HomeComponent } from './home.component';
+import { HomeComponent } from './home/home.component';
 import { JobEditComponent } from './admin/job-edit.component';
 import { JobsListComponent } from './admin/jobs-list.component';
 import { JobCreateComponent } from './admin/job-create.component';
