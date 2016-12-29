@@ -7,32 +7,14 @@ import * as serve from 'koa-static';
 import * as Pug from 'koa-pug';
 const convert = require('koa-convert');
 import * as path from 'path';
-import * as mongoose from 'mongoose';
+global.debug = require('debug')('trans');
 import router from './routes/router';
-const debug: debug.IDebugger = require('debug')('trans');
+import { startConnection } from './connectionManager';
+import { Config } from './config';
 
+startConnection();
 const app = new Koa();
-const nodeEnv = process.env.NODE_ENV || 'development';
-debug(`Environment is '${nodeEnv}'`);
-const isDevEnv = nodeEnv === 'development';
-const isTestEnv = nodeEnv === 'test';
-const isProdEnv = nodeEnv === 'production';
-
-(<any>mongoose).Promise = global.Promise;
-const connectionString = process.env.MONGO_URI;
-let connectResult: mongoose.MongooseThenable;
-if (connectionString) {
-    connectResult = mongoose.connect(connectionString);
-} else if (isTestEnv) {
-    connectResult = mongoose.connect('mongodb://localhost/transempregos-test');
-} else if (isProdEnv) {
-    throw new Error('Production has to have MONGO_URI set.');
-} else {
-    connectResult = mongoose.connect('mongodb://localhost/transempregos');
-}
-connectResult.catch(err => debug(`Could not connect to Mongo.\n${err}`));
-
-if (!isTestEnv)
+if (!Config.isTestEnv)
     app.use(logger());
 const publicPath = path.resolve(__dirname, '../public');
 app.use(mount('/dist/public', serve(publicPath)));
@@ -41,12 +23,12 @@ app.use(mount('/node_modules', serve(nodeModulesPath)));
 app.use(convert(json()));
 app.use(bodyParser());
 
-const viewPath = path.resolve(__dirname, '../../server/views');
+const viewPath = path.resolve(__dirname, 'views');
 new Pug({
     app: app,
     viewPath: viewPath,
-    noCache: isDevEnv,
-    pretty: isDevEnv
+    noCache: Config.isDevEnv,
+    pretty: Config.isDevEnv
 });
 
 app.use(async (ctx, next) => {
@@ -59,7 +41,7 @@ app.use(async (ctx, next) => {
     }
 });
 
-app .use(router.routes())
+app.use(router.routes())
     .use(router.allowedMethods());
 
 app.on('error', (err: any, ctx: any) => {
