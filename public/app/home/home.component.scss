@@ -74,4 +74,18 @@
     .margin-bottom-1 {
         margin-bottom: 1%;
     }
+
+    .home-page-menu {
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .home-page-menu-bottons {
+        width: 31%;  
+        height: 60px;
+        color: #fff;
+    }
 }
+
