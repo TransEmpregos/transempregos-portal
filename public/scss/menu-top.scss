@@ -14,6 +14,13 @@
     align-items: center;
 }
 
+@media(max-width: 450px) {
+    .header-alinhamento {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
 .header-logo {
     height: 40px;
     margin: 10px 0;
