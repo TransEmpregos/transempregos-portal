@@ -8,7 +8,7 @@ import * as Pug from 'koa-pug';
 import { MongoError } from 'mongodb';
 const convert = require('koa-convert');
 import * as path from 'path';
-global.debug = require('debug')('trans');
+global.log = require('debug')('trans');
 import router from './routes/router';
 import { startConnectionAsync, rebuildConnectionAsync } from './connectionManager';
 import { Config } from './config';
@@ -37,10 +37,10 @@ app.use(async (ctx, next) => {
         await next();
     } catch (error) {
         if (error instanceof MongoError) {
-            debug('Got unhandled mongo error, checking connection.');
+            log('Got unhandled mongo error, checking connection.');
             rebuildConnectionAsync();
         } else {
-            debug(`Error on middleware\n${error}`);
+            log(`Error on middleware\n${error}`);
         }
         ctx.body = { message: error.message };
         ctx.status = error.status || 500;

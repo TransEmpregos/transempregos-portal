@@ -5,3 +5,4 @@ import * as sinonChai from 'sinon-chai';
 chai.should();
 chai.use(sinonChai);
 chai.use(chaiAsPromised);
+import './routes/_routerHelpers';

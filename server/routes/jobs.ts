@@ -1,8 +1,8 @@
-import * as Router from 'koa-router';
+import { Router } from './_transRouter';
 import { Job } from '../models/job';
 
 const router = new Router();
-router.get('/', async (ctx) => {
+router.get('/', async ctx => {
     const jobs = await Job.find();
     ctx.body = jobs;
 });

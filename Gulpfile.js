@@ -20,7 +20,8 @@ const gulp = require("gulp"),
     tslint = require('tslint'),
     gulpTslint = require('gulp-tslint'),
     gutil = require('gulp-util'),
-    runSequence = require('run-sequence');
+    runSequence = require('run-sequence'),
+    watch = require('gulp-watch');
 const { protractor } = require("gulp-protractor");
 
 (function createGulpCacheDir() {
@@ -106,14 +107,23 @@ gulp.task("transpile:front", transpileFront);
 gulp.task("transpile:back", transpileBack);
 gulp.task("transpile:sass", transpileSass);
 
-gulp.task("autotest", ['transpile:front'], () => {
-    gulp.watch('public/**/*.ts', ['transpile:front']);
-    gulp.watch(["server/**/*.ts", "test/**/*.ts"], ['transpile:back']);
-    gulp.watch(["dist/server/**/*.js", "dist/test/**/*.js"], ['test:back']);
-    new karmaServer({
+gulp.task("autotest", () => {
+    gulp.watch(["server/**/*.ts", "test/**/*.ts"], ['test:back']);
+    const kServer = new karmaServer({
         configFile: path.resolve(__dirname, 'karma.conf.js'),
         singleRun: false
-    }).start();
+    });
+    let started = false;
+    return watch('public/**/*.ts', () => {
+        runSequence('transpile:front', () => {
+            if (!started) {
+                started = true;
+                kServer.start();
+                kServer.on('run_complete', () => {
+                })
+            }
+        })
+    });
 });
 
 gulp.task('test', done => runSequence('transpile', ["test:back:notranspile", "test:front:notranspile", "test:acceptance:notranspile"], done));

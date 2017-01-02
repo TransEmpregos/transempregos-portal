@@ -22,24 +22,24 @@ let connectionOptions: mongoose.ConnectionOptions = {
 let reconnectTimeout: NodeJS.Timer;
 
 async function reconnectAsync() {
-    debug('Trying to reconnect...');
+    log('Trying to reconnect...');
     switch (mongoose.connection.readyState) {
         case 0: // disconnected
             try {
-                debug('Disconnected, now will try to connect...');
+                log('Disconnected, now will try to connect...');
                 await mongoose.connect(connectionString, connectionOptions);
             } catch (error) {
-                debug('Could not connect when trying to reconnect.');
+                log('Could not connect when trying to reconnect.');
             }
             break;
         case 1: // connected
-            debug('Already connected, we are done.');
+            log('Already connected, we are done.');
             break;
         case 2: // connecting
-            debug('Already connecting, will give up on this try.');
+            log('Already connecting, will give up on this try.');
             break;
         case 3: // disconnecting
-            debug('Still disconnecting, will try later.');
+            log('Still disconnecting, will try later.');
             tryToReconnect();
             break;
     }
@@ -51,23 +51,23 @@ function tryToReconnect() {
 
 export async function rebuildConnectionAsync() {
     clearTimeout(reconnectTimeout);
-    debug('Rebuilding the connection...');
+    log('Rebuilding the connection...');
     switch (mongoose.connection.readyState) {
         case 0: // disconnected
             await reconnectAsync();
             break;
         case 1: // connected
-            debug('Connected, disconnecting...');
+            log('Connected, disconnecting...');
             await mongoose.connection.close();
             await reconnectAsync();
             break;
         case 2: // connecting
-            debug('Connecting, will close...');
+            log('Connecting, will close...');
             await mongoose.connection.close();
             await reconnectAsync();
             break;
         case 3: // disconnecting
-            debug('Disconnecting, will close.');
+            log('Disconnecting, will close.');
             await mongoose.connection.close();
             await reconnectAsync();
             break;
@@ -89,37 +89,37 @@ export async function startConnectionAsync() {
     try {
         await mongoose.connect(connectionString, connectionOptions);
     } catch (error) {
-        debug(`Could not connect to Mongo.\n${error}`);
+        log(`Could not connect to Mongo.\n${error}`);
         tryToReconnect();
     }
 
     mongoose.connection.on('connecting', () => {
-        debug('Mongoose connection connecting.');
+        log('Mongoose connection connecting.');
     }).on('connected', () => {
-        debug('Mongoose connection connected.');
+        log('Mongoose connection connected.');
     }).on('open', () => {
-        debug('Mongoose connection opened.');
+        log('Mongoose connection opened.');
         upMonitor.set({ up: true }, 'Connection opened.');
     }).on('disconnecting', () => {
-        debug('Mongoose connection disconnecting.');
+        log('Mongoose connection disconnecting.');
     }).on('disconnected', () => {
-        debug('Mongoose connection disconnected.');
+        log('Mongoose connection disconnected.');
         upMonitor.set({ down: true }, 'Connection disconnected.');
         tryToReconnect();
     }).on('close', () => {
-        debug('Mongoose connection closed.');
+        log('Mongoose connection closed.');
         upMonitor.set({ down: true }, 'Connection closed.');
         tryToReconnect();
     }).on('reconnected', () => {
-        debug('Mongoose connection reconnected.');
+        log('Mongoose connection reconnected.');
     }).on('error', (err: any) => {
-        debug(`Mongoose connection error: ${err}`);
+        log(`Mongoose connection error: ${err}`);
     });
 
     // If the Node process ends, close the Mongoose connection
     process.on('SIGINT', function () {
         mongoose.connection.close(() => {
-            debug('Mongoose connection disconnected through app termination');
+            log('Mongoose connection disconnected through app termination');
             process.exit(0);
         });
     });

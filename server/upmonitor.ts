@@ -1,16 +1,20 @@
 class UpMonitor {
-    public get isUp() { return this.up; }
-    public get isDown() { return !this.up; }
+    public get isUp() { return this._up; }
+    public get isDown() { return !this._up; }
     public get reason() { return this._reason; }
-    private up = false;
-    private _reason: string;
-    public set( state:  boolean | { up: boolean } | { down: boolean }, reason: string ) {
+    private _up = false;
+    private _reason = 'Not yet initialized.';
+    reset() {
+        this._up = false;
+        this._reason = 'Not yet initialized.';
+    }
+    set( state:  boolean | { up: boolean } | { down: boolean }, reason: string ) {
         if (typeof state === 'boolean')
-            this.up = state;
+            this._up = state;
         else if (typeof (<{up: boolean}>state).up !== 'undefined')
-            this.up = (<{up: boolean}>state).up;
+            this._up = (<{up: boolean}>state).up;
         else if (typeof (<{down: boolean}>state).down !== 'undefined')
-            this.up = !(<{down: boolean}>state).down;
+            this._up = !(<{down: boolean}>state).down;
         this._reason = reason;
     }
 }
