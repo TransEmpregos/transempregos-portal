@@ -2,7 +2,7 @@
 
 .login-and-register-area {
     height: 500px;
-    background-image: url('/dist/public/images/home-bg-login-register.jpg');
+    background-image: url('/dist/public/images/foto_bg_recrutador.png');
     background-size: cover;
     display: flex;
     justify-content: flex-start;
@@ -73,6 +73,10 @@
 
     .margin-top-50 {
         margin-top: 50px;
+    }
+
+    .margin-bottom-16 {
+        margin-bottom: 16%;
     }
 
     .margin-bottom-5 {
@@ -157,3 +161,64 @@
     // }
 }
 
+.descrition-area {
+    min-height: 500px;
+    padding: 10px;
+    background-color: #ebebeb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.aside-descrition {
+    max-width: 750px;
+}
+
+.titulo-aside-description {
+    font-size: 30pt;
+    color: #78569b;
+}
+
+
+@media(max-width: 768px){
+    .img-descrition {
+        display: none;
+    }
+}
+
+
+.hr {
+    max-width: 140px;
+    border-color: #f9b055;
+    border-width: 5px;
+    margin-left: 0;
+    margin-bottom: 50px;
+}
+
+.p-content-descrition {
+    margin-bottom: 50px;
+}
+
+.depoimentos-area {
+    padding: 0;
+    height: 700px;
+    background-image: url('/dist/public/images/photo_46199_20151005.jpg');
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 14pt;
+    color: #ececec;
+    text-align: center;
+}
+
+.titulo-depoimentos {
+    font-size: 30pt;
+    text-align: left;
+}
+
+.parceiros-area {
+    height: 500px;
+
+}
