@@ -2,19 +2,48 @@
     <section class="login-and-register-area relative col-xs-12">
         <div class="bg-black-alpha"></div>
 
-        <div class="margin-bottom-5">
-            <a href="#">Sou Candidato(a) </a> <b>|</b>
-            <a href="#">Sou Recrutador(a)</a>
+        <div class="margin-top-50 margin-bottom-5">
+            <a href="javascript:void(0);"
+            (click)="setAreaFormHome('candidate')"
+            [ngClass]="{active:(areaFormHome === 'candidate')}">Sou Candidato(a) </a> <b>|</b>
+
+            <a href="javascript:void(0);"
+            (click)="setAreaFormHome('recruter')"
+            [ngClass]="{active:(areaFormHome === 'recruter')}" >Sou Recrutador(a)</a>
         </div>
 
-        <span class="home-text-for-recruter">Encontre uma diversidade de talentos com o perfil ideal para sua empresa.</span>
-        <button type="button" class="margin-bottom-1 btn btn-block btn-home-login max-width-700"> ENTRAR / LOGIN </button>
-        <span>Primeiro acesso? <b><a href="#">Cadastre-se grátis</a></b> </span>
+        <div class="area-form-home-recruter" *ngIf="areaFormHome === 'recruter'">
+            <span class="home-text-for-recruter">Encontre uma diversidade de talentos com o perfil ideal para sua empresa.</span>
+            <button type="button" class="margin-bottom-1 btn btn-block btn-home-login"> ENTRAR / LOGIN </button>
+            <span>Primeiro acesso? <b><a href="#">Cadastre-se grátis</a></b> </span>
+        </div>
 
-        <div class="home-page-menu col-xs-12">
-            <button type="button" class="btn home-page-menu-bottons" style="background-color: #78569b;"> O que é o TransEmpregos? </button>
-            <button type="button" class="btn home-page-menu-bottons" style="background-color: #db573a;"> Cadastrar vagas </button>
-            <button type="button" class="btn home-page-menu-bottons" style="background-color: #e2a939;"> Perguntas frequentes </button>            
+        <div class="area-form-home-candidate" *ngIf="areaFormHome === 'candidate'">
+            <div class="home-text-for-recruter margin-bottom-5">Encontre vagas para o seu talento.</div>
+
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="keyword">Digite palavra-chave</label>
+                    <input type="text" id="keyword" class="form-control" placeholder="Ex: Analista Financeiro" aria-placeholder="Exemplo: Analista Financeiro">
+                </div>
+                <div class="form-group">
+                    <label for="location">Localização da vaga</label>
+                    <input type="text" id="location" class="form-control">
+                </div>
+                <div class="form-group">
+                    <button class="form-control">
+                        <i class="icon icon-search"></i>
+                    </button>
+                </div>
+            </form>
         </div>
     </section>
 </div>
+
+
+
+<!--<div class="home-page-menu col-xs-12">
+    <button type="button" class="btn home-page-menu-bottons" style="background-color: #78569b;"> O que é o TransEmpregos? </button>
+    <button type="button" class="btn home-page-menu-bottons" style="background-color: #db573a;"> Cadastrar vagas </button>
+    <button type="button" class="btn home-page-menu-bottons" style="background-color: #e2a939;"> Perguntas frequentes </button>
+</div>-->

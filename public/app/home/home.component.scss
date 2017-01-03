@@ -5,20 +5,28 @@
     background-image: url('/dist/public/images/home-bg-login-register.jpg');
     background-size: cover;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     font-size: 14pt;
     color: #ececec;
     text-align: center;
 
-    @media screen and (max-width: $break-small) {
+    @media screen and (max-width: $break-xsmall) {
       font-size: 12pt;
     }
 
     > * {
         z-index: 1;
         position: relative;
+    }
+
+    .area-form-home-recruter {
+        max-width: 700px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .bg-black-alpha {
@@ -36,6 +44,7 @@
         display: inline-block
     }
 
+    a.active,
     a:active,
     a:hover {
         color: #ececec;
@@ -46,10 +55,9 @@
 
     .home-text-for-recruter {
         font-size: 22pt;
-        max-width: 700px;
         margin-bottom: 40px;
 
-        @media screen and (max-width: $break-small) {
+        @media screen and (max-width: $break-xsmall) {
             font-size: 16pt;
             line-height: 1.4;
         }
@@ -63,8 +71,8 @@
         border-radius: 0;
     }
 
-    .max-width-700 {
-        max-width: 700px;
+    .margin-top-50 {
+        margin-top: 50px;
     }
 
     .margin-bottom-5 {
@@ -82,10 +90,70 @@
         justify-content: space-between;
     }
 
-    .home-page-menu-bottons {
-        width: 31%;  
-        height: 60px;
-        color: #fff;
+    .area-form-home-candidate {
+        form {
+            background: #fff;
+            color: #6a6a6a;
+            font-size: 12pt;
+            letter-spacing: -1px;
+
+            .form-group {
+                display: inline-flex;
+                align-items: center;
+                padding-left: 10px;
+
+                label {
+                    margin-top: .5em;
+                }
+
+                @media screen and (max-width: $break-tablet) {
+                    width: 100%;
+                }
+
+            }
+
+            .form-group:nth-child(3) {
+                padding-left: 0;
+                margin-bottom: 0;
+            }
+
+            button, input {
+                border: none;
+            }
+
+            input {
+                @media screen and (max-width: $break-tablet) {
+                    width: 150px;
+                }
+
+                @media screen and (max-width: $break-mobile) {
+                    width: 65%;
+                }
+
+            }
+
+
+            button {
+                background: #35b89c;
+                border-radius: 0;
+                height: 51px;
+
+                &:focus {
+                    background: #00c39a;
+                }
+            }
+
+            .icon-search {
+                content: url('/dist/public/images/search.svg');
+                width: 24px;
+                height: 24px;
+            }
+        }
     }
+    // .home-page-menu-bottons {
+    //     width: 31%;
+    //     height: 60px;
+    //     color: #fff;
+    // }
 }
 

@@ -7,7 +7,14 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['home.component.css']
 })
 export class HomeComponent implements OnInit {
+
+    areaFormHome: String = 'candidate';
+
     constructor() { }
 
     ngOnInit() { }
+
+    setAreaFormHome(role:string) {
+        this.areaFormHome = role;
+    }
 }

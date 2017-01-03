@@ -20,6 +20,7 @@
         "target": "ES2016", //todo: try ES2017 to use async & await with chrome
         "outDir": "../dist/public/",
         "lib": [
+            "es2016",
             "es2015",
             "dom"
         ]

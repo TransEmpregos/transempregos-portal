@@ -5,17 +5,18 @@ import * as logger from 'koa-logger';
 import * as mount from 'koa-mount';
 import * as serve from 'koa-static';
 import * as Pug from 'koa-pug';
+import { MongoError } from 'mongodb';
 const convert = require('koa-convert');
 import * as path from 'path';
-import * as mongoose from 'mongoose';
+global.debug = require('debug')('trans');
 import router from './routes/router';
+import { startConnectionAsync, rebuildConnectionAsync } from './connectionManager';
+import { Config } from './config';
 
-(<any>mongoose).Promise = global.Promise;
-mongoose.connect('mongodb://localhost/transempregos').catch(err => console.error(`Could not connect to Mongo.\n${err}`));
-
+startConnectionAsync();
 const app = new Koa();
-
-app.use(logger());
+if (!Config.isTestEnv)
+    app.use(logger());
 const publicPath = path.resolve(__dirname, '../public');
 app.use(mount('/dist/public', serve(publicPath)));
 const nodeModulesPath = path.resolve(__dirname, '../../node_modules');
@@ -23,26 +24,30 @@ app.use(mount('/node_modules', serve(nodeModulesPath)));
 app.use(convert(json()));
 app.use(bodyParser());
 
-const viewPath = path.resolve(__dirname, '../../server/views');
-const isDevEnv = process.env.NODE_ENV !== 'production';
+const viewPath = path.resolve(__dirname, 'views');
 new Pug({
     app: app,
     viewPath: viewPath,
-    noCache: isDevEnv,
-    pretty: isDevEnv
+    noCache: Config.isDevEnv,
+    pretty: Config.isDevEnv
 });
 
 app.use(async (ctx, next) => {
     try {
-        await next(); // next is now a function
-    } catch (err) {
-        console.error(err);
-        ctx.body = { message: err.message };
-        ctx.status = err.status || 500;
+        await next();
+    } catch (error) {
+        if (error instanceof MongoError) {
+            debug('Got unhandled mongo error, checking connection.');
+            rebuildConnectionAsync();
+        } else {
+            debug(`Error on middleware\n${error}`);
+        }
+        ctx.body = { message: error.message };
+        ctx.status = error.status || 500;
     }
 });
 
-app .use(router.routes())
+app.use(router.routes())
     .use(router.allowedMethods());
 
 app.on('error', (err: any, ctx: any) => {

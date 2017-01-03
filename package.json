@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "gulp test",
-    "start": "gulp watch",
+    "start": "node dist/server/bin/www.js",
     "tsc": "tsc"
   },
   "repository": {
@@ -31,6 +31,7 @@
     "@angular/platform-browser": "~2.4.0",
     "@angular/platform-browser-dynamic": "~2.4.0",
     "@angular/router": "~3.4.0",
+    "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.15",
     "core-js": "^2.4.1",
     "debug": "^2.2.0",
     "koa": "^2.0.0-alpha.7",
@@ -51,7 +52,6 @@
     "zone.js": "^0.7.4"
   },
   "devDependencies": {
-    "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.15",
     "@types/chai": "^3.4.34",
     "@types/chai-as-promised": "0.0.29",
     "@types/debug": "0.0.29",
@@ -64,11 +64,14 @@
     "@types/koa-router": "^7.0.21",
     "@types/koa-static": "^2.0.22",
     "@types/mocha": "^2.2.34",
+    "@types/mongodb": "^2.1.36",
     "@types/mongoose": "^4.7.2",
     "@types/protractor": "^4.0.0",
     "@types/sinon": "^1.16.33",
     "@types/sinon-chai": "^2.7.27",
     "@types/systemjs": "^0.19.33",
+    "babel-polyfill": "^6.20.0",
+    "babel-preset-latest": "^6.16.0",
     "bootstrap": "^4.0.0-alpha.5",
     "browser-sync": "^2.18.5",
     "chai": "^3.5.0",
@@ -88,6 +91,7 @@
     "gulp-typescript": "^3.1.3",
     "into-stream": "^3.1.0",
     "karma": "^1.1.1",
+    "karma-babel-preprocessor": "^6.0.1",
     "karma-chrome-launcher": "^2.0.0",
     "karma-mocha": "^1.1.1",
     "karma-mocha-reporter": "^2.2.1",

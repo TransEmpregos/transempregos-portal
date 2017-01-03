@@ -10,6 +10,10 @@ module.exports = function (config) {
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
         basePath: '',
+        proxies: { // removing 'base' so babel works with systemjs
+            '/dist/': '/base/dist/',
+            '/node_modules/': '/base/node_modules/',
+        },
 
 
         // frameworks to use
@@ -20,6 +24,7 @@ module.exports = function (config) {
             require('karma-mocha'),
             require('karma-chrome-launcher'),
             require('karma-phantomjs-launcher'),
+            require('karma-babel-preprocessor'),
             require('karma-mocha-reporter')
         ],
 
@@ -30,6 +35,8 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
+            'node_modules/babel-polyfill/dist/polyfill.js',
+
             // System.js for module loading
             'node_modules/systemjs/dist/system-polyfills.src.js',
             'node_modules/systemjs/dist/system.src.js',
@@ -59,8 +66,7 @@ module.exports = function (config) {
             { pattern: 'node_modules/@ng-bootstrap/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/@ng-bootstrap/**/*.js.map', included: false, watched: false },
 
-            { pattern: 'systemjs.config.js', included: false, watched: false },
-            { pattern: 'systemjs.config.extras.js', included: false, watched: false },
+            { pattern: appBase + 'systemjs.config.js', included: false, watched: false },
             'karma-test-shim.js', // optionally extend SystemJS mapping e.g., with barrels
 
             // test frameworks
@@ -93,6 +99,14 @@ module.exports = function (config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
+            'dist/public/**/*.js': ['babel'],
+        },
+
+        babelPreprocessor: {
+            options: {
+                presets: ['es2015'],
+                sourceMap: 'inline'
+            }
         },
 
 
