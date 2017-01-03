@@ -179,14 +179,6 @@
     color: #78569b;
 }
 
-
-@media(max-width: 768px){
-    .img-descrition {
-        display: none;
-    }
-}
-
-
 .hr {
     max-width: 140px;
     border-color: #f9b055;
@@ -213,12 +205,39 @@
     text-align: center;
 }
 
+.quadro-depoimentos {
+    margin-top: 5%;
+}
+
 .titulo-depoimentos {
     font-size: 30pt;
     text-align: left;
 }
 
 .parceiros-area {
-    height: 500px;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+}
 
+.parceiros-area ul {
+    margin: 50px 0;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.parceiros-area li a {
+    display: flex;
+    text-decoration: none;
+}
+
+@media(max-width: 768px){
+    .img-descrition {
+        display: none;
+    }
 }
