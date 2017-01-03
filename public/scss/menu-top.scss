@@ -82,7 +82,6 @@
     width: 80px;
     height: 80px;
     padding: 10px;
-    border-left: solid 1px #000;
 }
 
 .nav label img {
@@ -92,7 +91,7 @@
 
 .nav label:hover {
     cursor: pointer;
-    background: rgba(0, 0, 0, .3);
+    background: rgba(0, 0, 0, .1);
 }
 
 .menu ul {
@@ -102,12 +101,8 @@
     display: flex;
 }
 
-.menu li {
-    border-right: solid 1px #000;
-}
-
 .menu li:hover {
-    background: rgba(0, 0, 0, .3);
+    background: rgba(0, 0, 0, .1);
 }
 
 .menu li a {
