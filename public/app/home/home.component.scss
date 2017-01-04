@@ -165,30 +165,35 @@
     min-height: 500px;
     padding: 10px;
     background-color: #ebebeb;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    
+    .description-sub-area {
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-    .aside-description {
-        max-width: 750px;
+        .aside-description {
+            max-width: 750px;
 
-        button {
-             border-color: $purple-trans;
+            button {
+                border-color: $purple-trans;
+                border-radius: 0;
+                color: $purple-trans;
+            }
         }
-    }
 
-    .title-aside-description {
-        font-size: 30pt;
-        color: $purple-trans;
-    }
+        .title-aside-description {
+            font-size: 30pt;
+            color: $purple-trans;
+        }
 
-    .p-content-description {
-        margin-bottom: 50px;
-    }
+        .p-content-description {
+            margin-bottom: 50px;
+        }
 
-    .img-description {
-        @media screen and (max-width: $break-tablet) {
-            display: none;
+        .img-description {
+            @media screen and (max-width: $break-tablet) {
+                display: none;
+            }
         }
     }
 }
@@ -233,6 +238,7 @@
         button {
             display: inherit; 
             border-color: #fff; 
+            border-radius: 0;
             background-color: transparent; 
             color: #fff;
         }
@@ -268,5 +274,6 @@
     button {
          color: $green1-trans; 
          border-color: $green1-trans;
+         border-radius: 0;
     }
 }
