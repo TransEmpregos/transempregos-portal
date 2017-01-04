@@ -161,45 +161,44 @@
     // }
 }
 
-.descrition-area {
+.description-area {
     min-height: 500px;
     padding: 10px;
     background-color: #ebebeb;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    
+    .description-sub-area {
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-.aside-descrition {
-    max-width: 750px;
-}
+        .aside-description {
+            max-width: 750px;
 
-.titulo-aside-description {
-    font-size: 30pt;
-    color: #78569b;
-}
+            button {
+                border-color: $purple-trans;
+                border-radius: 0;
+                color: $purple-trans;
+            }
+        }
 
+        .title-aside-description {
+            font-size: 30pt;
+            color: $purple-trans;
+        }
 
-@media(max-width: 768px){
-    .img-descrition {
-        display: none;
+        .p-content-description {
+            margin-bottom: 50px;
+        }
+
+        .img-description {
+            @media screen and (max-width: $break-tablet) {
+                display: none;
+            }
+        }
     }
 }
 
-
-.hr {
-    max-width: 140px;
-    border-color: #f9b055;
-    border-width: 5px;
-    margin-left: 0;
-    margin-bottom: 50px;
-}
-
-.p-content-descrition {
-    margin-bottom: 50px;
-}
-
-.depoimentos-area {
+.depositions-area {
     padding: 0;
     height: 700px;
     background-image: url('/dist/public/images/photo_46199_20151005.jpg');
@@ -211,14 +210,70 @@
     font-size: 14pt;
     color: #ececec;
     text-align: center;
+
+    .general-board-depositions {
+        width: 100%; 
+        height: 100%; 
+        background-color: rgba(0, 0, 0, .6); 
+        padding-left: 15px;
+        
+        .board-depositions {
+            margin-top: 5%;
+        }
+
+        .title-depositions {
+            font-size: 30pt;
+            text-align: left;
+        }
+
+        .text-depositions {
+            text-align: left;
+            margin-bottom: 50px;
+
+            span {
+                color: $yellow-trans;
+            }
+        }
+
+        button {
+            display: inherit; 
+            border-color: #fff; 
+            border-radius: 0;
+            background-color: transparent; 
+            color: #fff;
+        }
+    }
 }
 
-.titulo-depoimentos {
-    font-size: 30pt;
-    text-align: left;
-}
+.partners-area {
+    min-height: 500px;
+    display: flex;
+    align-items: center;
 
-.parceiros-area {
-    height: 500px;
+    .title-partners {
+        color: $green1-trans;
+        font-size: 30pt;
+    }
 
+    ul {
+        margin: 50px 0;
+        list-style: none;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    li a {
+        display: flex;
+        text-decoration: none;
+    }
+
+    button {
+         color: $green1-trans; 
+         border-color: $green1-trans;
+         border-radius: 0;
+    }
 }

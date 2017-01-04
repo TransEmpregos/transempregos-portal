@@ -13,6 +13,14 @@ body {
     position: relative;
 }
 
+.hr {
+    max-width: 140px;
+    border-color: $yellow-trans;
+    border-width: 5px;
+    margin-left: 0;
+    margin-bottom: 50px;
+}
+
 //  Footer
 .footer {
     position: relative;
