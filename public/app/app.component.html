@@ -1,46 +1,42 @@
 <template ngbModalContainer></template>
-<nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
-    <div class="container">
-        <div class="row">
+<nav class="navbar navbar-fixed-top">
+    <div class="row">
 
-            <div class="col-xs-12 header-alinhamento">
-                
-                <a href="#" target="_blank">
-                    <img class="header-logo" src="/dist/public/images/logo.svg" alt="Logo Transempregos" />
-                </a>
-                <div class="nav navbar-nav header-text-uppercase menu-header">
-                    
-                    <input type="checkbox" id="btn-menu">
-                    <label for="btn-menu"><img src="/dist/public/images/hamburger-menu.png"></label>
+        <div class="col-xs-12 header-align">
 
-                    <div class="menu">
-                        <ul>
-                            <li><a routerLink="/sobre" class="nav-item nav-link" routerLinkActive="active" style="color: #6b6b6b;">Sobre</a></li>
-                            <li><a routerLink="/cadastrar-curriculo" class="nav-item nav-link" routerLinkActive="active" style="color: #f58873">Cadastrar curriculo</a></li>
-                            
-                            <!--<div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
-                                <button class="btn btn-outline-primary header-text-uppercase" id="dropdownMenu1" ngbDropdownToggle>Entrar</button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <button class="dropdown-item">Candidato(a)</button>
-                                    <button class="dropdown-item">Recrutador(a)</button>
+            <a href="#">
+                <img class="header-logo" src="/dist/public/images/logo.svg" alt="Logo Transempregos" />
+            </a>
+            <div class="nav navbar-nav header-text-uppercase menu-header">
+
+                <input type="checkbox" id="btn-menu">
+                <label for="btn-menu"><img src="/dist/public/images/hamburger.svg"></label>
+
+                <div class="menu">
+                    <ul>
+                        <li>
+                            <a routerLink="/sobre" class="nav-item nav-link" routerLinkActive="active">Sobre</a>
+                        </li>
+
+                        <li>
+                            <a routerLink="/cadastrar-curriculo" class="nav-item nav-link" routerLinkActive="active">Cadastrar curriculo</a>
+                        </li>
+
+                        <li>
+                            <div ngbDropdown class="dropdown">
+                                <div class="dropdown-divider hidden-sm-up"></div>
+                                <button ngbDropdownToggle>Entrar</button>
+                                <div class="dropdown-menu">
+                                    <a href="#" class="dropdown-item">Candidato(a)</a>
+                                    <a href="#" class="dropdown-item">Recrutador(a)</a>
                                 </div>
-
-                            </div>-->
-                            <li>
-                                <div class="dropdown">
-                                    <button class="dropbtn dropdown-toggle"  data-toggle="dropdown">Entrar</button>
-                                    <div class="dropdown-content">
-                                        <a href="#">Candidato(a)</a>
-                                        <a href="#">Recrutador(a)</a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                        
-                    </div>
-                    
+                            </div>
+                        </li>
+                    </ul>
 
                 </div>
+
+
             </div>
         </div>
     </div>
