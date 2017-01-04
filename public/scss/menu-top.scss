@@ -151,6 +151,11 @@
                         margin-top: -1px;
                         border: none;
 
+                        .dropdown-item:hover {
+                            background: #1ea487;
+                            color: #fff;
+                        }
+
                         @media screen and (max-width: $break-tablet) {
                             display: block;
                             width: 100%;
