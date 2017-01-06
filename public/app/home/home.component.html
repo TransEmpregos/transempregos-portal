@@ -3,13 +3,13 @@
         <div class="bg-black-alpha"></div>
 
         <div class="margin-top-50 margin-bottom-16">
-            <a href="javascript:void(0);"
+            <span
             (click)="setAreaFormHome('candidate')"
-            [ngClass]="{active:(areaFormHome === 'candidate')}">Sou Candidato(a) </a> <b>|</b>
+            [ngClass]="{active:(areaFormHome === 'candidate')}">Sou Candidato(a) </span> <b>|</b>
 
-            <a href="javascript:void(0);"
+            <span href="javascript:void(0);"
             (click)="setAreaFormHome('recruter')"
-            [ngClass]="{active:(areaFormHome === 'recruter')}" >Sou Recrutador(a)</a>
+            [ngClass]="{active:(areaFormHome === 'recruter')}" >Sou Recrutador(a)</span>
         </div>
 
         <div class="area-form-home-recruter" *ngIf="areaFormHome === 'recruter'">

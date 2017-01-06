@@ -39,18 +39,19 @@
         z-index: 0;
     }
 
-    a {
+    span {
         color: #b2b2b2;
         display: inline-block
     }
 
-    a.active,
-    a:active,
-    a:hover {
+    span.active,
+    span:active,
+    span:hover {
         color: #ececec;
         text-decoration: none;
         border-bottom: 2px solid #ececec;
         margin-bottom: -2px;
+        cursor: pointer;
     }
 
     .home-text-for-recruter {
