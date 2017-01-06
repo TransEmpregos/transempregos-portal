@@ -150,6 +150,13 @@
                 }
             }
 
+            div label[for="location"] {
+                img {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+
             .icon-search {
                 content: url('/dist/public/images/search.svg');
                 width: 24px;
@@ -261,11 +268,17 @@
         flex-grow: 1;
         justify-content: space-between;
         flex-wrap: wrap;
-    }
 
-    li a {
-        display: flex;
-        text-decoration: none;
+        @media screen and (max-width: $break-mobile) {
+            li {
+                width: 40%;
+            }
+        }
+        
+        li a {
+            display: flex;
+            text-decoration: none;
+        }
     }
 
     button {
