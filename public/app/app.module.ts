@@ -13,7 +13,7 @@ import { JobCreateComponent } from './admin/job-create.component';
 import { ModalYesNoComponent } from './modals/modal-yesno.component';
 import { ModalOkComponent } from './modals/modal-ok.component';
 import { HomeComponent } from './home/home.component';
-import { LoginRecruterComponent } from './login/login-recruter.component';
+import { LoginRecruiterComponent } from './login/login-recruiter.component';
 import { AppRoutingModule } from './app-routing.module';
 import './rxjs-extensions';
 
@@ -29,7 +29,7 @@ import './rxjs-extensions';
         AppComponent,
         AdminComponent,
         HomeComponent,
-        LoginRecruterComponent,
+        LoginRecruiterComponent,
         JobEditComponent,
         JobsListComponent,
         JobCreateComponent,
