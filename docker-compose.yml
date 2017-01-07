@@ -2,10 +2,7 @@ version: '2'
 
 services:
   web:
-    image: transempregos-portal:latest
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: transempregos/portal:latest
     environment:
       NODE_ENV: development
       MONGO_URI: mongodb://mongo/transempregos
