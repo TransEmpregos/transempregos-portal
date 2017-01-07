@@ -13,8 +13,8 @@ const gulp = require("gulp"),
     plumber = require('gulp-plumber'),
     karmaServer = require('karma').Server,
     mocha = require('gulp-mocha'),
-    // ts = require("gulp-typescript"), //todo: using exec until https://github.com/ivogabe/gulp-typescript/issues/460 is resolved
-    { exec, spawn } = require('child_process'),
+    ts = require("gulp-typescript"),
+    { spawn } = require('child_process'),
     browserSync = require('browser-sync'),
     intoStream = require('into-stream'),
     tslint = require('tslint'),
@@ -99,12 +99,12 @@ gulp.task("transpile", ['copy'], () => {
 
 gulp.task("transpile:production", ['copy'], () => {
     var merged = new mergeStream();
-    merged.add(transpileFront({ bail: true, target: 'ES5' }), transpileBack({ bail: true, target: 'ES2015' }), transpileSass({ bail: true }));
+    merged.add(transpileFront({ target: 'ES5' }), transpileBack({ target: 'ES2015' }), transpileSass({ bail: true }));
     return merged;
 });
 
-gulp.task("transpile:front", transpileFront);
-gulp.task("transpile:back", transpileBack);
+gulp.task("transpile:front", () => transpileFront());
+gulp.task("transpile:back", () => transpileBack());
 gulp.task("transpile:sass", transpileSass);
 
 gulp.task("autotest", () => {
@@ -259,84 +259,32 @@ function transpileSass(opt) {
         .pipe(gulp.dest("dist/public"));
 }
 
-// const tsProjectBack = ts.createProject("tsconfig.json");
+const tsProjectBack = ts.createProject("tsconfig.json", { outDir: null });
 function transpileBack(opt) {
-    //todo: using exec until https://github.com/ivogabe/gulp-typescript/issues/460 is resolved
-    const promise = new Promise((resolve, reject) => {
-        let resolveCalled = false;
-        try {
-            exec(`npm run tsc -- --pretty --project ${__dirname} ${opt && opt.target ? '--target ' + opt.target : ''}`, {
-                cwd: __dirname,
-            }, (err, stdout, stderr) => {
-                let info = "";
-                if (err)
-                    info += err;
-                if (stderr)
-                    info += stderr;
-                if (stdout)
-                    info += stdout;
-                if (info)
-                    gutil.log(info);
-                resolveCalled = true;
-                if (err && opt && opt.bail)
-                    return reject(err);
-                resolve("Done.");
-            });
-        } catch (error) {
-            gutil.log(`Error: ${error}`);
-            if (!resolveCalled)
-                resolve("Done.");
-        }
-    });
-    return intoStream(promise);
-    // return tsProjectBack.src()
-    //     .pipe(sourcemaps.init())
-    //     .pipe(plumber())
-    //     .pipe(debug({ title: 'back' }))
-    //     .pipe(tsProjectBack()).js
-    //     .pipe(sourcemaps.write('.'))
-    //     .pipe(debug({ title: 'map' }))
-    //     .pipe(gulp.dest("dist"));
+    let tsProject = opt
+        ? ts.createProject("tsconfig.json", { target: opt.target, outDir: null })
+        : tsProjectBack;
+    return tsProject.src()
+        .pipe(sourcemaps.init())
+        .pipe(plumber())
+        .pipe(debug({ title: 'back' }))
+        .pipe(tsProjectBack()).js
+        .pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: '..' }))
+        .pipe(gulp.dest("dist"));
 }
 
-// const tsProjectFront = ts.createProject("public/tsconfig.json");
+const tsProjectFront = ts.createProject("public/tsconfig.json", { outDir: null });
 function transpileFront(opt) {
-    //todo: using exec until https://github.com/ivogabe/gulp-typescript/issues/460 is resolved
-    const publicPath = path.resolve(__dirname, 'public');
-    const promise = new Promise((resolve, reject) => {
-        let resolveCalled = false;
-        try {
-            exec(`npm run tsc -- --pretty --project ${publicPath} ${opt && opt.target ? ' --target ' + opt.target : ''}`, {
-                cwd: publicPath,
-            }, (err, stdout, stderr) => {
-                let info = "";
-                if (err)
-                    info += err;
-                if (stderr)
-                    info += stderr;
-                if (stdout)
-                    info += stdout;
-                if (info)
-                    gutil.log(info);
-                resolveCalled = true;
-                if (err && opt && opt.bail)
-                    return reject(err);
-                resolve("Done.");
-            });
-        } catch (error) {
-            gutil.log(`Error: ${error}`);
-            if (!resolveCalled)
-                resolve("Done.");
-        }
-    });
-    return intoStream(promise);
-    // return tsProjectFront.src()
-    //     .pipe(sourcemaps.init())
-    //     .pipe(plumber())
-    //     .pipe(debug({ title: 'front' }))
-    //     .pipe(tsProjectFront()).js
-    //     .pipe(sourcemaps.write('.'))
-    //     .pipe(gulp.dest("dist/public"));
+    let tsProject = opt
+        ? ts.createProject("public/tsconfig.json", { target: opt.target, outDir: null })
+        : tsProjectFront;
+    return tsProject.src()
+        .pipe(sourcemaps.init())
+        .pipe(plumber())
+        .pipe(debug({ title: 'front' }))
+        .pipe(tsProjectFront()).js
+        .pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: '../../public/' }))
+        .pipe(gulp.dest("dist/public"));
 };
 
 gulp.task('lint', ['lint:back', 'lint:front']);

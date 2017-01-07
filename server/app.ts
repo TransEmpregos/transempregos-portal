@@ -17,8 +17,12 @@ startConnectionAsync();
 const app = new Koa();
 if (!Config.isTestEnv)
     app.use(logger());
-const publicPath = path.resolve(__dirname, '../public');
-app.use(mount('/dist/public', serve(publicPath)));
+const distPublicPath = path.resolve(__dirname, '../public');
+app.use(mount('/dist/public', serve(distPublicPath)));
+if (Config.isDevEnv) {
+    const publicPath = path.resolve(__dirname, '../../public');
+    app.use(mount('/public', serve(publicPath)));
+}
 const nodeModulesPath = path.resolve(__dirname, '../../node_modules');
 app.use(mount('/node_modules', serve(nodeModulesPath)));
 app.use(convert(json()));
