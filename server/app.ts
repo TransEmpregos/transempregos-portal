@@ -5,6 +5,8 @@ import * as logger from 'koa-logger';
 import * as Pug from 'koa-pug';
 import { MongoError } from 'mongodb';
 const convert = require('koa-convert');
+const etag = require('koa-etag');
+const conditional = require('koa-conditional-get');
 import * as path from 'path';
 global.log = require('debug')('trans');
 import router from './routes/router';
@@ -16,6 +18,8 @@ startConnectionAsync();
 const app = new Koa();
 if (!Config.isTestEnv)
     app.use(logger());
+app.use(conditional());
+app.use(etag());
 app.use(serveStatic());
 app.use(convert(json()));
 app.use(bodyParser());

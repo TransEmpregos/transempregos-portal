@@ -1878,7 +1878,7 @@ esutils@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/esutils/-/esutils-2.0.2.tgz#0abf4f1caa5bcb1f7a9d8acc6dea4faaa04bac9b"
 
-etag@^1.7.0, etag@~1.7.0:
+etag@^1.3.0, etag@^1.7.0, etag@~1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.7.0.tgz#03d30b5f67dd6e632d2945d30d6652731a34d5d8"
 
@@ -3323,12 +3323,23 @@ koa-compose@^3.0.0:
   dependencies:
     any-promise "^1.1.0"
 
+koa-conditional-get@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/koa-conditional-get/-/koa-conditional-get-1.0.3.tgz#91aa03f2888aec0ae2f636f18b0cd95f158510c7"
+
 koa-convert@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/koa-convert/-/koa-convert-1.2.0.tgz#da40875df49de0539098d1700b50820cebcd21d0"
   dependencies:
     co "^4.6.0"
     koa-compose "^3.0.0"
+
+koa-etag@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/koa-etag/-/koa-etag-2.1.1.tgz#ab79894e027d0f09b1087a780e6babcca33af065"
+  dependencies:
+    etag "^1.3.0"
+    mz "^2.1.0"
 
 koa-favicon@next:
   version "2.0.0"
@@ -4057,7 +4068,7 @@ muri@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/muri/-/muri-1.1.1.tgz#64bd904eaf8ff89600c994441fad3c5195905ac2"
 
-mz@^2.0.0, mz@^2.3.1:
+mz@^2.0.0, mz@^2.1.0, mz@^2.3.1:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/mz/-/mz-2.6.0.tgz#c8b8521d958df0a4f2768025db69c719ee4ef1ce"
   dependencies:
