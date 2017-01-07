@@ -69,7 +69,7 @@ gulp.task('watch', ['transpile'], () => {
     return stream;
 });
 
-gulp.task('copy', ['copy:html', 'copy:pug']);
+gulp.task('copy', ['copy:html', 'copy:images', 'copy:pug']);
 
 gulp.task("copy:html", () => {
     var htmlFileCache = new FileCache('.gulp-cache/.gulp-cache-html');
@@ -80,6 +80,17 @@ gulp.task("copy:html", () => {
         .pipe(debug({ title: 'html' }))
         .pipe(gulp.dest("dist/public"));
 });
+
+gulp.task("copy:images", () => {
+    var imagesFileCache = new FileCache('.gulp-cache/.gulp-cache-html');
+    return gulp.src(["public/images/**/*"], { base: 'public/images'})
+        .pipe(plumber())
+        .pipe(imagesFileCache.filter())
+        .pipe(imagesFileCache.cache())
+        .pipe(debug({ title: 'images' }))
+        .pipe(gulp.dest("dist/public/images"));
+});
+
 
 gulp.task("copy:pug", () => {
     var pugFileCache = new FileCache('.gulp-cache/.gulp-cache-pug');
