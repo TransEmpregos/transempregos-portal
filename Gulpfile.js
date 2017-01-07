@@ -51,7 +51,7 @@ gulp.task('watch', ['transpile'], () => {
         ext: 'ts',
         env: {
             'NODE_ENV': 'development',
-            DEBUG: '*,-*socket*,-engine*,-koa*,-connect*,-mquery'
+            DEBUG: '*,-*socket*,-engine*,-koa*,-connect*,-mquery,-babel'
         },
         watch: ['server/**/*.ts'],
         tasks: ['transpile:back'],
@@ -157,9 +157,10 @@ gulp.task('run', done => {
         const node = spawn(process.execPath, ['--debug', '--harmony-async-await', 'dist/server/bin/www.js'], {
             cwd: __dirname,
             env: {
-                DEBUG: '*,trans,-*socket*,-engine*,-koa*,-connect*,-mquery',
+                DEBUG: '*,trans,-*socket*,-engine*,-koa*,-connect*,-mquery,-babel',
                 NODE_ENV: 'development',
-                DEBUG_COLORS: true
+                DEBUG_COLORS: true,
+                MONGO_URI: process.env.MONGO_URI || ''
             }
         });
         node.stdout.on('data', data => {
