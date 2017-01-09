@@ -147,6 +147,6 @@ module.exports = function (config) {
         // how many browser should be started simultaneous
         concurrency: Infinity,
 
-        autoWatchBatchDelay: 500
+        autoWatchBatchDelay: 1000
     })
 }

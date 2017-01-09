@@ -4,4 +4,4 @@ export class Config {
     static isTestEnv = Config.nodeEnv === 'test';
     static isProdEnv = Config.nodeEnv === 'production';
 }
-debug(`Environment is '${Config.nodeEnv}'`);
+log(`Environment is '${Config.nodeEnv}'`);

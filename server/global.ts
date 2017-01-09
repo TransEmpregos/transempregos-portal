@@ -1,6 +1,7 @@
-declare var debug: debug.IDebugger;
+declare var log: debug.IDebugger;
 declare namespace NodeJS {
     export interface Global {
-        debug: typeof debug;
+        log: typeof debug;
     }
 }
+interface XMLHttpRequest { } // this is because of superagent/index.d.ts, a dependency of supertest

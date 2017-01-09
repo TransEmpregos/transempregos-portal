@@ -13,14 +13,15 @@ const gulp = require("gulp"),
     plumber = require('gulp-plumber'),
     karmaServer = require('karma').Server,
     mocha = require('gulp-mocha'),
-    // ts = require("gulp-typescript"), //todo: using exec until https://github.com/ivogabe/gulp-typescript/issues/460 is resolved
-    { exec, spawn } = require('child_process'),
+    ts = require("gulp-typescript"),
+    { spawn } = require('child_process'),
     browserSync = require('browser-sync'),
     intoStream = require('into-stream'),
     tslint = require('tslint'),
     gulpTslint = require('gulp-tslint'),
     gutil = require('gulp-util'),
-    runSequence = require('run-sequence');
+    runSequence = require('run-sequence'),
+    watch = require('gulp-watch');
 const { protractor } = require("gulp-protractor");
 
 (function createGulpCacheDir() {
@@ -50,7 +51,7 @@ gulp.task('watch', ['transpile'], () => {
         ext: 'ts',
         env: {
             'NODE_ENV': 'development',
-            DEBUG: '*,-*socket*,-engine*,-koa*,-connect*,-mquery'
+            DEBUG: '*,-*socket*,-engine*,-koa*,-connect*,-mquery,-babel'
         },
         watch: ['server/**/*.ts'],
         tasks: ['transpile:back'],
@@ -80,10 +81,12 @@ gulp.task("copy:html", () => {
         .pipe(gulp.dest("dist/public"));
 });
 
-
 gulp.task("copy:images", () => {
-    return gulp.src(["public/images/**/*"])
+    var imagesFileCache = new FileCache('.gulp-cache/.gulp-cache-html');
+    return gulp.src(["public/images/**/*"], { base: 'public/images'})
         .pipe(plumber())
+        .pipe(imagesFileCache.filter())
+        .pipe(imagesFileCache.cache())
         .pipe(debug({ title: 'images' }))
         .pipe(gulp.dest("dist/public/images"));
 });
@@ -107,22 +110,31 @@ gulp.task("transpile", ['copy'], () => {
 
 gulp.task("transpile:production", ['copy'], () => {
     var merged = new mergeStream();
-    merged.add(transpileFront({ bail: true, target: 'ES5' }), transpileBack({ bail: true, target: 'ES2015' }), transpileSass({ bail: true }));
+    merged.add(transpileFront({ target: 'ES5' }), transpileBack({ target: 'ES2015' }), transpileSass({ bail: true }));
     return merged;
 });
 
-gulp.task("transpile:front", transpileFront);
-gulp.task("transpile:back", transpileBack);
+gulp.task("transpile:front", () => transpileFront());
+gulp.task("transpile:back", () => transpileBack());
 gulp.task("transpile:sass", transpileSass);
 
-gulp.task("autotest", ['transpile:front'], () => {
-    gulp.watch('public/**/*.ts', ['transpile:front']);
-    gulp.watch(["server/**/*.ts", "test/**/*.ts"], ['transpile:back']);
-    gulp.watch(["dist/server/**/*.js", "dist/test/**/*.js"], ['test:back']);
-    new karmaServer({
+gulp.task("autotest", () => {
+    gulp.watch(["server/**/*.ts", "test/**/*.ts"], ['test:back']);
+    const kServer = new karmaServer({
         configFile: path.resolve(__dirname, 'karma.conf.js'),
         singleRun: false
-    }).start();
+    });
+    let started = false;
+    return watch('public/**/*.ts', () => {
+        runSequence('transpile:front', () => {
+            if (!started) {
+                started = true;
+                kServer.start();
+                kServer.on('run_complete', () => {
+                })
+            }
+        })
+    });
 });
 
 gulp.task('test', done => runSequence('transpile', ["test:back:notranspile", "test:front:notranspile", "test:acceptance:notranspile"], done));
@@ -156,9 +168,10 @@ gulp.task('run', done => {
         const node = spawn(process.execPath, ['--debug', '--harmony-async-await', 'dist/server/bin/www.js'], {
             cwd: __dirname,
             env: {
-                DEBUG: '*,trans,-*socket*,-engine*,-koa*,-connect*,-mquery',
+                DEBUG: '*,trans,-*socket*,-engine*,-koa*,-connect*,-mquery,-babel',
                 NODE_ENV: 'development',
-                DEBUG_COLORS: true
+                DEBUG_COLORS: true,
+                MONGO_URI: process.env.MONGO_URI || ''
             }
         });
         node.stdout.on('data', data => {
@@ -257,84 +270,32 @@ function transpileSass(opt) {
         .pipe(gulp.dest("dist/public"));
 }
 
-// const tsProjectBack = ts.createProject("tsconfig.json");
+const tsProjectBack = ts.createProject("tsconfig.json", { outDir: '' });
 function transpileBack(opt) {
-    //todo: using exec until https://github.com/ivogabe/gulp-typescript/issues/460 is resolved
-    const promise = new Promise((resolve, reject) => {
-        let resolveCalled = false;
-        try {
-            exec(`npm run tsc -- --pretty --project ${__dirname} ${opt && opt.target ? '--target ' + opt.target : ''}`, {
-                cwd: __dirname,
-            }, (err, stdout, stderr) => {
-                let info = "";
-                if (err)
-                    info += err;
-                if (stderr)
-                    info += stderr;
-                if (stdout)
-                    info += stdout;
-                if (info)
-                    gutil.log(info);
-                resolveCalled = true;
-                if (err && opt && opt.bail)
-                    return reject(err);
-                resolve("Done.");
-            });
-        } catch (error) {
-            gutil.log(`Error: ${error}`);
-            if (!resolveCalled)
-                resolve("Done.");
-        }
-    });
-    return intoStream(promise);
-    // return tsProjectBack.src()
-    //     .pipe(sourcemaps.init())
-    //     .pipe(plumber())
-    //     .pipe(debug({ title: 'back' }))
-    //     .pipe(tsProjectBack()).js
-    //     .pipe(sourcemaps.write('.'))
-    //     .pipe(debug({ title: 'map' }))
-    //     .pipe(gulp.dest("dist"));
+    let tsProject = opt
+        ? ts.createProject("tsconfig.json", { target: opt.target, outDir: '' })
+        : tsProjectBack;
+    return tsProject.src()
+        .pipe(sourcemaps.init())
+        .pipe(plumber())
+        .pipe(debug({ title: 'back' }))
+        .pipe(tsProject()).js
+        .pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: '..' }))
+        .pipe(gulp.dest("dist"));
 }
 
-// const tsProjectFront = ts.createProject("public/tsconfig.json");
+const tsProjectFront = ts.createProject("public/tsconfig.json", { outDir: '' });
 function transpileFront(opt) {
-    //todo: using exec until https://github.com/ivogabe/gulp-typescript/issues/460 is resolved
-    const publicPath = path.resolve(__dirname, 'public');
-    const promise = new Promise((resolve, reject) => {
-        let resolveCalled = false;
-        try {
-            exec(`npm run tsc -- --pretty --project ${publicPath} ${opt && opt.target ? ' --target ' + opt.target : ''}`, {
-                cwd: publicPath,
-            }, (err, stdout, stderr) => {
-                let info = "";
-                if (err)
-                    info += err;
-                if (stderr)
-                    info += stderr;
-                if (stdout)
-                    info += stdout;
-                if (info)
-                    gutil.log(info);
-                resolveCalled = true;
-                if (err && opt && opt.bail)
-                    return reject(err);
-                resolve("Done.");
-            });
-        } catch (error) {
-            gutil.log(`Error: ${error}`);
-            if (!resolveCalled)
-                resolve("Done.");
-        }
-    });
-    return intoStream(promise);
-    // return tsProjectFront.src()
-    //     .pipe(sourcemaps.init())
-    //     .pipe(plumber())
-    //     .pipe(debug({ title: 'front' }))
-    //     .pipe(tsProjectFront()).js
-    //     .pipe(sourcemaps.write('.'))
-    //     .pipe(gulp.dest("dist/public"));
+    let tsProject = opt
+        ? ts.createProject("public/tsconfig.json", { target: opt.target, outDir: '' })
+        : tsProjectFront;
+    return tsProject.src()
+        .pipe(sourcemaps.init())
+        .pipe(plumber())
+        .pipe(debug({ title: 'front' }))
+        .pipe(tsProject()).js
+        .pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: '../../public/' }))
+        .pipe(gulp.dest("dist/public"));
 };
 
 gulp.task('lint', ['lint:back', 'lint:front']);

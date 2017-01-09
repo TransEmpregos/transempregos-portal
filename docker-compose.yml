@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  web:
+    image: transempregos/portal:latest
+    environment:
+      NODE_ENV: development
+      MONGO_URI: mongodb://mongo/transempregos
+    ports:
+      - 3000:3000
+      - 7000:7000
+      - 5858:5858
+    volumes:
+      - .:/app
+      # if docker breaks, comment the first line
+      - /trans/node_modules/:/app/node_modules/
+      # if docker still breaks, comment the second line too
+      - /.cache/yarn/:/usr/local/share/.cache/yarn/
+    links:
+      - mongo
+    tty: true
+    stdin_open: true
+    shm_size: 2g
+  mongo:
+    image: mongo:3.4
+    volumes:
+      - /trans/data/db:/data/db

@@ -12,6 +12,11 @@ exports.config = {
         slow: 3000,
         timeout: 4000
     },
+    plugins: [{
+        axe: true,
+        chromeA11YDevTools: true,
+        package: 'protractor-accessibility-plugin'
+    }],
     rootElement: 'trans-app',
     baseUrl: 'http://localhost:3000',
     useAllAngular2AppRoots: true

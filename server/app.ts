@@ -2,25 +2,25 @@ import * as Koa from 'koa';
 import * as json from 'koa-json';
 import * as bodyParser from 'koa-bodyparser';
 import * as logger from 'koa-logger';
-import * as mount from 'koa-mount';
-import * as serve from 'koa-static';
 import * as Pug from 'koa-pug';
 import { MongoError } from 'mongodb';
 const convert = require('koa-convert');
+const etag = require('koa-etag');
+const conditional = require('koa-conditional-get');
 import * as path from 'path';
-global.debug = require('debug')('trans');
+global.log = require('debug')('trans');
 import router from './routes/router';
 import { startConnectionAsync, rebuildConnectionAsync } from './connectionManager';
 import { Config } from './config';
+import { serveStatic } from './staticFiles';
 
 startConnectionAsync();
 const app = new Koa();
 if (!Config.isTestEnv)
     app.use(logger());
-const publicPath = path.resolve(__dirname, '../public');
-app.use(mount('/dist/public', serve(publicPath)));
-const nodeModulesPath = path.resolve(__dirname, '../../node_modules');
-app.use(mount('/node_modules', serve(nodeModulesPath)));
+app.use(convert(conditional()));
+app.use(convert(etag()));
+app.use(serveStatic());
 app.use(convert(json()));
 app.use(bodyParser());
 
@@ -29,7 +29,10 @@ new Pug({
     app: app,
     viewPath: viewPath,
     noCache: Config.isDevEnv,
-    pretty: Config.isDevEnv
+    pretty: Config.isDevEnv,
+    locals: {
+        iconsDir: '/dist/public/images/icons'
+    }
 });
 
 app.use(async (ctx, next) => {
@@ -37,10 +40,10 @@ app.use(async (ctx, next) => {
         await next();
     } catch (error) {
         if (error instanceof MongoError) {
-            debug('Got unhandled mongo error, checking connection.');
+            log('Got unhandled mongo error, checking connection.');
             rebuildConnectionAsync();
         } else {
-            debug(`Error on middleware\n${error}`);
+            log(`Error on middleware\n${error}`);
         }
         ctx.body = { message: error.message };
         ctx.status = error.status || 500;

@@ -2,8 +2,6 @@
 
 import app from '../app';
 import * as http from 'http';
-import * as Debug from 'debug';
-const debug = Debug('server');
 
 const port = normalizePort(process.env.PORT || '3000');
 const server = http.createServer(app.callback());
@@ -46,5 +44,5 @@ function onListening() {
     const bind = typeof addr === 'string'
         ? 'pipe ' + addr
         : 'port ' + addr.port;
-    debug('Listening on ' + bind);
+    log('Listening on ' + bind);
 }
