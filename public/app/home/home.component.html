@@ -8,18 +8,18 @@
             [ngClass]="{active:(areaFormHome === 'candidate')}">Sou Candidato(a) </span> <b>|</b>
 
             <span
-            (click)="setAreaFormHome('recruter')"
-            [ngClass]="{active:(areaFormHome === 'recruter')}" >Sou Recrutador(a)</span>
+            (click)="setAreaFormHome('recruiter')"
+            [ngClass]="{active:(areaFormHome === 'recruiter')}" >Sou Recrutador(a)</span>
         </div>
 
-        <div class="area-form-home-recruter" *ngIf="areaFormHome === 'recruter'">
-            <h1 class="home-text-for-recruter">Encontre uma diversidade de talentos com o perfil ideal para sua empresa.</h1>
+        <div class="area-form-home-recruiter" *ngIf="areaFormHome === 'recruiter'">
+            <h1 class="home-text-for-recruiter">Encontre uma diversidade de talentos com o perfil ideal para sua empresa.</h1>
             <button type="button" class="margin-bottom-1 btn btn-block btn-home-login"> ENTRAR / LOGIN </button>
             <span>Primeiro acesso? <b><a href="#">Cadastre-se grátis</a></b> </span>
         </div>
 
         <div class="area-form-home-candidate" *ngIf="areaFormHome === 'candidate'">
-            <h1 class="home-text-for-recruter margin-bottom-5">Encontre vagas para o seu talento.</h1>
+            <h1 class="home-text-for-recruiter margin-bottom-5">Encontre vagas para o seu talento.</h1>
 
             <form class="form-inline">
                 <div class="form-group">

@@ -2,7 +2,7 @@
 
 .login-and-register-area {
     min-height: 500px;
-    background-image: url('/dist/public/images/foto_bg_recrutador.png');
+    background-image: url('/dist/public/images/bg_recruiter.png');
     background-size: cover;
     display: flex;
     justify-content: flex-start;
@@ -22,7 +22,7 @@
         position: relative;
     }
 
-    .area-form-home-recruter {
+    .area-form-home-recruiter {
         max-width: 700px;
         text-align: center;
         display: flex;
@@ -55,7 +55,7 @@
         cursor: pointer;
     }
 
-    .home-text-for-recruter {
+    .home-text-for-recruiter {
         font-size: 22pt;
         margin-bottom: 40px;
 
