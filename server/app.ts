@@ -18,8 +18,8 @@ startConnectionAsync();
 const app = new Koa();
 if (!Config.isTestEnv)
     app.use(logger());
-app.use(conditional());
-app.use(etag());
+app.use(convert(conditional()));
+app.use(convert(etag()));
 app.use(serveStatic());
 app.use(convert(json()));
 app.use(bodyParser());
