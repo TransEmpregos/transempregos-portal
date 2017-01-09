@@ -1,7 +1,7 @@
 @import "../../scss/variables";
 
 .login-and-register-area {
-    height: 500px;
+    min-height: 500px;
     background-image: url('/dist/public/images/foto_bg_recrutador.png');
     background-size: cover;
     display: flex;
@@ -11,6 +11,7 @@
     font-size: 14pt;
     color: #ececec;
     text-align: center;
+    padding-bottom: 80px;
 
     @media screen and (max-width: $break-xsmall) {
       font-size: 12pt;
@@ -87,13 +88,6 @@
         margin-bottom: 1%;
     }
 
-    .home-page-menu {
-        position: absolute;
-        bottom: 0;
-        display: flex;
-        justify-content: space-between;
-    }
-
     .area-form-home-candidate {
         form {
             background: #fff;
@@ -111,6 +105,7 @@
 
                 label {
                     margin-top: .5em;
+                    line-height: 5px;
                 }
 
                 @media screen and (max-width: $break-tablet) {
@@ -170,6 +165,43 @@
     min-height: 500px;
     padding: 10px;
     background-color: #ebebeb;
+
+    .home-page-menu {
+        position: absolute;
+        top: -38px;
+        left: 0;
+        right: 0;
+
+        @media screen and (max-width: $break-mobile) {
+            top: -58px;
+        }
+
+        display: flex;
+        justify-content: space-between;
+        color: #fff;
+
+        button {
+            width: 32%;
+            color: #fff;
+            white-space: initial;
+
+            @media screen and (max-width: $break-mobile) {
+                padding: 8px;
+            }
+
+            &:nth-child(1) {
+               background-color: $purple-trans;
+            }
+
+            &:nth-child(2) {
+               background-color: $red-trans;
+            }
+
+            &:nth-child(3) {
+               background-color: $yellow-trans;
+            }
+        }
+    }
 
     .description-sub-area {
         display: flex;

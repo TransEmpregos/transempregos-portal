@@ -43,6 +43,7 @@ gulp.task('watch', ['transpile'], () => {
     gulp.watch('public/**/*.ts', ['transpile:front']);
     gulp.watch('public/**/*.scss', ['transpile:sass']);
     gulp.watch('public/**/*.html', ['copy:html']);
+    gulp.watch('public/images/**/*', ['copy:images']);
     gulp.watch('server/**/*.pug', ['copy:pug']);
     gulp.watch('test/**/*.ts', ['transpile:back']);
     let nodemonOpt = {
