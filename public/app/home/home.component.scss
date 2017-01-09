@@ -282,12 +282,25 @@
         @media screen and (max-width: $break-mobile) {
             li {
                 width: 40%;
+                display: flex;
+                justify-content: center;
+
+                img {
+                    height: 80px;
+                    margin: 14px;
+                }
+
             }
         }
 
         li a {
             display: flex;
             text-decoration: none;
+
+            img {
+                max-height: 100px;
+            }
+
         }
     }
 
