@@ -6,30 +6,46 @@
         margin: 0 auto;
     }
 
-    .recruiter-area {
+    .candidate-bg-image {
+        background-image: url('/dist/public/images/photo_39601_20150724.png');
+    }
+
+    .recruiter-bg-image {
+        background-image: url('/dist/public/images/foto_bg_recrutador.png');
+    }
+
+    .user-area {
         position: relative;
         margin: 0 auto;
         padding: 0;
         min-height: 500px;
-        background-image: url('/dist/public/images/foto_bg_recrutador.png');
         background-size: cover;
         * > {
             z-index: 1;
             position: relative;
         }
 
+        .candidate-bg-color {
+            background-color: rgba(89, 63, 114, .7); 
+        }
 
-        .title-recruiter-area {
+        .title-user-area {
             margin: 50px auto;
             width: 80%;
             border-radius: 20px;
-            background-color: rgba(0, 0, 0, .8);
             color: #fff;
             font-size: 20pt;
             text-align: center;
             position: relative;
         }
-        .recruiter-sub-area {
+        .title-candidate-bg {
+            background-color: rgba(89, 63, 114, .8);
+        }
+
+        .title-recruiter-bg {
+            background-color: rgba(0, 0, 0, .8);
+        }
+        .user-sub-area {
             display: flex;
             justify-content: center;
             position: relative;
