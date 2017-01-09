@@ -1,4 +1,4 @@
-@import "../../variables";
+@import "../../scss/variables";
 
 .max-width {
     @media screen and (min-width: 940px) {
@@ -17,7 +17,7 @@
             z-index: 1;
             position: relative;
         }
-        
+
 
         .title-recruiter-area {
             margin: 50px auto;
@@ -33,9 +33,9 @@
             display: flex;
             justify-content: center;
             position: relative;
-            
+
             @media screen and (max-width: $break-tablet) {
-                flex-direction: column;    
+                flex-direction: column;
             }
 
             .uppercase-letter {
@@ -66,7 +66,7 @@
                     label {
                         font-size: 10pt;
                     }
-                    
+
                     a {
                         color: #fff;
                         font-size: 10pt;
@@ -77,7 +77,7 @@
                         color: #fff;
                         font-size: 12pt;
                         background-color: $green1-trans;
-                                        
+
                     }
                 }
 
@@ -87,7 +87,7 @@
                     a {
                         float: none;
                     }
-                    
+
                 }
             }
 
@@ -114,6 +114,6 @@
                     background-color: $red-trans;
                 }
             }
-        }  
+        }
     }
 }

@@ -1,4 +1,4 @@
-@import "../../variables";
+@import "../../scss/variables";
 
 .login-and-register-area {
     height: 500px;
@@ -274,7 +274,7 @@
                 width: 40%;
             }
         }
-        
+
         li a {
             display: flex;
             text-decoration: none;
