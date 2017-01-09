@@ -182,6 +182,11 @@
             button {
                 border-color: $purple-trans;
                 color: $purple-trans;
+
+                @media screen and (max-width: $break-mobile) {
+                    width: 100%;
+                }
+
             }
         }
 
@@ -245,6 +250,11 @@
             border-color: #fff;
             background-color: transparent;
             color: #fff;
+
+            @media screen and (max-width: $break-mobile) {
+                width: 100%;
+            }
+
         }
     }
 }
@@ -282,7 +292,12 @@
     }
 
     button {
-         color: $green1-trans;
-         border-color: $green1-trans;
+        color: $green1-trans;
+        border-color: $green1-trans;
+
+        @media screen and (max-width: $break-mobile) {
+            width: 100%;
+        }
+
     }
 }
