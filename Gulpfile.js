@@ -270,30 +270,30 @@ function transpileSass(opt) {
         .pipe(gulp.dest("dist/public"));
 }
 
-const tsProjectBack = ts.createProject("tsconfig.json", { outDir: null });
+const tsProjectBack = ts.createProject("tsconfig.json", { outDir: '' });
 function transpileBack(opt) {
     let tsProject = opt
-        ? ts.createProject("tsconfig.json", { target: opt.target, outDir: null })
+        ? ts.createProject("tsconfig.json", { target: opt.target, outDir: '' })
         : tsProjectBack;
     return tsProject.src()
         .pipe(sourcemaps.init())
         .pipe(plumber())
         .pipe(debug({ title: 'back' }))
-        .pipe(tsProjectBack()).js
+        .pipe(tsProject()).js
         .pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: '..' }))
         .pipe(gulp.dest("dist"));
 }
 
-const tsProjectFront = ts.createProject("public/tsconfig.json", { outDir: null });
+const tsProjectFront = ts.createProject("public/tsconfig.json", { outDir: '' });
 function transpileFront(opt) {
     let tsProject = opt
-        ? ts.createProject("public/tsconfig.json", { target: opt.target, outDir: null })
+        ? ts.createProject("public/tsconfig.json", { target: opt.target, outDir: '' })
         : tsProjectFront;
     return tsProject.src()
         .pipe(sourcemaps.init())
         .pipe(plumber())
         .pipe(debug({ title: 'front' }))
-        .pipe(tsProjectFront()).js
+        .pipe(tsProject()).js
         .pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: '../../public/' }))
         .pipe(gulp.dest("dist/public"));
 };
