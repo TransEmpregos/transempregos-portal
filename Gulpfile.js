@@ -142,7 +142,7 @@ gulp.task('test', done => runSequence('transpile', ["test:back:notranspile", "te
 
 gulp.task("test:quick", ["test:back:notranspile", "test:front:notranspile"]);
 
-gulp.task("test:front", ['transpile:front'], testFront);
+gulp.task("test:front", ['transpile:front', 'copy:html'], testFront);
 gulp.task("test:front:notranspile", testFront);
 
 function testFront(done) {
