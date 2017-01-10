@@ -11,7 +11,7 @@ describe('AppComponent', () => {
     let comp: AppComponent;
     let fixture: ComponentFixture<AppComponent>;
     let de: DebugElement;
-    let el: HTMLElement;
+    let el: HTMLImageElement;
     let links: RouterLinkStubDirective[];
     let linkDes: DebugElement[];
 
@@ -33,24 +33,24 @@ describe('AppComponent', () => {
 
         comp = fixture.componentInstance;
 
-        de = fixture.debugElement.query(By.css('a.navbar-brand'));
-        el = de.nativeElement;
+        de = fixture.debugElement.query(By.css('img.header-logo'));
+        el = <HTMLImageElement>de.nativeElement;
     });
 
     it('should display original title', () => {
         fixture.detectChanges();
-        el.textContent.should.equal(comp.title);
+        el.attributes['alt'].value.should.equal(`Logo ${comp.title}`);
     });
 
     it('should display a different test title', () => {
         comp.title = 'Test Title';
         fixture.detectChanges();
-        el.textContent.should.equal('Test Title');
+        el.attributes['alt'].value.should.equal('Logo Test Title');
     });
 
     it('can get RouterLinks from template', () => {
-        links.length.should.eq(2, 'should have 2 links');
+        links.length.should.eq(5, 'should have 5 links');
         links[0].linkParams.should.equal('/', '1st link should go Home');
-        links[1].linkParams.should.equal('/admin', '1st link should go to the Admin area');
+        links[1].linkParams.should.equal('/sobre', '1st link should go to the About area');
     });
 });

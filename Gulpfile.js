@@ -43,6 +43,7 @@ gulp.task('watch', ['transpile'], () => {
     gulp.watch('public/**/*.ts', ['transpile:front']);
     gulp.watch('public/**/*.scss', ['transpile:sass']);
     gulp.watch('public/**/*.html', ['copy:html']);
+    gulp.watch('public/images/**/*', ['copy:images']);
     gulp.watch('server/**/*.pug', ['copy:pug']);
     gulp.watch('test/**/*.ts', ['transpile:back']);
     let nodemonOpt = {
@@ -91,7 +92,6 @@ gulp.task("copy:images", () => {
         .pipe(gulp.dest("dist/public/images"));
 });
 
-
 gulp.task("copy:pug", () => {
     var pugFileCache = new FileCache('.gulp-cache/.gulp-cache-pug');
     return gulp.src(["server/**/*.pug"])
@@ -100,6 +100,7 @@ gulp.task("copy:pug", () => {
         .pipe(pugFileCache.cache())
         .pipe(debug({ title: 'pug' }))
         .pipe(gulp.dest("dist/server"));
+
 });
 
 gulp.task("transpile", ['copy'], () => {
@@ -141,7 +142,7 @@ gulp.task('test', done => runSequence('transpile', ["test:back:notranspile", "te
 
 gulp.task("test:quick", ["test:back:notranspile", "test:front:notranspile"]);
 
-gulp.task("test:front", ['transpile:front'], testFront);
+gulp.task("test:front", ['transpile:front', 'copy:html'], testFront);
 gulp.task("test:front:notranspile", testFront);
 
 function testFront(done) {

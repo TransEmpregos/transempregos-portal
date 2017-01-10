@@ -1,11 +1,54 @@
 <template ngbModalContainer></template>
-<nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
-    <a class="navbar-brand" href="#">{{title}}</a>
-    <div class="nav navbar-nav">
-        <a routerLink="/" class="nav-item nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
-        <a routerLink="/admin" class="nav-item nav-link" routerLinkActive="active">Admin</a>
+<nav class="navbar navbar-fixed-top">
+    <div class="row">
+
+        <div class="col-xs-12 header-align">
+
+            <a  routerLink="/">
+                <img class="header-logo" src="/dist/public/images/logo.svg" alt="Logo {{title}}" />
+            </a>
+            <div class="nav navbar-nav header-text-uppercase menu-header">
+
+                <input type="checkbox" id="btn-menu">
+                <label for="btn-menu"><img src="/dist/public/images/hamburger.svg"></label>
+
+                <div class="menu">
+                    <ul>
+                        <li>
+                            <a routerLink="/sobre" class="nav-item nav-link" routerLinkActive="active">Sobre</a>
+                        </li>
+
+                        <li>
+                            <a routerLink="/cadastrar-curriculo" class="nav-item nav-link" routerLinkActive="active">Cadastrar Vagas</a>
+                        </li>
+
+                        <li>
+                            <div ngbDropdown class="dropdown">
+                                <div class="dropdown-divider hidden-sm-up"></div>
+                                <button ngbDropdownToggle>Entrar</button>
+                                <div class="dropdown-menu">
+                                    <a routerLink="/login/candidate" class="dropdown-item">Candidato(a)</a>
+                                    <a routerLink="/login/recruiter" class="dropdown-item">Recrutador(a)</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+
+
+            </div>
+        </div>
     </div>
 </nav>
-<div class="container">
+<div class="container-fluid main-app">
     <router-outlet></router-outlet>
 </div>
+
+<footer class="footer">
+    <img class="footer-logo" alt="Logo Transempregos" src="/dist/public/images/logo2.svg"/>
+    <div>
+        <span class="txt-orange">CopyRight © 2016 TransEmpregos</span>
+        <br class="hidden-sm-up" ><b class="hidden-sm-down">|</b> <span> Todos os direitos reservados.</span>
+    </div>
+</footer>

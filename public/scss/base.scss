@@ -1,0 +1,65 @@
+@import "variables";
+
+.btn {
+    border-radius: 0;
+}
+
+body {
+    padding-top: 60px;
+    padding-bottom: 140px;
+}
+
+.txt-orange {
+    color: $txt-orange;
+}
+
+.relative {
+    position: relative;
+}
+
+.hr {
+    max-width: 140px;
+    border-color: $yellow-trans;
+    border-width: 5px;
+    margin-left: 0;
+    margin-bottom: 50px;
+}
+
+.black-bg-color {
+    position: absolute !important;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .7);
+    z-index: 0 !important;
+}
+
+.navbar-nav {
+    float: right;
+}
+
+//  Footer
+.footer {
+    position: relative;
+    bottom: -140px;
+    width: 100%;
+    color: #fff;
+    text-align: center;
+    background: $gray;
+    border-bottom: 8px solid $grayBold;
+    height: 140px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    .footer-logo {
+        height: 40px;
+        margin: 10px 0;
+    }
+
+    > div {
+          line-height: 1.1;
+    }
+}
+//  END - Footer

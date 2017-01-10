@@ -1,0 +1,157 @@
+<div class="home-page row">
+    <section class="login-and-register-area relative col-xs-12">
+        <div class="bg-black-alpha"></div>
+
+        <div class="margin-top-50 margin-bottom-16">
+            <span
+            (click)="setAreaFormHome('candidate')"
+            [ngClass]="{active:(areaFormHome === 'candidate')}">Sou Candidato(a) </span> <b>|</b>
+
+            <span
+            (click)="setAreaFormHome('recruiter')"
+            [ngClass]="{active:(areaFormHome === 'recruiter')}" >Sou Recrutador(a)</span>
+        </div>
+
+        <div class="area-form-home-recruiter" *ngIf="areaFormHome === 'recruiter'">
+            <h1 class="home-text-for-recruiter">Encontre uma diversidade de talentos com o perfil ideal para sua empresa.</h1>
+            <button type="button" class="margin-bottom-1 btn btn-block btn-home-login"> ENTRAR / LOGIN </button>
+            <span>Primeiro acesso? <b><a href="#">Cadastre-se grátis</a></b> </span>
+        </div>
+
+        <div class="area-form-home-candidate" *ngIf="areaFormHome === 'candidate'">
+            <h1 class="home-text-for-recruiter margin-bottom-5">Encontre vagas para o seu talento.</h1>
+
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="keyword">Digite palavra-chave</label>
+                    <input type="text" id="keyword" class="form-control" placeholder="Ex: Analista Financeiro">
+                </div>
+                <div class="form-group">
+                    <label for="location">
+                        <img alt="Pin de localização" src="/dist/public/images/icon-location.svg">
+                        Localização da vaga
+                    </label>
+                    <input type="text" id="location" class="form-control">
+                </div>
+                <div class="form-group">
+                    <button class="form-control">
+                        <i class="icon icon-search" aria-label="Busca"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section class="description-area relative col-xs-12">
+        <div class="home-page-menu col-xs-12">
+            <button type="button" class="btn"> Cadastrar vagas </button>
+            <button type="button" class="btn"> O que é o TransEmpregos? </button>
+            <button type="button" class="btn"> Perguntas frequentes </button>
+        </div>
+
+        <div class="container description-sub-area">
+            <aside class="aside-description">
+                <h2 class="title-aside-description">Diversidade de talentos para um mundo de oportunidades</h2>
+
+                <hr class="hr">
+
+                <p class="p-content-description">O TransEmpregos é o lugar da diversidade de talentos porque aqui as pessoas trans(travestis e
+                transexuais) encontram espaço para publicar o currículo para que empresas de todos os tamanhos
+                e nas mais diversas áreas possam encontrá-las. Se você é uma empresa interessada na inclusao
+                como fator transformador da sociedade, cadastre sua vaga hoje mesmo.</p>
+
+                <button class="btn btn-secondary btn-lg" type="button">Saiba mais</button>
+            </aside>
+
+            <img alt="Desenho de várias pessoas segurando a carteira de trabalho" class="img-description" src="/dist/public/images/Desenho_Laerte_Transempregos.png">
+
+        </div>
+
+    </section>
+
+    <section class="depositions-area relative col-xs-12">
+        <div class="general-board-depositions">
+
+            <div class="container board-depositions">
+                <p class="title-depositions">Eu contrato</p>
+
+                <hr class="hr">
+
+                <p class="text-depositions">
+                Nós da lambda3 ficamos muito felizes ao receber em nosso<br>
+                time de desemvolvimento profissionais trans que agregam muito<br>
+                valor ao nosso ambiente de trabalho e trazem resultados bem<br>
+                importantes para nossos clientes. Estamos sempre em busca de<br>
+                pessoas com talento, nao importando sua identidade de gênero<br>
+                ou orientaçao.<br>
+
+                <span>Vitor Hugo Germano</span> <b>|</b> Lambda3
+                </p>
+                <button type="button" class="btn btn-secondary btn-lg">ver depoimentos</button>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="partners-area relative col-xs-12">
+        <div class="container">
+            <p class="title-partners">Parceiros</p>
+
+            <hr class="hr">
+
+            <ul>
+                <li>
+                    <a href="#">
+                        <img alt="Logo comissão de atenção a diversidade sexual de Osaco" src="/dist/public/images/logos_parceiros/comissao_de_atencao_a_diversidade_sexual_osasco.png">
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <img alt="Logo do TXAI" src="/dist/public/images/logos_parceiros/txai.png">
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <img alt="Logo da coordenadoria da mulher promocao da igualdade_racial e diversidade sexual" src="/dist/public/images/logos_parceiros/coordenadoria_da_mulher_promocao_da_igualdade_racial_e_diversidade_sexual.png">
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <img alt="Logo da SP escola de teatro" src="/dist/public/images/logos_parceiros/sp_escola_de_teatro.png">
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <img alt="Logo da comissão de diversidade sexual" src="/dist/public/images/logos_parceiros/comissao_da_diversidade_sexual.png">
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <img alt="logo da ABRAT"  src="/dist/public/images/logos_parceiros/abrat.png">
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <img alt="Logo da Sex Box" src="/dist/public/images/logos_parceiros/ssex_bbox.png">
+                    </a>
+                </li>
+
+                <li>
+                    <a href="http://www.lambda3.com.br">
+                        <img alt="logo da Lambda3" src="/dist/public/images/logos_parceiros/lambda3.png">
+                    </a>
+                </li>
+            </ul>
+
+            <button type="button" class="btn btn-secondary btn-lg">quero ser parceiro</button>
+        </div>
+
+    </section>
+</div>

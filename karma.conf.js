@@ -12,6 +12,7 @@ module.exports = function (config) {
         basePath: '',
         proxies: { // removing 'base' so babel works with systemjs
             '/dist/': '/base/dist/',
+            '/base/dist/public/images/': '/dist/public/images/',
             '/node_modules/': '/base/node_modules/',
         },
 
