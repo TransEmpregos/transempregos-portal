@@ -30,7 +30,7 @@ exports.config = {
                     'badAriaAttributeValue',
                     'badAriaRole',
                     'controlsWithoutLabel',
-                    // 'duplicateId', -> is on source, but fails
+                    'duplicateId',
                     'focusableElementNotVisibleAndNotAriaHidden',
                     'humanLangMissing',
                     'imagesWithoutAltText',
@@ -39,7 +39,7 @@ exports.config = {
                     'elementsWithMeaningfulBackgroundImage',
                     'multipleAriaOwners',
                     'multipleLabelableElementsPerLabel',
-                    // 'nonExistentRelatedElement', -> is on source, but fails
+                    'nonExistentRelatedElement',
                     // 'nonExistentAriaLabelledbyElement', -> is on the docs, but does not exist
                     'pageWithoutTitle',
                     'requiredAriaAttributeMissing',
