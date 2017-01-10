@@ -30,7 +30,7 @@ exports.config = {
                     'badAriaAttributeValue',
                     'badAriaRole',
                     'controlsWithoutLabel',
-                    //'duplicateId', -> is on source, but fails
+                    // 'duplicateId', -> is on source, but fails
                     'focusableElementNotVisibleAndNotAriaHidden',
                     'humanLangMissing',
                     'imagesWithoutAltText',

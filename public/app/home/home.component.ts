@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() { }
 
-    setAreaFormHome(role:string) {
+    setAreaFormHome(role: string) {
         this.areaFormHome = role;
     }
 }
