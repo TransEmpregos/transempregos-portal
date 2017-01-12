@@ -64,6 +64,12 @@
             line-height: 1.4;
         }
 
+        @media screen and (max-width: $break-mobile) {
+            
+            margin-top: 5%;
+            
+        }
+
     }
 
     .btn-home-login {
@@ -74,6 +80,12 @@
 
     .margin-top-50 {
         margin-top: 50px;
+    }
+
+    @media screen and (max-width: $break-mobile) {
+        .margin-top-mobile {
+            margin-top: 20px;
+        }
     }
 
     .margin-bottom-16 {
@@ -89,27 +101,47 @@
     }
 
     .area-form-home-candidate {
+        @media screen and (max-width: $break-mobile) {
+            bottom: 105px;
+        }
+
         form {
             background: #fff;
             color: #6a6a6a;
             font-size: 12pt;
             letter-spacing: -1px;
             display: flex;
+            
             @media screen and (max-width: $break-tablet) {
                 flex-direction: column;
             }
+
             .form-group {
                 display: inline-flex;
                 align-items: center;
                 padding-left: 10px;
 
-                label {
+                /*label[for="keyword"] {
                     margin-top: .5em;
-                    line-height: 5px;
+                    line-height: 17px;
                 }
+
+                label[for="location"] {
+                    line-height: 2px;
+                } */
+
+                label {
+                    display: none;
+                }               
 
                 @media screen and (max-width: $break-tablet) {
                     width: 100%;
+                }
+
+                @media screen and (min-width: 1024px) {
+                    label[for="location"] {
+                        margin-top: .5em;
+                    }
                 }
 
             }
@@ -124,13 +156,15 @@
             }
 
             input {
-                @media screen and (max-width: $break-tablet) {
+                width: 100%;
+                /*@media screen and (max-width: $break-tablet) {
                     width: 150px;
                 }
 
                 @media screen and (max-width: $break-mobile) {
                     width: 65%;
                 }
+                */
 
             }
 
@@ -171,11 +205,6 @@
         top: -38px;
         left: 0;
         right: 0;
-
-        @media screen and (max-width: $break-mobile) {
-            top: -58px;
-        }
-
         display: flex;
         justify-content: space-between;
         color: #fff;
@@ -187,6 +216,7 @@
 
             @media screen and (max-width: $break-mobile) {
                 padding: 8px;
+
             }
 
             &:nth-child(1) {
@@ -199,6 +229,15 @@
 
             &:nth-child(3) {
                background-color: $yellow-trans;
+            }
+        }
+
+        @media screen and (max-width: $break-mobile) {
+            top: -170px;
+            flex-direction: column;
+            button {
+                width: 100%;
+                margin-bottom: 10px;
             }
         }
     }
