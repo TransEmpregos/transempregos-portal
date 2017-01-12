@@ -2,3 +2,9 @@
 @import "scss/variables";
 @import "scss/base";
 @import "scss/menu-top";
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body {
+    padding-bottom: 0;
+    font-family: 'Roboto', sans-serif;
+}

@@ -1,39 +1,44 @@
 <div class="home-page row">
     <section class="login-and-register-area relative col-xs-12">
-        <div class="bg-black-alpha"></div>
+        <div class="black-bg-color"></div>
 
-        <div class="margin-top-50 margin-bottom-16 margin-top-mobile">
+        <div class="margin-top-50 margin-top-mobile margin-bottom-50 font-size-choice">
             <span
-            (click)="setAreaFormHome('candidate')"
-            [ngClass]="{active:(areaFormHome === 'candidate')}">Sou Candidato(a) </span> <b>|</b>
+            (click)="setAreaFormHome(CANDIDATE)"
+            [ngClass]="{active:(areaFormHome === CANDIDATE)}">Sou Candidato(a) </span> <b class="hidden-pipe">|</b>
 
             <span
-            (click)="setAreaFormHome('recruiter')"
-            [ngClass]="{active:(areaFormHome === 'recruiter')}" >Sou Recrutador(a)</span>
+            (click)="setAreaFormHome(RECRUITER)"
+            [ngClass]="{active:(areaFormHome === RECRUITER)}" >Sou Recrutador(a)</span>
         </div>
 
-        <div class="area-form-home-recruiter" *ngIf="areaFormHome === 'recruiter'">
+        <div class="bg-img-recruiter" *ngIf="areaFormHome === RECRUITER"></div>
+
+        <div class="bg-img-candidate" *ngIf="areaFormHome === CANDIDATE"></div>
+
+        <div class="area-form-home-recruiter" *ngIf="areaFormHome === RECRUITER">
             <h1 class="home-text-for-recruiter">Encontre uma diversidade de talentos com o perfil ideal para sua empresa.</h1>
             <button type="button" class="margin-bottom-1 btn btn-block btn-home-login"> ENTRAR / LOGIN </button>
             <span>Primeiro acesso? <b><a href="#">Cadastre-se grátis</a></b> </span>
         </div>
 
-        <div class="area-form-home-candidate" *ngIf="areaFormHome === 'candidate'">
-            <h1 class="home-text-for-recruiter margin-bottom-5">Encontre vagas para o seu talento.</h1>
+        <div class="area-form-home-candidate" *ngIf="areaFormHome === CANDIDATE">
+            <h1 class="home-text-for-candidate margin-bottom-50">Encontre vagas para o seu talento</h1>
 
-            <form class="form-inline">
-                <div class="form-group form-group-flex">
-                    <input required type="text" id="keyword" class="form-control" placeholder="Ex: Analista Financeiro">
-                    <label for="keyword">Digite palavra-chave</label>
-                </div>
-                <div class="form-group form-group-flex">
-                    <input required type="text" id="location" class="form-control" placeholder="Localização da vaga">
-                    <label for="location">
-                        <img alt="Pin de localização" src="/dist/public/images/icon-location.svg">
-                        Localização da vaga
-                    </label>
-                </div>
+            <form>
                 <div class="form-group">
+                    <label for="keyword">Digite palavra-chave</label>
+                    <input required type="text" id="keyword" class="form-control" placeholder="Ex: Analista Financeiro">
+                </div>
+
+                <div class="form-group">
+                    <label for="location">
+                        Localidade
+                    </label>
+                    <input required type="text" id="location" class="form-control" placeholder="Ex: São Paulo">
+                </div>
+
+                <div class="form-group-button">
                     <button class="form-control">
                         <i class="icon icon-search" aria-label="Busca"></i>
                     </button>
@@ -43,12 +48,7 @@
     </section>
 
     <section class="description-area relative col-xs-12">
-        <div class="home-page-menu col-xs-12">
-            <button type="button" class="btn"> Cadastrar vagas </button>
-            <button type="button" class="btn"> O que é o TransEmpregos? </button>
-            <button type="button" class="btn"> Perguntas frequentes </button>
-        </div>
-
+       
         <div class="container description-sub-area">
             <aside class="aside-description">
                 <h2 class="title-aside-description">Diversidade de talentos para um mundo de oportunidades</h2>
@@ -70,24 +70,24 @@
     </section>
 
     <section class="depositions-area relative col-xs-12">
-        <div class="general-board-depositions">
+        <div class="general-board-depositions black-bg-color">
 
-            <div class="container board-depositions">
-                <p class="title-depositions">Eu contrato</p>
+            <div class="container">
+                <h2 class="title-depositions">Eu contrato</h2>
 
                 <hr class="hr">
 
                 <p class="text-depositions">
-                Nós da lambda3 ficamos muito felizes ao receber em nosso<br>
-                time de desemvolvimento profissionais trans que agregam muito<br>
-                valor ao nosso ambiente de trabalho e trazem resultados bem<br>
-                importantes para nossos clientes. Estamos sempre em busca de<br>
-                pessoas com talento, não importando sua identidade de gênero<br>
-                ou orientação.<br>
+                Nós da lambda3 ficamos muito felizes ao receber em nosso
+                time de desenvolvimento profissionais trans que agregam muito
+                valor ao nosso ambiente de trabalho e trazem resultados bem
+                importantes para nossos clientes. Estamos sempre em busca de
+                pessoas com talento, não importando sua identidade de gênero
+                e/ou orientação sexual.<br><br>
 
                 <span>Vitor Hugo Germano</span> <b>|</b> Lambda3
                 </p>
-                <button type="button" class="btn btn-secondary btn-lg">ver depoimentos</button>
+                <button type="button" class="btn btn-secondary btn-lg">Mais depoimentos</button>
             </div>
 
         </div>
@@ -96,7 +96,7 @@
 
     <section class="partners-area relative col-xs-12">
         <div class="container">
-            <p class="title-partners">Parceiros</p>
+            <h2 class="title-partners">Parceiros</h2>
 
             <hr class="hr">
 
@@ -150,7 +150,7 @@
                 </li>
             </ul>
 
-            <button type="button" class="btn btn-secondary btn-lg">quero ser parceiro</button>
+            <button type="button" class="btn btn-secondary btn-lg">Seja um parceiro</button>
         </div>
 
     </section>

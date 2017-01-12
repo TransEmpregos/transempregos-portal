@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { JobService } from '../job.service';
 import { Job } from '../job';
@@ -10,7 +11,8 @@ import { Job } from '../job';
 })
 export class JobEditComponent implements OnInit {
     job: Job;
-    constructor(private jobService: JobService, private route: ActivatedRoute, private router: Router) { }
+    constructor(private jobService: JobService, private route: ActivatedRoute, private router: Router) {
+     }
 
     ngOnInit() {
         this.route.params
@@ -18,7 +20,10 @@ export class JobEditComponent implements OnInit {
         .subscribe(job => this.job = job);
     }
 
-    async save() {
+    async save(form: NgForm) {
+        if (form.invalid) {
+            return;
+        }
         await this.jobService.updateAsync(this.job);
         this.goBack();
     }
