@@ -28,6 +28,9 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        @media screen and (max-width: $break-mobile) {
+            bottom: 75px;
+        }
     }
 
     .bg-black-alpha {
@@ -58,14 +61,14 @@
     .home-text-for-recruiter {
         font-size: 22pt;
         margin-bottom: 40px;
-
+        
         @media screen and (max-width: $break-xsmall) {
             font-size: 16pt;
             line-height: 1.4;
         }
 
         @media screen and (max-width: $break-mobile) {
-            
+
             margin-top: 5%;
             
         }
@@ -120,20 +123,26 @@
                 display: inline-flex;
                 align-items: center;
                 padding-left: 10px;
-
-                /*label[for="keyword"] {
+                
+                label[for="keyword"] {
                     margin-top: .5em;
                     line-height: 17px;
                 }
 
                 label[for="location"] {
                     line-height: 2px;
-                } */
-
-                label {
+                }                            
+                
+                input:valid + label,
+                input:focus + label { 
                     display: none;
-                }               
+                }
 
+                input:valid,
+                input:focus { 
+                    width: 100%;
+                }
+                
                 @media screen and (max-width: $break-tablet) {
                     width: 100%;
                 }
@@ -143,7 +152,15 @@
                         margin-top: .5em;
                     }
                 }
-
+            }
+            .form-group-flex {
+                display: flex;
+                input {
+                    order: 2;
+                }
+                label {
+                    order: 1;
+                }
             }
 
             .form-group:nth-child(3) {
@@ -156,16 +173,13 @@
             }
 
             input {
-                width: 100%;
-                /*@media screen and (max-width: $break-tablet) {
+                @media screen and (max-width: $break-tablet) {
                     width: 150px;
                 }
 
                 @media screen and (max-width: $break-mobile) {
                     width: 65%;
                 }
-                */
-
             }
 
 
