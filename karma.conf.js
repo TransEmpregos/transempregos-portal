@@ -94,6 +94,8 @@ module.exports = function (config) {
 
         // list of files to exclude
         exclude: [
+            appBase + 'app.js',
+            appBase + 'built.js',
         ],
 
 
@@ -148,6 +150,6 @@ module.exports = function (config) {
         // how many browser should be started simultaneous
         concurrency: Infinity,
 
-        autoWatchBatchDelay: 1000
+        autoWatchBatchDelay: 2000
     })
 }

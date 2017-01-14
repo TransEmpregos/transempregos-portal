@@ -20,14 +20,18 @@ const gulp = require("gulp"),
     tslint = require('tslint'),
     gulpTslint = require('gulp-tslint'),
     gutil = require('gulp-util'),
-    runSequence = require('run-sequence'),
-    watch = require('gulp-watch');
-const { protractor } = require("gulp-protractor");
+    watch = require('gulp-watch'),
+    uglify = require('gulp-uglify'),
+    Builder = require('systemjs-builder'),
+    rimraf = require('rimraf'),
+    gulpSequence = require('gulp-sequence'),
+    { protractor } = require("gulp-protractor");
 
-(function createGulpCacheDir() {
+function createGulpCacheDir() {
     var dir = path.resolve(__dirname, '.gulp-cache');
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
-})();
+}
+createGulpCacheDir();
 
 gulp.task('watch:front', ['transpile:front'], () => {
     gulp.watch('public/**/*.ts', ['transpile:front']);
@@ -84,7 +88,7 @@ gulp.task("copy:html", () => {
 
 gulp.task("copy:images", () => {
     var imagesFileCache = new FileCache('.gulp-cache/.gulp-cache-html');
-    return gulp.src(["public/images/**/*"], { base: 'public/images'})
+    return gulp.src(["public/images/**/*"], { base: 'public/images' })
         .pipe(plumber())
         .pipe(imagesFileCache.filter())
         .pipe(imagesFileCache.cache())
@@ -103,18 +107,17 @@ gulp.task("copy:pug", () => {
 
 });
 
-gulp.task("transpile", ['copy'], () => {
-    var merged = new mergeStream();
-    merged.add(transpileFront(), transpileBack(), transpileSass());
-    return merged;
-});
+gulp.task("transpile", gulpSequence(['copy', 'transpile:front', 'transpile:back', 'transpile:sass']));
+gulp.task("trans", ['transpile']);
+gulp.task("retrans", gulpSequence(['clean', 'transpile']));
 
-gulp.task("transpile:production", ['copy'], () => {
-    var merged = new mergeStream();
-    merged.add(transpileFront({ target: 'ES5' }), transpileBack({ target: 'ES2015' }), transpileSass({ bail: true }));
-    return merged;
-});
-
+gulp.task("transpile:production",
+    gulpSequence('clean',
+        ['copy', 'transpile:production:front', 'transpile:production:back', 'transpile:production:sass'])
+);
+gulp.task("transpile:production:front", () => transpileFront({ target: 'ES5' }));
+gulp.task("transpile:production:back", () => transpileBack({ target: 'ES2015' }));
+gulp.task("transpile:production:sass", () => transpileSass({ bail: true }));
 gulp.task("transpile:front", () => transpileFront());
 gulp.task("transpile:back", () => transpileBack());
 gulp.task("transpile:sass", transpileSass);
@@ -127,7 +130,7 @@ gulp.task("autotest", () => {
     });
     let started = false;
     return watch('public/**/*.ts', () => {
-        runSequence('transpile:front', () => {
+        gulpSequence('transpile:front', () => {
             if (!started) {
                 started = true;
                 kServer.start();
@@ -138,7 +141,7 @@ gulp.task("autotest", () => {
     });
 });
 
-gulp.task('test', done => runSequence('transpile', ["test:back:notranspile", "test:front:notranspile", "test:acceptance:notranspile"], done));
+gulp.task('test', gulpSequence('transpile', ["test:back:notranspile", "test:front:notranspile", "test:acceptance:notranspile"]));
 
 gulp.task("test:quick", ["test:back:notranspile", "test:front:notranspile"]);
 
@@ -299,6 +302,30 @@ function transpileFront(opt) {
         .pipe(gulp.dest("dist/public"));
 };
 
+gulp.task('bundle', () => {
+    const builder = new Builder('.', 'dist/public/systemjs.config.js');
+    return builder
+        .bundle('dist/public/app/main.js', 'dist/public/built.js',
+        { minify: false, sourceMaps: false });
+});
+
+gulp.task('combine', () => {
+    return gulp.src(["node_modules/core-js/client/shim.min.js",
+        "node_modules/zone.js/dist/zone.js",
+        "node_modules/reflect-metadata/Reflect.js",
+        "node_modules/systemjs/dist/system.src.js",
+        "dist/public/systemjs.config.js",
+        "dist/public/built.js",
+        "dist/public/start.js"])
+        .pipe(concat('app.js'))
+        .pipe(debug({ title: 'concat' }))
+        .pipe(uglify())
+        .pipe(debug({ title: 'min' }))
+        .pipe(gulp.dest('dist/public/'));
+});
+
+gulp.task('transbunbine', gulpSequence('transpile:production', 'bundle', 'combine'));
+
 gulp.task('lint', ['lint:back', 'lint:front']);
 
 gulp.task('lint:back', () => {
@@ -315,9 +342,15 @@ gulp.task('lint:front', () => {
         .pipe(gulpTslint.report());
 });
 
-gulp.task('ci:quick', done => runSequence('ci-build', 'ci-test:quick', done));
+gulp.task('clean', () => {
+    rimraf.sync(path.resolve(__dirname, 'dist'));
+    rimraf.sync(path.resolve(__dirname, '.gulp-cache'));
+    createGulpCacheDir();
+});
+
+gulp.task('ci:quick', gulpSequence('ci-build', 'ci-test:quick'));
 gulp.task('ci:slow', ['ci-test:slow']);
-gulp.task('ci-build', ['lint', 'transpile:production']);
+gulp.task('ci-build', gulpSequence(['lint', 'transbunbine']));
 gulp.task('ci-test:quick', ['test:quick']);
 gulp.task('ci-test:slow', ['test:acceptance:notranspile']);
 

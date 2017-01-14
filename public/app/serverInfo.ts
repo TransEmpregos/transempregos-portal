@@ -1,0 +1,10 @@
+import { Job } from './job';
+declare var _jobs: Array<Job>;
+declare var _isDown: boolean;
+declare var _isProd: boolean;
+export let isProd = false;
+if (_isProd) isProd = true;
+export let isDown = false;
+if (_isDown) isDown = true;
+export let isUp = !isDown;
+export let jobs = _jobs;

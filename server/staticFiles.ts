@@ -11,12 +11,12 @@ export function serveStatic(): Koa.Middleware {
     const distPublicPath = path.resolve(__dirname, '../public');
     middlewares.push(mount('/dist/public', serve(distPublicPath)));
     middlewares.push(favicon(path.resolve(distPublicPath, 'images', 'icons', 'favicon.ico')));
-    if (Config.isDevEnv) {
+    if (!Config.isProdEnv) {
         const publicPath = path.resolve(__dirname, '../../public');
         middlewares.push(mount('/public', serve(publicPath)));
+        const nodeModulesPath = path.resolve(__dirname, '../../node_modules');
+        middlewares.push(mount('/node_modules', serve(nodeModulesPath)));
     }
-    const nodeModulesPath = path.resolve(__dirname, '../../node_modules');
-    middlewares.push(mount('/node_modules', serve(nodeModulesPath)));
     middlewares.push(async (ctx: Koa.Context, next: () => Promise<any>) => {
         const url = ctx.originalUrl;
         if (url.substr(0, 6) === '/dist/'

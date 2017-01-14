@@ -31,7 +31,8 @@ new Pug({
     noCache: Config.isDevEnv,
     pretty: Config.isDevEnv,
     locals: {
-        iconsDir: '/dist/public/images/icons'
+        iconsDir: '/dist/public/images/icons',
+        Config: Config
     }
 });
 
