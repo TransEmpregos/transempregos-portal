@@ -2,7 +2,7 @@
     <section class="login-and-register-area relative col-xs-12">
         <div class="bg-black-alpha"></div>
 
-        <div class="margin-top-50 margin-bottom-16">
+        <div class="margin-top-50 margin-bottom-16 margin-top-mobile">
             <span
             (click)="setAreaFormHome('candidate')"
             [ngClass]="{active:(areaFormHome === 'candidate')}">Sou Candidato(a) </span> <b>|</b>
@@ -22,16 +22,16 @@
             <h1 class="home-text-for-recruiter margin-bottom-5">Encontre vagas para o seu talento.</h1>
 
             <form class="form-inline">
-                <div class="form-group">
+                <div class="form-group form-group-flex">
+                    <input required type="text" id="keyword" class="form-control" placeholder="Ex: Analista Financeiro">
                     <label for="keyword">Digite palavra-chave</label>
-                    <input type="text" id="keyword" class="form-control" placeholder="Ex: Analista Financeiro">
                 </div>
-                <div class="form-group">
+                <div class="form-group form-group-flex">
+                    <input required type="text" id="location" class="form-control" placeholder="Localização da vaga">
                     <label for="location">
                         <img alt="Pin de localização" src="/dist/public/images/icon-location.svg">
                         Localização da vaga
                     </label>
-                    <input type="text" id="location" class="form-control">
                 </div>
                 <div class="form-group">
                     <button class="form-control">
@@ -57,7 +57,7 @@
 
                 <p class="p-content-description">O TransEmpregos é o lugar da diversidade de talentos porque aqui as pessoas trans(travestis e
                 transexuais) encontram espaço para publicar o currículo para que empresas de todos os tamanhos
-                e nas mais diversas áreas possam encontrá-las. Se você é uma empresa interessada na inclusao
+                e nas mais diversas áreas possam encontrá-las. Se você é uma empresa interessada na inclusão
                 como fator transformador da sociedade, cadastre sua vaga hoje mesmo.</p>
 
                 <button class="btn btn-secondary btn-lg" type="button">Saiba mais</button>
@@ -82,8 +82,8 @@
                 time de desemvolvimento profissionais trans que agregam muito<br>
                 valor ao nosso ambiente de trabalho e trazem resultados bem<br>
                 importantes para nossos clientes. Estamos sempre em busca de<br>
-                pessoas com talento, nao importando sua identidade de gênero<br>
-                ou orientaçao.<br>
+                pessoas com talento, não importando sua identidade de gênero<br>
+                ou orientação.<br>
 
                 <span>Vitor Hugo Germano</span> <b>|</b> Lambda3
                 </p>
