@@ -114,9 +114,9 @@
     "sinon-chai": "^2.8.0",
     "supertest": "^2.0.1",
     "systemjs-builder": "^0.15.34",
-    "tslib": "^1.4.0",
+    "tslib": "^1.5.0",
     "tslint": "^4.2.0",
-    "typescript": "^2.1.4",
+    "typescript": "^2.1.5",
     "yargs": "^6.5.0"
   }
 }

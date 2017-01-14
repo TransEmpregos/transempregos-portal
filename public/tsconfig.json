@@ -10,7 +10,7 @@
         "experimentalDecorators": true,
         "removeComments": true,
         "preserveConstEnums": true,
-        "importHelpers": false,//wait for typescript 2.1.5 see https://github.com/Microsoft/tslib/issues/12
+        "importHelpers": true,
         "sourceMap": true,
         "types": [ //todo: there is a clash in jasmine and mocha, we need to remove jasmine, see https://github.com/angular/protractor/pull/3795 // run with  ls .\node_modules\@types\ | select { "`"$_`"," }
             "chai", "chai-as-promised", "cookies", "debug", "koa", "koa-bodyparser", "koa-json", "koa-logger", "koa-mount",

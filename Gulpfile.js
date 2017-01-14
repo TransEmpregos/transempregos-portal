@@ -14,6 +14,7 @@ const gulp = require("gulp"),
     karmaServer = require('karma').Server,
     mocha = require('gulp-mocha'),
     ts = require("gulp-typescript"),
+    typescript = require("typescript"),
     { spawn } = require('child_process'),
     browserSync = require('browser-sync'),
     intoStream = require('into-stream'),
@@ -274,10 +275,10 @@ function transpileSass(opt) {
         .pipe(gulp.dest("dist/public"));
 }
 
-const tsProjectBack = ts.createProject("tsconfig.json", { outDir: '' });
+const tsProjectBack = ts.createProject("tsconfig.json", { typescript: typescript, outDir: '' });
 function transpileBack(opt) {
     let tsProject = opt
-        ? ts.createProject("tsconfig.json", { target: opt.target, outDir: '' })
+        ? ts.createProject("tsconfig.json", { target: opt.target, typescript: typescript, outDir: '' })
         : tsProjectBack;
     return tsProject.src()
         .pipe(sourcemaps.init())
@@ -288,10 +289,10 @@ function transpileBack(opt) {
         .pipe(gulp.dest("dist"));
 }
 
-const tsProjectFront = ts.createProject("public/tsconfig.json", { outDir: '' });
+const tsProjectFront = ts.createProject("public/tsconfig.json", { outDir: '', typescript: typescript });
 function transpileFront(opt) {
     let tsProject = opt
-        ? ts.createProject("public/tsconfig.json", { target: opt.target, outDir: '' })
+        ? ts.createProject("public/tsconfig.json", { target: opt.target, outDir: '', typescript: typescript })
         : tsProjectFront;
     return tsProject.src()
         .pipe(sourcemaps.init())
