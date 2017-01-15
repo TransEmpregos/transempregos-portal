@@ -8,4 +8,6 @@
         "LICENSE": true,
         "*.log": true
     }
+,
+"typescript.tsdk": "./node_modules/typescript/lib"
 }

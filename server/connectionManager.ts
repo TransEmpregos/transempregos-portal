@@ -19,18 +19,26 @@ let connectionOptions: mongoose.ConnectionOptions = {
     }
 };
 
+async function connectAsync() {
+    try {
+        await <PromiseLike<void>>mongoose.connect(connectionString, connectionOptions);
+        return { connected: true, error: null };
+    } catch (error) {
+        log('Could not connect when trying to reconnect.');
+        return { connected: false, error };
+    }
+}
+
 let reconnectTimeout: NodeJS.Timer;
 
 async function reconnectAsync() {
     log('Trying to reconnect...');
     switch (mongoose.connection.readyState) {
         case 0: // disconnected
-            try {
-                log('Disconnected, now will try to connect...');
-                await mongoose.connect(connectionString, connectionOptions);
-            } catch (error) {
+            log('Disconnected, now will try to connect...');
+            const { connected } = await connectAsync();
+            if (!connected)
                 log('Could not connect when trying to reconnect.');
-            }
             break;
         case 1: // connected
             log('Already connected, we are done.');
@@ -86,13 +94,11 @@ export async function startConnectionAsync() {
     } else {
         connectionString = 'mongodb://localhost/transempregos';
     }
-    try {
-        await mongoose.connect(connectionString, connectionOptions);
-    } catch (error) {
+    const { connected, error } = await connectAsync();
+    if (!connected) {
         log(`Could not connect to Mongo.\n${error}`);
         tryToReconnect();
     }
-
     mongoose.connection.on('connecting', () => {
         log('Mongoose connection connecting.');
     }).on('connected', () => {

@@ -32,12 +32,16 @@ describe('AppComponent', () => {
 
     it('should display original ok button caption', () => {
         fixture.detectChanges();
+        if (buttonElement == null || buttonElement.textContent == null)
+            throw new Error('Button element textContent should have a value.');
         buttonElement.textContent.should.equal(comp.ok);
     });
 
     it('should display a different ok button caption', () => {
         comp.ok = 'Confirm';
         fixture.detectChanges();
+        if (buttonElement == null || buttonElement.textContent == null)
+            throw new Error('Button element textContent should have a value.');
         buttonElement.textContent.should.equal('Confirm');
     });
 

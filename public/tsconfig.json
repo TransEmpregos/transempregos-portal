@@ -12,6 +12,8 @@
         "preserveConstEnums": true,
         "importHelpers": true,
         "sourceMap": true,
+        "strictNullChecks": true,
+        "skipLibCheck": true, // TODO: necessary until https://github.com/angular/angular/issues/11844 is resolved
         "types": [ //todo: there is a clash in jasmine and mocha, we need to remove jasmine, see https://github.com/angular/protractor/pull/3795 // run with  ls .\node_modules\@types\ | select { "`"$_`"," }
             "chai", "chai-as-promised", "cookies", "debug", "koa", "koa-bodyparser", "koa-json", "koa-logger", "koa-mount",
             "koa-pug", "koa-router", "koa-static", "mocha", "mongodb", "mongoose", "node", "promises-a-plus", "protractor",
@@ -28,5 +30,5 @@
     "include": [
         "./**/*"
     ],
-    "exclude": []
+    "exclude": [ ]
 }
