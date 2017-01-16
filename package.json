@@ -51,8 +51,8 @@
     "pug": "^2.0.0-beta6",
     "reflect-metadata": "^0.1.2",
     "rxjs": "5.0.2",
-    "tslib": "^1.5.0",
     "systemjs": "0.19.40",
+    "tslib": "^1.5.0",
     "zone.js": "^0.7.4"
   },
   "devDependencies": {
@@ -90,7 +90,6 @@
     "gulp-mocha": "^3.0.1",
     "gulp-nodemon": "^2.0.6",
     "gulp-plumber": "^1.1.0",
-    "gulp-protractor": "^3.0.0",
     "gulp-sass": "^3.0.0",
     "gulp-sequence": "^0.4.6",
     "gulp-sourcemaps": "^1.6.0",
@@ -108,7 +107,7 @@
     "merge-stream": "^1.0.0",
     "mocha": "^3.2.0",
     "phantomjs-prebuilt": "2.1.8",
-    "protractor": "^4.0.14",
+    "protractor": "^5.0.0",
     "protractor-accessibility-plugin": "^0.3.0",
     "rimraf": "^2.5.4",
     "sinon": "^1.17.3",

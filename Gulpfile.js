@@ -25,8 +25,7 @@ const gulp = require("gulp"),
     uglify = require('gulp-uglify'),
     Builder = require('systemjs-builder'),
     rimraf = require('rimraf'),
-    gulpSequence = require('gulp-sequence'),
-    { protractor } = require("gulp-protractor");
+    gulpSequence = require('gulp-sequence');
 
 function createGulpCacheDir() {
     var dir = path.resolve(__dirname, '.gulp-cache');
@@ -356,3 +355,45 @@ gulp.task('ci-test:quick', ['test:quick']);
 gulp.task('ci-test:slow', ['test:acceptance:notranspile']);
 
 gulp.task("default", ['transpile']);
+
+// TODO necessary until gulp-protractor is updated to use protractor 5
+// follow on https://github.com/mllrsohn/gulp-protractor/issues/123 is solved
+var protractor = (options) => {
+    options = options || {};
+    const files = [];
+    const args = options.args || [];
+    const es = require('event-stream');
+    const child_process = require('child_process');
+    return es.through(function (file) {
+        files.push(file.path);
+        this.push(file);
+    }, function () {
+        var stream = this;
+        if (options.debug)
+            args.push('debug');
+        if (files.length) {
+            args.push('--specs');
+            args.push(files.join(','));
+        }
+        if (options.configFile)
+            args.unshift(options.configFile);
+        const protractorDir = path.resolve(path.join(path.dirname(require.resolve("protractor")), "..", "..", ".bin"));
+        const winExt = /^win/.test(process.platform) ? ".cmd" : "";
+        let child = child_process.spawn(path.resolve(protractorDir, 'protractor' + winExt), args, {
+            stdio: 'inherit',
+            env: process.env
+        }).on('exit', function (code) {
+            if (child)
+                child.kill();
+            if (stream) {
+                if (code) {
+                    const PluginError = require('gulp-util').PluginError;
+                    stream.emit('error', new PluginError('protractor', 'protractor exited with code ' + code));
+                }
+                else {
+                    stream.emit('end');
+                }
+            }
+        });
+    });
+};
