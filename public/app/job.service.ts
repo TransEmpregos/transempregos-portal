@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Headers } from '@angular/http';
+import { HttpAuth } from './httpAuth';
 import { Job } from './job';
 import 'rxjs/add/operator/toPromise';
 
@@ -8,14 +9,13 @@ export class JobService {
     private jobsUrl = 'api/jobs';
     private headers = new Headers({ 'Content-Type': 'application/json' });
 
-    constructor(private http: Http) { }
+    constructor(private http: HttpAuth) { }
 
     async getAllAsync(): Promise<Job[]> {
         try {
             const response = await this.http.get(this.jobsUrl).toPromise();
             const jobs = response.json() as Job[];
             return jobs;
-
         } catch (error) {
             console.error(`An error ocurred: ${error}`);
             throw error;

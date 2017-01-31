@@ -1,5 +1,5 @@
-import { Router } from './_transRouter';
-import { upMonitor } from '../upmonitor';
+import { Router } from '../transRouter';
+import { upMonitor } from '../../upmonitor';
 
 export const statusRouter = new Router();
 statusRouter.get('/', ctx => {

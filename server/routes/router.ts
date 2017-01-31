@@ -1,23 +1,39 @@
-import { Router } from './_transRouter';
-import catchAllRoute from './catchAll';
+import { Router } from './transRouter';
+import catchAllRoute from './unprotected/catchAll';
 import * as path from 'path';
 import * as fs from 'fs';
+import { jwt } from './jwt';
 
-const router = new Router();
+export const router = new Router();
 
-const files = fs.readdirSync(__dirname);
-const routeModuleNames = files
-    .filter(f => f.indexOf('catchAll.js') !== 0 && f.indexOf('router.js') !== 0 && f.endsWith('.js'))
-    .map(f => path.basename(f, '.js'));
-for (const routeModuleName of routeModuleNames) {
-    if (routeModuleName[0] === '_') continue;
-    let routeModule = require(`./${routeModuleName}`);
-    for (const routeKey in routeModule) {
-        if (!routeModule.hasOwnProperty(routeKey)) continue;
-        const route: Router = routeModule[routeKey];
-        router.use(`/api/${routeModuleName}`, route.routes(), route.allowedMethods());
-    }
-}
+addRoutes('unprotected');
+addRoutes('protected');
 router.use(catchAllRoute.routes(), catchAllRoute.allowedMethods());
 
-export default router;
+log('Routes: ' + router.stack.filter(s => s.methods.length).map(s => s.methods.join('|')  + ' ' + s.path));
+
+function addRoutes(base: 'protected'|'unprotected') {
+    const routes = getRouteModuleNames(path.resolve(__dirname, base));
+    for (const routeModuleName of routes) {
+        const routeModule = require(`./${base}/${routeModuleName}`);
+        for (const routeKey in routeModule) {
+            if (!routeModule.hasOwnProperty(routeKey)) continue;
+            const route: Router = routeModule[routeKey];
+            if (base === 'protected')
+                router.use(`/api/${routeModuleName}`, jwt, route.routes(), route.allowedMethods());
+            else
+                router.use(`/api/${routeModuleName}`, route.routes(), route.allowedMethods());
+        }
+    }
+}
+
+function getRouteModuleNames(directory: string) {
+    const files = fs.readdirSync(directory);
+    const routeModuleNames = files
+        .filter(f =>
+            !f.startsWith('_')
+            && f.indexOf('catchAll.js') !== 0
+            && f.endsWith('.js'))
+        .map(f => path.basename(f, '.js'));
+    return routeModuleNames;
+}

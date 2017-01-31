@@ -7,19 +7,20 @@ import { LoginCandidateComponent } from './login/login-candidate.component';
 import { JobEditComponent } from './admin/job-edit.component';
 import { JobsListComponent } from './admin/jobs-list.component';
 import { JobCreateComponent } from './admin/job-create.component';
+import { RecruiterGuard } from './route.guards';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, pathMatch: 'full' },
-  { path: 'login/recruiter', component: LoginRecruiterComponent },
-  { path: 'login/candidate', component: LoginCandidateComponent },
-  { path: 'admin', component: AdminComponent },
-  { path: 'admin/job', component: JobsListComponent },
-  { path: 'admin/job/create', component: JobCreateComponent },
-  { path: 'admin/job/:id', component: JobEditComponent }
+    { path: '', component: HomeComponent, pathMatch: 'full' },
+    { path: 'login/recruiter', component: LoginRecruiterComponent },
+    { path: 'login/candidate', component: LoginCandidateComponent },
+    { path: 'admin', component: AdminComponent, canActivate: [RecruiterGuard] },
+    { path: 'admin/job', component: JobsListComponent, canActivate: [RecruiterGuard] },
+    { path: 'admin/job/create', component: JobCreateComponent, canActivate: [RecruiterGuard] },
+    { path: 'admin/job/:id', component: JobEditComponent, canActivate: [RecruiterGuard] }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule { }

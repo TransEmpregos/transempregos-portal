@@ -1,6 +1,6 @@
-import { Router } from '../../server/routes/_transRouter';
+import { Router } from '../../server/routes/transRouter';
 
-declare module '../../server/routes/_transRouter' {
+declare module '../../server/routes/transRouter' {
     interface Router {
         findRoute(route: string): Function;
     }

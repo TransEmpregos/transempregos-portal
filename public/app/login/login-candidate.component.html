@@ -7,30 +7,30 @@
 
             <div class="user-sub-area">
                 <aside class="login-area">
-                    <form>
+                    <form #loginForm="ngForm" (ngSubmit)="loginAsync()">
                         <fieldset>
                             <legend class="uppercase-letter sub-title">Já tenho cadastro</legend>
 
                             <div class="form-group">
                                 <label for="email">E-mail cadastrado</label>
-                                <input type="text" class="form-control" id="email">
+                                <input [(ngModel)]="user.userNameOrEmail" type="text" class="form-control" required id="email" name="email">
                             </div>
 
                             <div class="form-group">
                                 <label for="senha">Senha</label>
-                                <input type="password" class="form-control" id="senha">
+                                <input [(ngModel)]="user.password" type="password" class="form-control" required id="senha" name="senha">
                             </div>
 
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" value="sim" name="spam" checked>
+                                    <input [(ngModel)]="user.persist" type="checkbox" value="sim" name="persist" checked>
                                     Manter conectado
                                 </label>
                             </div>
 
                             <a href="#">Esqueci minha senha</a>
 
-                            <button type="button" class="btn form-control uppercase-letter"> Acessar </button>
+                            <button type="submit" class="btn form-control uppercase-letter" [disabled]="!loginForm.form.valid"> Acessar </button>
                         </fieldset>
 
                     </form>
@@ -50,4 +50,3 @@
         </div>
     </section>
 </div>
-

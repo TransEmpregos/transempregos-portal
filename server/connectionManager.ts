@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import { Config } from './config';
+import { isTestEnv, isProdEnv } from './config';
 import { upMonitor } from './upmonitor';
 
 (<any>mongoose).Promise = global.Promise;
@@ -87,9 +87,9 @@ export async function startConnectionAsync() {
         connectionOptions.server.socketOptions.connectTimeoutMS = 10000;
         connectionOptions.server.socketOptions.socketTimeoutMS = 10000;
         connectionOptions.server.reconnectTries = 10;
-    } else if (Config.isTestEnv) {
+    } else if (isTestEnv) {
         connectionString = 'mongodb://localhost/transempregos-test';
-    } else if (Config.isProdEnv) {
+    } else if (isProdEnv) {
         throw new Error('Production has to have MONGO_URI set.');
     } else {
         connectionString = 'mongodb://localhost/transempregos';

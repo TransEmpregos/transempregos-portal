@@ -1,6 +1,6 @@
-import { Router } from './_transRouter';
-import { Job } from '../models/job';
-import { upMonitor } from '../upmonitor';
+import { Router } from '../transRouter';
+import { Job } from '../../models/job';
+import { upMonitor } from '../../upmonitor';
 
 const router = new Router();
 router.get('/', async ctx => {

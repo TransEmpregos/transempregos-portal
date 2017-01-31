@@ -1,5 +1,5 @@
 // import * as Router from 'koa-router';
-import { statusRouter } from '../../server/routes/status';
+import { statusRouter } from '../../server/routes/unprotected/status';
 import { upMonitor } from '../../server/upmonitor';
 import * as request from 'supertest';
 import * as Koa from 'koa';

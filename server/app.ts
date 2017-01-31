@@ -9,14 +9,17 @@ const etag = require('koa-etag');
 const conditional = require('koa-conditional-get');
 import * as path from 'path';
 global.log = require('debug')('trans');
-import router from './routes/router';
+import { router } from './routes/router';
 import { startConnectionAsync, rebuildConnectionAsync } from './connectionManager';
-import { Config } from './config';
+import { isDevEnv, isTestEnv } from './config';
+import * as Config from './config';
 import { serveStatic } from './staticFiles';
+import { User } from './models/user';
 
-startConnectionAsync();
+startConnectionAsync().then(() => User.seed());
+
 const app = new Koa();
-if (!Config.isTestEnv)
+if (!isTestEnv)
     app.use(logger());
 app.use(convert(conditional()));
 app.use(convert(etag()));
@@ -28,8 +31,8 @@ const viewPath = path.resolve(__dirname, 'views');
 new Pug({
     app: app,
     viewPath: viewPath,
-    noCache: Config.isDevEnv,
-    pretty: Config.isDevEnv,
+    noCache: isDevEnv,
+    pretty: isDevEnv,
     locals: {
         iconsDir: '/dist/public/images/icons',
         Config: Config

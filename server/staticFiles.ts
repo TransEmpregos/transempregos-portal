@@ -3,7 +3,7 @@ import * as Koa from 'koa';
 import * as mount from 'koa-mount';
 import * as serve from 'koa-static';
 import * as favicon from 'koa-favicon';
-import { Config } from './config';
+import { isProdEnv } from './config';
 import * as compose from 'koa-compose';
 
 export function serveStatic(): Koa.Middleware {
@@ -11,7 +11,7 @@ export function serveStatic(): Koa.Middleware {
     const distPublicPath = path.resolve(__dirname, '../public');
     middlewares.push(mount('/dist/public', serve(distPublicPath)));
     middlewares.push(favicon(path.resolve(distPublicPath, 'images', 'icons', 'favicon.ico')));
-    if (!Config.isProdEnv) {
+    if (!isProdEnv) {
         const publicPath = path.resolve(__dirname, '../../public');
         middlewares.push(mount('/public', serve(publicPath)));
         const nodeModulesPath = path.resolve(__dirname, '../../node_modules');

@@ -14,7 +14,7 @@
         "sourceMap": true,
         "strictNullChecks": true,
         "skipLibCheck": true, // TODO: necessary until https://github.com/angular/angular/issues/11844 is resolved
-        "target": "ES2016", //todo: try ES2017 to use async & await with chrome
+        "target": "ES2016", // TODO: try ES2017 to use async & await with chrome
         "outDir": "../dist/public/",
         "lib": [
             "es2016",
