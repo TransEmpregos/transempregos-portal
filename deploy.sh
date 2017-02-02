@@ -35,12 +35,13 @@ dev() {
   check $?
   cp "$SNAP_WORKING_DIR/package.json" "$RELEASE_DIR/package.json"
   check $?
-  echo Adding version file...
-  echo '{ "buildNumber":'" $SNAP_PIPELINE_COUNTER, "'"commit": "'"$SNAP_COMMIT"'" }' > dist/public/version.json
   echo Adding files to git...
   git add -A
   check $?
   if [[ $(git status -s) ]]; then
+    echo Adding version file...
+    echo '{ "buildNumber":'" $SNAP_PIPELINE_COUNTER, "'"commit": "'"$SNAP_COMMIT"'" }' > dist/public/version.json
+    git add -A
     echo Committing...
     git commit -m "#$SNAP_PIPELINE_COUNTER $MESSAGE
   Original commit: $SNAP_COMMIT
