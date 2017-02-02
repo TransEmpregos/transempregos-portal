@@ -11,6 +11,8 @@ MESSAGE=$(git log -1 --pretty=%B)
 echo Last commit message is "'"$MESSAGE"'"
 RELEASE_DIR="$HOME/transempregos-portal-release"
 echo Release dir is "'"$RELEASE_DIR"'".
+shopt -s extglob #enable globbing
+shopt extglob
 
 dev() {
   #last commit message:
@@ -23,7 +25,6 @@ dev() {
   check $?
   echo Deleting old files...
   cd $RELEASE_DIR
-  shopt -s extglob
   rm !(.git|.|..) -rf
   check $?
   if [ ! -d dist ]; then
