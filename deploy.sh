@@ -21,7 +21,7 @@ dev() {
     rm -rf "$RELEASE_DIR"
   fi
   echo Cloning to "'"$RELEASE_DIR"'"...
-  git clone --depth 1 --no-single-branch git@github.com:TransEmpregos/transempregos-portal-release.git "$RELEASE_DIR"
+  git clone --depth 10 --no-single-branch git@github.com:TransEmpregos/transempregos-portal-release.git "$RELEASE_DIR"
   check $?
   echo Deleting old files...
   cd $RELEASE_DIR
@@ -57,14 +57,17 @@ dev() {
 staging() {
   cd $RELEASE_DIR
   check $?
+  echo Finding original commit...
+  ORIGINAL_COMMIT=$(git log --grep="Original commit: $SNAP_COMMIT" --format=format:%H)
+  check $?
   echo Checking out staging branch...
   git checkout staging
   check $?
   echo Pulling staging branch...
   git pull --ff-only origin staging
   check $?
-  echo Merging $SNAP_COMMIT commit - from master - into staging...
-  git merge --ff-only $SNAP_COMMIT
+  echo Merging $ORIGINAL_COMMIT commit - from master - into staging...
+  git merge --ff-only $ORIGINAL_COMMIT
   check $?
   echo Pushing staging branch...
   git push origin staging
@@ -75,14 +78,17 @@ staging() {
 prod() {
   cd $RELEASE_DIR
   check $?
+  echo Finding original commit...
+  ORIGINAL_COMMIT=$(git log --grep="Original commit: $SNAP_COMMIT" --format=format:%H)
+  check $?
   echo Checking out staging branch...
   git checkout prod
   check $?
   echo Pulling staging branch...
   git pull --ff-only origin prod
   check $?
-  echo Merging $SNAP_COMMIT commit - from staging - into prod...
-  git merge --ff-only $SNAP_COMMIT
+  echo Merging $ORIGINAL_COMMIT commit - from staging - into prod...
+  git merge --ff-only $ORIGINAL_COMMIT
   check $?
   echo Pushing staging branch...
   git push origin prod
