@@ -24,10 +24,12 @@ dev() {
   echo Deleting old files...
   cd $RELEASE_DIR
   shopt -s extglob
-  #rm !(.git|.|..) -rf
+  rm !(.git|.|..) -rf
   check $?
+  if [ ! -d dist ]; then
+    mkdir dist
+  fi
   echo Copying release files from "'"$SNAP_WORKING_DIR"'" to "'"$RELEASE_DIR"'"...
-  mkdir dist
   cp -R "$SNAP_WORKING_DIR/dist/." "$RELEASE_DIR/dist/"
   check $?
   cp "$SNAP_WORKING_DIR/package.json" "$RELEASE_DIR/package.json"
@@ -54,7 +56,7 @@ staging() {
   cd $RELEASE_DIR
   check $?
   echo Checking out staging branch...
-  git checkout staging
+  git checkout --track origin/staging
   check $?
   echo Pulling staging branch...
   git pull --ff-only origin staging
@@ -72,7 +74,7 @@ prod() {
   cd $RELEASE_DIR
   check $?
   echo Checking out staging branch...
-  git checkout prod
+  git checkout --track origin/prod
   check $?
   echo Pulling staging branch...
   git pull --ff-only origin prod
