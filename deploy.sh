@@ -19,7 +19,7 @@ dev() {
     rm -rf "$RELEASE_DIR"
   fi
   echo Cloning to "'"$RELEASE_DIR"'"...
-  git clone --depth 1 git@github.com:TransEmpregos/transempregos-portal-release.git "$RELEASE_DIR"
+  git clone --depth 1 --no-single-branch git@github.com:TransEmpregos/transempregos-portal-release.git "$RELEASE_DIR"
   check $?
   echo Deleting old files...
   cd $RELEASE_DIR
@@ -56,7 +56,7 @@ staging() {
   cd $RELEASE_DIR
   check $?
   echo Checking out staging branch...
-  git checkout --track origin/staging
+  git checkout staging
   check $?
   echo Pulling staging branch...
   git pull --ff-only origin staging
@@ -74,7 +74,7 @@ prod() {
   cd $RELEASE_DIR
   check $?
   echo Checking out staging branch...
-  git checkout --track origin/prod
+  git checkout prod
   check $?
   echo Pulling staging branch...
   git pull --ff-only origin prod
