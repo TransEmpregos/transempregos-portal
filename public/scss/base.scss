@@ -114,15 +114,19 @@ body {
                     list-style: none;
                     display: flex;
                     padding: 0;
-                    color: $gray2-trans;
-                    font-weight: bold;
-
+                    
                     @media screen and (max-width: $break-tablet) {
                         font-size: 10pt;
                     }
 
                     li {
+                        a, b {
+                            color: $gray2-trans;
+                            font-weight: bold;
+                        }
+                        
                         a {
+                            text-decoration: none;
                             margin-left: 5px;
                             margin-right: 5px;
                         }
