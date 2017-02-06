@@ -68,6 +68,7 @@
             list-style: none;
             padding: 0;
             display: flex;
+            font-weight: bold;
 
             @media screen and (max-width: $break-tablet) {
                 flex-direction: column;
