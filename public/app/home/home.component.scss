@@ -60,6 +60,7 @@
         color: #b2b2b2;
         display: inline-block;
         padding: 2% 0;
+        font-weight: bold;
     }
 
     span.active,
@@ -163,6 +164,11 @@
 
                 margin-bottom: 0;
                 border-right: 1px solid $gray2-trans;
+
+                label {
+                    font-weight: bold;
+                }
+
                 input {
                     width: 100%;
                 }
@@ -201,6 +207,12 @@
                     &:focus {
                         background: #00c39a;
                     }
+
+                    .icon-search {
+                        content: url(/dist/public/images/search.svg);
+                        width: 24px;
+                        height: 24px;
+                    }
                 }
             }
         }
@@ -227,6 +239,7 @@
                 color: $purple-trans;
                 text-transform: uppercase;
                 font-size: 16pt;
+                font-weight: bold;
                 width: 300px;
 
                 @media screen and (max-width: $break-mobile) {
@@ -303,6 +316,7 @@
             background-color: transparent;
             color: #fff;
             font-size: 16pt;
+            font-weight: bold;
             text-transform: uppercase;
             width: 300px;
 
@@ -369,6 +383,7 @@
         color: $purple-trans;
         border-color: $purple-trans;
         font-size: 16pt;
+        font-weight: bold;
         text-transform: uppercase;
         width: 300px;
 
