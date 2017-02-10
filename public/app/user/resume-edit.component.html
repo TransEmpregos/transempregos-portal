@@ -1,0 +1,142 @@
+{{diagnostic}}
+<div *ngIf="resume">
+    <form #resumeForm="ngForm">
+        <fieldset>
+            <legend>Dados Pessoais</legend>
+            <div class="form-group">
+                <label for="name">Nome:</label>
+                <input [(ngModel)]="resume.name" placeholder="Coloque o nome" class="form-control" type="text" name="name" />
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input [(ngModel)]="resume.email" placeholder="Coloque o e-mail" class="form-control" type="email" name="email" />
+            </div>
+            <div class="form-group">
+                <label for="register">CPF:</label>
+                <input [(ngModel)]="resume.register" placeholder="Coloque o CPF" class="form-control" type="text" name="register" />
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Formação</legend>
+            <div class="form-group">
+                <label for="college.name">Instituição de Ensino:</label>
+                <input [(ngModel)]="college.name" placeholder="Nome da Instituição de Ensino" class="form-control" type="text" name="college.name" />
+            </div>
+            <div class="form-group">
+                <label for="college.nameOfCurse">Nome do Curso:</label>
+                <input [(ngModel)]="college.nameOfCurse" placeholder="Nome do Curso" class="form-control" type="text" name="college.nameOfCurse" />
+
+            </div>
+             <div class="form-group">
+                <label for="college.description">Descrição:</label>
+                <input [(ngModel)]="college.description" placeholder="Descrição do Curso" class="form-control" type="text" name="college.description"/>
+
+            </div>
+            <div class="form-group">
+                <label for="college.formationDate">Data de Formação</label>
+                <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd" name="college.formationDate" [(ngModel)]="dataPickerCollege" ngbDatepicker #datePicker="ngbDatepicker" />
+                    <div class="input-group-addon" (click)="datePicker.toggle()">
+                        <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button (click)="addCollege(college);" class="btn btn-secondary">Adicionar Formação</button>
+            </div>
+        </fieldset>
+        <div>
+            <table class="table table-striped table-hover ">
+                <thead class="thead-default">
+                    <tr>
+                        <th>Instituição de Ensino</th>
+                        <th>Formação</th>
+                        <th>Descrição</th>
+                        <th>Data de Formação</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let formation of resume.collegeFormation">
+                        <td>{{ formation.name }}</td>
+                        <td>{{ formation.nameOfCurse }} </td>
+                        <td>{{ formation.description}}
+                        <td>{{ formation.date }}</td>
+                        <td> <button (click)="removeCollege(formation)" class="btn btn-danger">-</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <fieldset>
+            <legend>Áreas de Interesse</legend>
+            <div class="form-group">
+                <label for="area">Área de intere:</label>
+                <input [(ngModel)]="area" placeholder="Área de Interesse" class="form-control" type="text" name="area" />
+            </div>
+            <div class="form-group">
+                <button (click)="addAreaOfInterest(area);" class="btn btn-secondary">Adicionar Área de Interesse</button>
+            </div>
+        </fieldset>
+        <div>
+            <table class="table table-striped table-hover ">
+                <thead class="thead-default">
+                    <tr>
+                        <th>Nome</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let area of resume.areasOfInterest">
+                        <td>{{ area }}</td>
+                        <td> <button (click)="removeAreaOfInterest(area)" class="btn btn-danger">-</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <fieldset>
+            <legend>Experiência</legend>
+            <div class="form-group">
+                <label for="job.name">Empresa:</label>
+                <input [(ngModel)]="job.name" placeholder="Coloque o nome da empresa" class="form-control" type="text" name="job.name" />
+            </div>
+            <div class="form-group">
+                <label for="job.salary">Salário:</label>
+                <input [(ngModel)]="job.salary" placeholder="Coloque o seu ultimo salário" class="form-control" type="text" name="job.salary" />
+            </div>
+             <div class="form-group">
+                <label for="job.initialDate">Data:</label>
+                <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd" name="job.initialDate" [(ngModel)]="dataPickerJob" ngbDatepicker #datePickerJob="ngbDatepicker" />
+                    <div class="input-group-addon" (click)="datePickerJob.toggle()">
+                        <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button (click)="addJOb(job);" class="btn btn-secondary">Adicionar Experiência</button>
+            </div>
+        </fieldset>
+        <div>
+            <table class="table table-striped table-hover ">
+                <thead class="thead-default">
+                    <tr>
+                        <th>Empresa</th>
+                        <th>Salário</th>
+                        <th>Início</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let job of resume.jobList">
+                        <td>{{ job.name }}</td>
+                        <td>{{ job.salary }}</td>
+                        <td>{{ job.initialDate }}</td>
+                        <td> <button (click)="removeAreaOfInterest(area)" class="btn btn-danger">-</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button (click)="goBack()" class="btn btn-secondary">Cancelar</button>
+        <button (click)="save()" class="btn btn-default" [disabled]="!resumeForm.form.valid">Salvar</button>
+    </form>
+</div>
