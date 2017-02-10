@@ -1,0 +1,14 @@
+<h2>Currículos</h2>
+<div class="row">
+     <a class="btn btn-primary" role="button" routerLink="/user/resume/create">Novo Curriclo</a>
+    <div class="col-md-12">
+        <ul>
+            <li *ngFor="let resume of resumes">
+                <a [routerLink]="['/user/resume', resume._id]">{{resume.name}}</a>
+                <a [routerLink]="['/user/resume', resume._id]" class="btn btn-secondary" role="button">Editar</a>
+                <span>{{resume.email}}</span>
+                <button (click)="delete(resume)" class="btn btn-danger">Excluir</button>
+            </li>
+        </ul>
+    </div>
+</div>

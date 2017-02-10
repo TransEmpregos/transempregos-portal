@@ -7,6 +7,8 @@ import { LocalStorageModule } from 'angular-2-local-storage';
 
 import { HttpAuth } from './httpAuth';
 import { JobService } from './job.service';
+import { ResumeService } from './resume.service';
+
 import { AppComponent } from './app.component';
 import { AdminComponent } from './admin/admin.component';
 import { JobEditComponent } from './admin/job-edit.component';
@@ -18,9 +20,15 @@ import { HomeComponent } from './home/home.component';
 import { LoginRecruiterComponent } from './login/login-recruiter.component';
 import { LoginCandidateComponent } from './login/login-candidate.component';
 import { AppRoutingModule } from './app-routing.module';
+import { UserComponent } from './user/user.component';
+import { ResumesListComponent } from './user/resume-list.component';
+import { ResumeCreateComponent } from './user/resume-create.component';
+import { ResumeEditComponent } from './user/resume-edit.component';
 import { AdminGuard, LoggedInGuard, RecruiterGuard } from './route.guards';
 import { UserService } from './user.service';
+
 import './rxjs-extensions';
+
 
 
 @NgModule({
@@ -45,9 +53,13 @@ import './rxjs-extensions';
         JobsListComponent,
         JobCreateComponent,
         ModalYesNoComponent,
-        ModalOkComponent
+        ModalOkComponent,
+        UserComponent,
+        ResumesListComponent,
+        ResumeCreateComponent,
+        ResumeEditComponent
     ],
-    providers: [HttpAuth, JobService, UserService, AdminGuard, LoggedInGuard, RecruiterGuard],
+    providers: [HttpAuth, JobService, UserService, ResumeService, AdminGuard, LoggedInGuard, RecruiterGuard],
     entryComponents: [ModalYesNoComponent, ModalOkComponent],
     bootstrap: [AppComponent]
 })
