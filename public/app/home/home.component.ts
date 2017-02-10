@@ -8,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-    areaFormHome: String = 'candidate';
+    readonly CANDIDATE: String = 'candidate';
+    readonly RECRUITER: String = 'recruiter';
+
+    areaFormHome: String = this.CANDIDATE;
 
     constructor() { }
 

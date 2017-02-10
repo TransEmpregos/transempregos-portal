@@ -1,135 +1,127 @@
 @import "../../scss/variables";
 
-.max-width {
-    @media screen and (min-width: 940px) {
-        max-width: 940px;
-        margin: 0 auto;
-    }
+.candidate-bg-image {
+    background-image: url('/dist/public/images/photo_39601_20150724.png');
+}
 
-    .candidate-bg-image {
-        background-image: url('/dist/public/images/photo_39601_20150724.png');
-    }
+.recruiter-bg-image {
+    background-image: url('/dist/public/images/bg_recruiter.png');
+}
 
-    .recruiter-bg-image {
-        background-image: url('/dist/public/images/bg_recruiter.png');
-    }
-
-    .user-area {
+.user-area {
+    position: relative;
+    margin: 0 auto;
+    padding: 50px 0;
+    min-height: 500px;
+    background-size: cover;
+    * > {
+        z-index: 1;
         position: relative;
-        margin: 0 auto;
-        padding: 0;
-        min-height: 500px;
-        background-size: cover;
-        * > {
-            z-index: 1;
-            position: relative;
-        }
+    }
 
-        .candidate-bg-color {
-            background-color: rgba(89, 63, 114, .7);
-        }
+    .candidate-bg-color {
+        background-color: rgba(89, 63, 114, .7);
+    }
 
-        .title-user-area {
-            margin: 50px auto;
-            width: 80%;
-            border-radius: 20px;
-            color: #fff;
-            font-size: 20pt;
-            text-align: center;
-            position: relative;
-        }
-        .title-candidate-bg {
-            background-color: rgba(89, 63, 114, .9);
-        }
+    .title-user-area {
+        width: 100%;
+        padding: 10px;
+        font-size: 16pt;
+        font-weight: bold;
+        margin: 50px auto;
+        border-radius: 20px;
+        color: #fff;
+        font-size: 20pt;
+        text-align: center;
+        position: relative;
+    }
+    .title-candidate-bg {
+        background-color: rgba(89, 63, 114, .9);
+    }
 
-        .title-recruiter-bg {
-            background-color: rgba(0, 0, 0, .9);
+    .title-recruiter-bg {
+        background-color: rgba(0, 0, 0, .9);
+    }
+
+    .uppercase-letter {
+            text-transform: uppercase;
+    }
+
+    .user-sub-area {
+        display: flex;
+        justify-content: center;
+        position: relative;
+
+        @media screen and (max-width: $break-tablet) {
+            flex-direction: column;
         }
-        .user-sub-area {
-            display: flex;
-            justify-content: center;
-            position: relative;
+        
+        .login-area, .register-area {
+            width: 46%;
 
             @media screen and (max-width: $break-tablet) {
-                flex-direction: column;
+                width: 100%;
             }
 
-            .uppercase-letter {
-                text-transform: uppercase;
+            .sub-title {
+                font-size: 13pt;
+                font-weight: bold;
             }
 
-            .login-area {
-                width: 40%;
-                border-right: solid 1px rgba(0, 0, 0, .8);
-                padding: 15px;
-
-                form {
-                    color: #fff;
-
-                    legend {
-                        font-size: 16pt;
-                    }
-                    .checkbox {
-                        display: inline-block;
-                    }
-
-                    .form-group {
-                        .form-control {
-                            border-radius: 0;
-                        }
-                    }
-
-                    label {
-                        font-size: 10pt;
-                    }
-
-                    a {
-                        color: #fff;
-                        font-size: 10pt;
-                        float: right;
-                    }
-
-                    button.form-control {
-                        color: #fff;
-                        font-size: 12pt;
-                        background-color: $green1-trans;
-
-                    }
-                }
-
-                @media screen and (max-width: $break-tablet) {
-                    border-right: 0;
-                    width: 100%;
-                    a {
-                        float: none;
-                    }
-
-                }
+            p, label {
+                font-size: 11pt;
             }
 
-            .register-area {
-                width: 40%;
-                padding: 15px;
+            button.form-control {
+                color: #fff;
+                font-size: 12pt;
+            }
+        }
+
+        .login-area {
+            border-right: solid 1px rgba(0, 0, 0, .8);
+            padding: 1% 2% 1% 0;
+            form {
                 color: #fff;
 
-                @media screen and (max-width: $break-tablet) {
-                    width: 100%;
+                .checkbox {
+                    display: inline-block;
                 }
+            }
 
-                .title-register {
-                    font-size: 16pt;
+                .form-group {
+                    .form-control {
+                        border-radius: 0;
+                    }
                 }
-
-                .title-register + p {
+                
+                a {
+                    color: #fff;
                     font-size: 10pt;
+                    float: right;
                 }
 
                 button.form-control {
-                    color: #fff;
-                    font-size: 12pt;
-                    background-color: $red-trans;
+                    background-color: $green1-trans;
+
+                }
+            }
+
+            @media screen and (max-width: $break-tablet) {
+                border-right: 0;
+
+                a {
+                    float: none;
                 }
             }
         }
-    }
+
+        .register-area {
+            padding: 1% 0 1% 2%;
+            color: #fff;
+                       
+            button.form-control {
+                background-color: $red-trans;
+            }
+        }
 }

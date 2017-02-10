@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JobService } from '../job.service';
 import { Job } from '../job';
@@ -8,11 +9,21 @@ import { Job } from '../job';
     selector: 'trans-admin-job-edit',
     templateUrl: 'job-edit.component.html'
 })
-export class JobCreateComponent {
-    job = new Job();
-    constructor(private jobService: JobService, private router: Router) { }
+export class JobCreateComponent implements OnInit {
 
-    async save() {
+    private job: Job;
+
+    ngOnInit() {
+        this.job = new Job();
+    }
+
+    constructor(private jobService: JobService, private router: Router) {
+     }
+
+    async save(form: NgForm) {
+        if (form.invalid) {
+            return;
+        }
         await this.jobService.createAsync(this.job);
         this.goBack();
     }

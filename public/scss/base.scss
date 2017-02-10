@@ -6,7 +6,7 @@
 
 body {
     padding-top: 60px;
-    padding-bottom: 140px;
+    padding-bottom: 0;
 }
 
 .txt-orange {
@@ -41,21 +41,140 @@ body {
 
 //  Footer
 .footer {
-    position: relative;
-    bottom: -140px;
-    width: 100%;
-    color: #fff;
-    text-align: center;
-    background: $gray;
-    border-bottom: 8px solid $grayBold;
-    height: 140px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+    .social-network-footer {
+        background-color: #5a5663;
+        color: #fff;
+        min-height: 100px;
+        display: flex;
+        align-items: center;
+        padding: 2em 0;
+        
+        .sub-area-network {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;  
+            @media screen and (max-width: $break-tablet) {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            span:nth-child(1){
+                font-size: 16pt;
 
-    .footer-logo {
-        height: 40px;
-        margin: 10px 0;
+                @media screen and (max-width: $break-tablet) {
+                    text-align: center;
+                    margin-bottom: 10px;
+                }
+            } 
+
+            a {
+                background-image: url('/dist/public/images/facebook_online_social_media.svg');
+                width: 40px;
+                height: 40px;
+                display: block; 
+                text-indent: -9999999px;
+            }        
+        }
+    }
+
+    .trans-footer-description {
+        background-color: #514c59;
+        min-height: 200px;
+        display: flex;
+        align-items: center;
+        padding: 2em 0;
+        
+        .sub-area-footer-description {
+            display: flex;
+
+            @media screen and (max-width: $break-tablet) {
+                width: 100%;
+                flex-direction: column;
+            }
+            
+            .esq, .dir {
+                width: 50%;
+            }
+        
+            .esq {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+
+                @media screen and (max-width: $break-tablet) {
+                    width: 100%;
+                    align-items: center;
+                }
+
+                .footer-logo {
+                    height: 40px;
+                    margin: 10px 0;
+                }
+
+                ul {
+                    list-style: none;
+                    display: flex;
+                    padding: 0;
+                    
+                    @media screen and (max-width: $break-tablet) {
+                        font-size: 10pt;
+                    }
+
+                    li {
+                        a, b {
+                            color: $gray2-trans;
+                            font-weight: bold;
+                        }
+                        
+                        a {
+                            text-decoration: none;
+                            margin-left: 5px;
+                            margin-right: 5px;
+                        }
+                    }   
+                }
+            }
+
+            .dir {
+                color: #fff;
+                font-size: 10pt;
+                line-height: 1.4;
+
+                @media screen and (max-width: $break-tablet) {
+                    width: 100%;
+                    margin-bottom: 15px;
+                }
+            }
+        }        
+    }
+
+    .baixo {
+        background-color: #514c59;
+        color: #fff;
+        min-height: 50px;
+        border-top: 1px solid #aaa;
+        display: flex;
+        align-items: center;
+        font-size: 10pt;
+        line-height: 1.4;
+        padding: 1em 0;
+
+        .sub-area-baixo {
+            display: flex;
+            justify-content: space-between;
+
+            @media screen and (max-width: $break-tablet) {
+                flex-wrap: wrap;
+                justify-content: center;
+                text-align: center;
+                margin-bottom: 10px;
+                margin-top: 10px;
+
+                span:ntd-child(1) {
+                    margin-bottom: 10px;
+                    line-height: 1.4;
+                }
+            }
+        }
     }
 
     > div {

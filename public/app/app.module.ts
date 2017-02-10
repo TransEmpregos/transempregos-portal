@@ -18,6 +18,7 @@ import { LoginCandidateComponent } from './login/login-candidate.component';
 import { AppRoutingModule } from './app-routing.module';
 import './rxjs-extensions';
 
+
 @NgModule({
     imports: [
         BrowserModule,

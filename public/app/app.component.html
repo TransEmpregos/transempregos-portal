@@ -19,13 +19,13 @@
                         </li>
 
                         <li>
-                            <a routerLink="/cadastrar-curriculo" class="nav-item nav-link" routerLinkActive="active">Cadastrar Vagas</a>
+                            <a routerLink="/cadastrar-curriculo" class="nav-item nav-link" routerLinkActive="active">Crie seu perfil</a>
                         </li>
 
                         <li>
                             <div ngbDropdown class="dropdown">
                                 <div class="dropdown-divider hidden-sm-up"></div>
-                                <button ngbDropdownToggle>Entrar</button>
+                                <button ngbDropdownToggle>Acesse</button>
                                 <div class="dropdown-menu">
                                     <a routerLink="/login/candidate" class="dropdown-item">Candidato(a)</a>
                                     <a routerLink="/login/recruiter" class="dropdown-item">Recrutador(a)</a>
@@ -46,9 +46,49 @@
 </div>
 
 <footer class="footer">
-    <img class="footer-logo" alt="Logo Transempregos" src="/dist/public/images/logo2.svg"/>
-    <div>
-        <span class="txt-orange">CopyRight © 2016 TransEmpregos</span>
-        <br class="hidden-sm-up" ><b class="hidden-sm-down">|</b> <span> Todos os direitos reservados.</span>
+    
+    <div class="social-network-footer">
+        <div class="container">
+            <div class=" sub-area-network">
+                <span>Acompanhe também as nossas vagas no Facebook</span>
+                <span>
+                    <a href="https://www.facebook.com/transempregos/?fref=ts">
+                        Facebook
+                    </a>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="trans-footer-description">
+        <div class="container">
+            <div class="sub-area-footer-description">
+                <div class="esq">
+                    <img class="footer-logo" alt="Logo Transempregos" src="/dist/public/images/logo2.svg"/>
+                    <ul>
+                        <li><a href="#">Sobre</a><b>|</b></li> 
+                        <li><a href="#">Cadastre-se</a><b>|</b></li> 
+                        <li><a href="#">Acesse seu perfil</a></li>
+                    </ul>
+                </div>
+                <div class="dir">
+                    O TransEmpregos é um site que visa facilitar a colocação
+                    de pessoas trans* (travestis e transexuais) no mercado de
+                    trabalho, e possibilitar que empresários e recrutadores 
+                    contatem essas pessoas, que muitas vezes não conseguem 
+                    demonstrar todo o talento que possuem pois não são contratadas
+                    por possuírem uma condição diferente da maioria.
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="baixo">
+        <div class="container">
+            <div class="sub-area-baixo">
+                <span>CopyRight © 2016 TransEmpregos.<br class="hidden-md-up"> Todos os direitos reservados.</span>
+                <span>Termos de uso | Política de privacidade</span>
+            </div>
+        </div>
     </div>
 </footer>

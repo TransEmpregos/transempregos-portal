@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <ul>
             <li *ngFor="let job of jobs">
-                <a [routerLink]="['/admin/job', job._id]">{{job.name}}</a>
+                <a [routerLink]="['/admin/job', job._id]">{{job.companyName}}</a>
                 <a [routerLink]="['/admin/job', job._id]" class="btn btn-secondary" role="button">Editar</a>
                 <button (click)="delete(job)" class="btn btn-danger">Excluir</button>
             </li>
