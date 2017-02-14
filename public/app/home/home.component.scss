@@ -235,6 +235,7 @@
             max-width: 750px;
 
             button {
+                background-color: transparent;
                 border-color: $purple-trans;
                 color: $purple-trans;
                 text-transform: uppercase;
@@ -381,6 +382,7 @@
 
     button {
         color: $purple-trans;
+        background-color: transparent;
         border-color: $purple-trans;
         font-size: 16pt;
         font-weight: bold;
