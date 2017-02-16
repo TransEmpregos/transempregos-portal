@@ -377,9 +377,8 @@ var protractor = (options) => {
         }
         if (options.configFile)
             args.unshift(options.configFile);
-        const protractorDir = path.resolve(path.join(path.dirname(require.resolve("protractor")), "..", "..", ".bin"));
-        const winExt = /^win/.test(process.platform) ? ".cmd" : "";
-        let child = child_process.spawn(path.resolve(protractorDir, 'protractor' + winExt), args, {
+        const protractorJsFilePath = path.resolve(path.join(__dirname, 'node_modules', "protractor", "bin", "protractor"));
+        let child = spawn(process.execPath, ['--harmony-async-await', protractorJsFilePath, ...args], {
             stdio: 'inherit',
             env: process.env
         }).on('exit', function (code) {
