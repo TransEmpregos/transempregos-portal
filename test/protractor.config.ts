@@ -10,8 +10,9 @@ exports.config = {
     mochaOpts: {
         reporter: 'spec',
         slow: 3000,
-        timeout: 38000
+        timeout: 60000
     },
+    allScriptsTimeout: 30000,
     plugins: [{
         axe: {
             rules: {
