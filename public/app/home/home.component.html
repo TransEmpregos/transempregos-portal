@@ -77,16 +77,17 @@
 
                 <hr class="hr">
 
-                <p class="text-depositions">
-                Nós da lambda3 ficamos muito felizes ao receber em nosso
-                time de desenvolvimento profissionais trans que agregam muito
-                valor ao nosso ambiente de trabalho e trazem resultados bem
-                importantes para nossos clientes. Estamos sempre em busca de
-                pessoas com talento, não importando sua identidade de gênero
-                e/ou orientação sexual.<br><br>
+                <ngb-carousel>
+                    <template ngbSlide *ngFor="let depoimento of depoimentos">
+                        <p class="text-depositions">
+                            {{depoimento.message}}
+                            <br><br>
 
-                <span>Vitor Hugo Germano</span> <b>|</b> Lambda3
-                </p>
+                            <span>{{depoimento.name}}</span> <b>|</b> {{depoimento.company}}
+                        </p>
+                    </template>
+                </ngb-carousel>
+
                 <button type="button" class="btn btn-secondary btn-lg">Mais depoimentos</button>
             </div>
 
@@ -99,53 +100,11 @@
             <h2 class="title-partners">Parceiros</h2>
 
             <hr class="hr">
-
+            
             <ul>
-                <li>
-                    <a href="#">
-                        <img alt="Logo comissão de atenção a diversidade sexual de Osaco" src="/dist/public/images/logos_parceiros/comissao_de_atencao_a_diversidade_sexual_osasco.png">
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <img alt="Logo do TXAI" src="/dist/public/images/logos_parceiros/txai.png">
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <img alt="Logo da coordenadoria da mulher promocao da igualdade_racial e diversidade sexual" src="/dist/public/images/logos_parceiros/coordenadoria_da_mulher_promocao_da_igualdade_racial_e_diversidade_sexual.png">
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <img alt="Logo da SP escola de teatro" src="/dist/public/images/logos_parceiros/sp_escola_de_teatro.png">
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <img alt="Logo da comissão de diversidade sexual" src="/dist/public/images/logos_parceiros/comissao_da_diversidade_sexual.png">
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <img alt="logo da ABRAT"  src="/dist/public/images/logos_parceiros/abrat.png">
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <img alt="Logo da Sex Box" src="/dist/public/images/logos_parceiros/ssex_bbox.png">
-                    </a>
-                </li>
-
-                <li>
-                    <a href="http://www.lambda3.com.br">
-                        <img alt="logo da Lambda3" src="/dist/public/images/logos_parceiros/lambda3.png">
+                <li *ngFor="let parceiro of parceiros">
+                    <a href="{{parceiro.url}}">
+                        <img alt="{{parceiro.alt}}" src="{{parceiro.src}}">
                     </a>
                 </li>
             </ul>
