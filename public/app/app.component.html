@@ -2,41 +2,41 @@
 <nav class="navbar navbar-fixed-top">
     <div class="row">
 
-        <div class="col-xs-12 header-align">
-
-            <a  routerLink="/">
+        <div class="header-align">
+            <div class="container">
+                <a  routerLink="/">
                 <img class="header-logo" src="/dist/public/images/logo.svg" alt="Logo {{title}}" />
-            </a>
-            <div class="nav navbar-nav header-text-uppercase menu-header">
+                </a>
+                <div class="nav navbar-nav header-text-uppercase menu-header">
 
-                <input type="checkbox" id="btn-menu">
-                <label for="btn-menu"><img src="/dist/public/images/hamburger.svg"></label>
+                    <input type="checkbox" id="btn-menu">
+                    <label for="btn-menu"><img src="/dist/public/images/hamburger.svg"></label>
 
-                <div class="menu">
-                    <ul>
-                        <li>
-                            <a routerLink="/sobre" class="nav-item nav-link" routerLinkActive="active">Sobre</a>
-                        </li>
+                    <div class="menu">
+                        <ul>
+                            <li>
+                                <a routerLink="/sobre" class="nav-item nav-link" routerLinkActive="active">Sobre</a>
+                            </li>
 
-                        <li>
-                            <a routerLink="/cadastrar-curriculo" class="nav-item nav-link" routerLinkActive="active">Crie seu perfil</a>
-                        </li>
+                            <li>
+                                <a routerLink="/cadastrar-curriculo" class="nav-item nav-link" routerLinkActive="active">Crie seu perfil</a>
+                            </li>
 
-                        <li>
-                            <div ngbDropdown class="dropdown">
-                                <div class="dropdown-divider hidden-sm-up"></div>
-                                <button ngbDropdownToggle>Acesse</button>
-                                <div class="dropdown-menu">
-                                    <a routerLink="/login/candidate" class="dropdown-item">Candidato(a)</a>
-                                    <a routerLink="/login/recruiter" class="dropdown-item">Recrutador(a)</a>
+                            <li>
+                                <div ngbDropdown class="dropdown">
+                                    <div class="dropdown-divider hidden-sm-up"></div>
+                                    <button ngbDropdownToggle>Acesse</button>
+                                    <div class="dropdown-menu">
+                                        <a routerLink="/login/candidate" class="dropdown-item">Candidato(a)</a>
+                                        <a routerLink="/login/recruiter" class="dropdown-item">Recrutador(a)</a>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                    </ul>
+                            </li>
+                        </ul>
+
+                    </div>
 
                 </div>
-
-
             </div>
         </div>
     </div>
