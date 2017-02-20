@@ -1,43 +1,29 @@
 import { CompanyService } from './../company.service';
 import { Company } from './../company';
 import { Component, OnInit } from '@angular/core';
-import { Job } from '../job';
-import { JobService } from '../job.service';
 import { ModalYesNoComponent } from '../modals/modal-yesno.component';
 import { ModalOkComponent } from '../modals/modal-ok.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     moduleId: module.id,
-    selector: 'trans-admin-jobs-list',
-    templateUrl: 'jobs-list.component.html',
-    styleUrls: ['base-test.component.css']
+    selector: 'trans-admin-companies-list',
+    templateUrl: 'companies-list.component.html'
 })
-export class JobsListComponent implements OnInit {
-    jobs: Job[] = [];
+export class CompaniesListComponent implements OnInit {
     companies: Company[] = [];
-
-    constructor(private jobService: JobService, private companyService: CompanyService,
-        private modalService: NgbModal) { }
-
+    constructor(private companyService: CompanyService, private modalService: NgbModal) { }
     async ngOnInit(): Promise<void> {
         const companies = await this.companyService.getAllAsync();
-
-        for (let i = 0; i < companies.length; i++) {
-            const companyJobs = await this.companyService.getAllCompanyJobsAsync(companies[i]._id);
-            companies[i].jobs = companyJobs;
-        }
-
         this.companies = companies;
     }
-
-    async delete(job: Job) {
+    async delete(company: Company) {
         const yesNoModal = this.modalService.open(ModalYesNoComponent);
         const result = await yesNoModal.result;
         if (result !== 'yes') return;
         try {
-            await this.jobService.deleteAsync(job._id);
-            this.jobs.splice(this.jobs.indexOf(job), 1);
+            await this.companyService.deleteAsync(company._id);
+            this.companies.splice(this.companies.indexOf(company), 1);
         } catch (error) {
             const okModal = this.modalService.open(ModalOkComponent);
             okModal.componentInstance.message = 'Erro ao excluir.';

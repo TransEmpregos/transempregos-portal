@@ -1,20 +1,18 @@
-import { Contact } from './contact';
-
+import { Company } from './company';
 export class Job {
     _id: string;
-    companyName: string;
-    fantasyName: String;
-    cnpj: String;
-    showCompanyName: Boolean;
-    opportunityName: String;
-    opportunityDecription: String;
+    name: String;
+    description: String;
     howToSubscribe: String;
-
-    contact: Contact;
     salaryRange: String;
     opportunityType: String;
     contractType: String;
-    city: String;
     state: String;
-    constructor() { this.contact = new Contact(); };
+    city: String;
+    companyId: String;
+
+    constructor () {
+        let j  = new Company();
+        this.companyId = j._id;
+    }
 }

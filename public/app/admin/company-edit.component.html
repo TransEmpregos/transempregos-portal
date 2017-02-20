@@ -1,0 +1,131 @@
+<div class="container">
+    <div *ngIf="company" >
+        <form #companyForm="ngForm">
+            <fieldset>
+                <legend>Os campos em vermelho são obrigarios</legend>
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="companyName">Nome da empresa:</label>
+                        <input required #companyName="ngModel" [(ngModel)]="company.companyName" 
+                            placeholder="Coloque o nome da empresa" class="form-control" type="text" 
+                            id="companyName" name="companyName" minlength="2" maxlength="100"
+                        />
+                        <div *ngIf="companyName.errors && companyName.dirty" 
+                            class="alert alert-danger">
+                            <div [hidden]="!companyName.errors.required  || (companyName.dirty && !companyName.valid && !companyName.touched)">
+                                O nome da empresa é obrigatório
+                            </div>
+
+                            <div [hidden]="!companyName.errors.maxlength">
+                                O nome da empresa nao tem mais de 100 caracteres.
+                            </div>
+
+                            <div [hidden]="!companyName.errors.minlength || (companyName.dirty && !companyName.valid && !companyName.touched)">
+                                O nome da empresa nao tem menos de 2 caracteres.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="comercialName">Nome fantasia da empresa:</label>
+                        <input required #comercialName="ngModel" [(ngModel)]="company.comercialName" 
+                            placeholder="Coloque o nome fantasia da empresa" class="form-control" type="text" 
+                            id="comercialName" name="comercialName" minlength="2" maxlength="50"
+                        />
+                        <div *ngIf="comercialName.errors && comercialName.dirty" 
+                            class="alert alert-danger">
+                            <div [hidden]="!comercialName.errors.required">
+                                O nome fantasia da empresa é obrigatório
+                            </div>
+
+                            <div [hidden]="!comercialName.errors.maxlength">
+                                O nome fantasia da empresa nao tem mais de 50 caracteres.
+                            </div>
+
+                            <div [hidden]="!comercialName.errors.minlength">
+                                O nome fantasia da empresa nao tem menos de 2 caracteres.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="governmentId">CNPJ da empresa:</label>
+                        <div *ngIf="governmentId.errors && governmentId.dirty" class="alert-info">
+                            Ex.: 00.000.000/0000-00
+                        </div>
+                        <input required #governmentId="ngModel" [(ngModel)]="company.governmentId" 
+                            placeholder="00.000.000/0000-00" class="form-control" type="text" 
+                            id="governmentId" name="governmentId" 
+                            pattern="[0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[\-]?[0-9]{2}"
+                        />
+                        <div *ngIf="governmentId.errors && !governmentId.pristine" 
+                            class="alert alert-danger">
+                            <div [hidden]="!governmentId.errors.required">
+                                O cnpj da empresa é obrigario
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="checkbox" name="showCompany" value="false"
+                            #showCompany="ngModel" [(ngModel)]="company.showCompany"
+                            id="showCompany"
+                        />
+                        <label for="showCompany">Deseja mostrar o nome da empresa</label>
+                    </div>
+                </div>
+
+                    <div class="form-group">
+                    <label for="contactEmail">Email da empresa:</label>
+                    <input required #contactEmail="ngModel" [(ngModel)]="company.contactEmail" 
+                        placeholder="exemplo@email.com" class="form-control" type="text" 
+                        id="contactEmail" name="contactEmail" 
+                        pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])$"
+                    />
+                    <div *ngIf="contactEmail.errors && contactEmail.dirty" 
+                        class="alert alert-danger">
+                        <div [hidden]="!contactEmail.errors.required">
+                            O email da empresa é obrigatório
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactName">Nome:</label>
+                    <input required #contactName="ngModel" [(ngModel)]="company.contactName" 
+                        placeholder="Coloque o nome" class="form-control" type="text" 
+                        id="contactName" name="contactName" 
+                    />
+                    <div *ngIf="contactName.errors && contactName.dirty" 
+                        class="alert alert-danger">
+                        <div [hidden]="!contactName.errors.required">
+                            O name para contato é obrigatório
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactPhone">Telefone da empresa:</label>
+                    <div *ngIf="contactPhone.errors && contactPhone.dirty" class="alert-info">
+                        Ex.: (11)98888-7777
+                    </div>
+                    <input required #contactPhone="ngModel" [(ngModel)]="company.contactPhone" 
+                        placeholder="(11)98888-7777" class="form-control" type="text" 
+                        id="contactPhone" name="contactPhone" pattern="[\(]?[0-9]{2}[\)]?[0-9]{4,5}[\-]?[0-9]{4}$"
+                    />
+                    <div *ngIf="contactPhone.errors && contactPhone.dirty" 
+                        class="alert alert-danger">
+                        <div [hidden]="!contactPhone.errors.required">
+                            O telefone da empresa é obrigatório
+                        </div>
+                    </div>
+                </div>
+                    
+                <div>
+                    <button (click)="goBack()" class="btn btn-secondary">Cancelar</button>
+                    <button (click)="save(companyForm)" class="btn btn-primary" [disabled]="!companyForm.form.valid">Salvar</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>

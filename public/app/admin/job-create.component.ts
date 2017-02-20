@@ -1,3 +1,5 @@
+import { CompanyService } from './../company.service';
+import { Company } from './../company';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -7,17 +9,21 @@ import { Job } from '../job';
 @Component({
     moduleId: module.id,
     selector: 'trans-admin-job-edit',
-    templateUrl: 'job-edit.component.html'
+    templateUrl: 'job-edit.component.html',
+    styleUrls: ['form.component.css']
 })
 export class JobCreateComponent implements OnInit {
 
     private job: Job;
+    companies: Company[] = [];
 
-    ngOnInit() {
+    async ngOnInit(): Promise<void> {
+        const companies = await this.companyService.getAllAsync();
+        this.companies = companies;
         this.job = new Job();
     }
 
-    constructor(private jobService: JobService, private router: Router) {
+    constructor(private jobService: JobService, private companyService: CompanyService, private router: Router) {
      }
 
     async save(form: NgForm) {
