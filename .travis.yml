@@ -12,7 +12,17 @@ script:
   - node_modules/.bin/gulp
   - gulp ci:quick
   - ssh-agent bash -c 'ssh-add /var/go/transempregos-release; /bin/bash ./deploy.sh -d'
-
+  
+notifications:
+  slack: slackChanel #| travis encrypt "slackChanel" --add notifications.slack # defaultChannel: transempregos
+    on_success: change # default: always
+    on_failure: always # default: always
+    template:
+      - "%{branch} (%{commit}) : %{result} %{build_number} "
+      - "Build details: %{build_url}"
+      - "Commit Author: %{author}"
+      - "Commit Message: %{commit_message}"
+      
 #services:
 #  - mongodb
 
