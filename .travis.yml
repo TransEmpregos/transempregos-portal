@@ -8,10 +8,18 @@ install:
 before_script:
   - npm install -g gulp
 
+addons:
+  sonarqube:
+    token:
+      secure: SONAR_TOKEN
+  branches:
+    - master
+
 script:
   - node_modules/.bin/gulp
   - gulp ci:quick
   - ssh-agent bash -c 'ssh-add /var/go/transempregos-release; /bin/bash ./deploy.sh -d'
+  - sonar-scanner
   
 notifications:
   slack: slackChanel #| travis encrypt "slackChanel" --add notifications.slack # defaultChannel: transempregos
@@ -22,7 +30,7 @@ notifications:
       - "Build details: %{build_url}"
       - "Commit Author: %{author}"
       - "Commit Message: %{commit_message}"
-      
+
 #services:
 #  - mongodb
 
