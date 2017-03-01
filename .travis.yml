@@ -1,0 +1,27 @@
+language: node_js
+node_js:
+  - "7"
+
+install:
+  - npm install
+
+before_script:
+  - npm install -g gulp
+
+script:
+  - node_modules/.bin/gulp
+  - gulp ci:quick
+  - ssh-agent bash -c 'ssh-add /var/go/transempregos-release; /bin/bash ./deploy.sh -d'
+
+#services:
+#  - mongodb
+
+#deploy:
+#  provider: azure_web_apps
+#  skip_cleanup: false
+#  verbose: true
+#  username: userName                          # azure_deployment_user - If AZURE_WA_USERNAME isn't set
+#  password: userPWD                           # azure_deployment_password - If AZURE_WA_PASSWORD isn't set
+#  site: destinationAppUrl                     # azure_deployment_sitename - If AZURE_WA_SITE isn't set
+#  slot: production                            # azure_deployment_slotname - (optional) If AZURE_WA_SLOT isn't set
+#  on: master                                  # branch to deploy from
