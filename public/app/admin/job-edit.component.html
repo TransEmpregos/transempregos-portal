@@ -1,249 +1,148 @@
-<div *ngIf="job">
-    <form #jobForm="ngForm">
-        <div class="form-group">
-            <h2>{{job.companyName}}</h2>
-            <div class="form-group">
+<div class="container page-min-height">
+    <div *ngIf="job">
+        <form #jobForm="ngForm">
+            <fieldset>
+                <legend>Os campos em vermelho são obrigatórios</legend>
                 <div class="form-group">
-                    <label for="companyName">Nome da empresa:</label>
-                    <input required #companyName="ngModel" [(ngModel)]="job.companyName" 
-                        placeholder="Coloque o nome da empresa" class="form-control" type="text" 
-                        id="companyName" name="companyName" minlength="2" maxlength="100"
-                    />
-                    <div *ngIf="companyName.errors && (companyName.dirty || companyName.touched)" 
-                        class="alert alert-danger">
-                        <div [hidden]="!companyName.errors.required">
-                            O nome da empresa é obrigatória
-                        </div>
-
-                        <div [hidden]="!companyName.errors.maxlength">
-                            O nome da empresa nao tem mais de 100 caracteres.
-                        </div>
-
-                        <div [hidden]="!companyName.errors.minlength">
-                            O nome da empresa nao tem menos de 2 caracteres.
+                     <div class="form-group" >
+                        <label for="company">Empresa:</label>
+                        <select required [(ngModel)]="job.companyId" #company="ngModel" name="company" id="company" class="form-control">
+                            <option value="{{company._id}}" *ngFor="let company of companies" >{{company.companyName}}</option>
+                        </select>
+                        <div *ngIf="company.errors && company.dirty" class="alert alert-danger">
+                            <div [hidden]="!company.errors.required">
+                                A empresa é obrigatória.
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="fantasyName">Nome fantasia da empresa:</label>
-                    <input required #fantasyName="ngModel" [(ngModel)]="job.fantasyName" 
-                        placeholder="Coloque o nome da empresa" class="form-control" type="text" 
-                        id="fantasyName" name="fantasyName" minlength="2" maxlength="50"
-                    />
-                    <div *ngIf="fantasyName.errors && (fantasyName.dirty || fantasyName.touched)" 
-                        class="alert alert-danger">
-                        <div [hidden]="!fantasyName.errors.required">
-                            O nome fantasia da empresa é obrigatória
-                        </div>
 
-                        <div [hidden]="!fantasyName.errors.maxlength">
-                            O nome fantasia da empresa nao tem mais de 50 caracteres.
-                        </div>
-
-                        <div [hidden]="!fantasyName.errors.minlength">
-                            O nome fantasia da empresa nao tem menos de 2 caracteres.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="cnpj">CNPJ da empresa:</label>
-                    <input required #cnpj="ngModel" [(ngModel)]="job.cnpj" 
-                        placeholder="Coloque o nome da empresa" class="form-control" type="text" 
-                        id="cnpj" name="cnpj" 
-                    />
-                    <div *ngIf="cnpj.errors && (cnpj.dirty || cnpj.touched)" 
-                        class="alert alert-danger">
-                        <div [hidden]="!cnpj.errors.required">
-                            O nome fantasia da empresa é obrigatória
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <input type="checkbox" name="showCompanyName" value="false"
-                        #showCompanyName="ngModel" [(ngModel)]="job.showCompanyName"
-                        id="showCompanyName"
-                    />
-                    <label for="showCompanyName">Mostrar nome da empresa</label>
-                </div>
-            </div>
-
-           
-
-            <div class="form-group">
-                <label for="opportunityName">Nome da vaga:</label>
-                <input required [(ngModel)]="job.opportunityName" #opportunityName="ngModel" 
-                    placeholder="Coloque o nome da vaga" class="form-control" type="text" id="opportunityName" 
-                    name="opportunityName"
-                />
-                <div *ngIf="opportunityName.errors && (opportunityName.dirty || opportunityName.touched)" 
-                    class="alert alert-danger">
-                    <div [hidden]="!opportunityName.errors.required">
-                        O nome da vaga é obrigatória
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="opportunityDecription">Descrição da vaga:</label>
-                <textarea required [(ngModel)]="job.opportunityDecription" rows="5" 
-                    #opportunityDecription="ngModel" placeholder="Coloque a descriçao da vaga" 
-                    class="form-control" type="text" id="opportunityDecription" name="opportunityDecription">
-                </textarea>
-                <div *ngIf="opportunityDecription.errors && (opportunityDecription.dirty || opportunityDecription.touched)" 
-                    class="alert alert-danger">
-                    <div [hidden]="!opportunityDecription.errors.required">
-                        A descrição da vaga é obrigatória
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="howToSubscribe">Como se inscrever:</label>
-                <textarea required [(ngModel)]="job.howToSubscribe" rows="5" #howToSubscribe="ngModel" 
-                    placeholder="Coloque como se inscrever" class="form-control" type="text" id="howToSubscribe" 
-                    name="howToSubscribe">
-                </textarea>
-                <div *ngIf="howToSubscribe.errors && (howToSubscribe.dirty || howToSubscribe.touched)" 
-                    class="alert alert-danger">
-                    <div [hidden]="!howToSubscribe.errors.required">
-                        É obrigatóriao explicar como se increver.
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="contactEmail">Email de alguém da empresa:</label>
-                
-                <input required [(ngModel)]="job.contact.email" #contactEmail="ngModel" placeholder="Coloque o email" 
-                        class="form-control" type="email" 
-                        id="contactEmail" 
-                        name="contactEmail" 
-                        pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])$"
+                   <div class="form-group">
+                        <label for="name">Nome da vaga:</label>
+                        <input required [(ngModel)]="job.name" #name="ngModel" 
+                            placeholder="Coloque o nome da vaga" class="form-control" type="text" id="name" 
+                            name="name"
                         />
-
-                <div *ngIf="contactEmail.errors && (contactEmail.dirty || contactEmail.touched)" class="alert alert-danger">
-                    <div [hidden]="!contactEmail.errors.required">
-                        O email da empresa é obrigatório.
+                        <div *ngIf="name.errors && name.dirty" 
+                            class="alert alert-danger">
+                            <div [hidden]="!name.errors.required">
+                                O nome da vaga é obrigatória
+                            </div>
+                        </div>
                     </div>
-                    <div [hidden]="!contactEmail.errors.pattern">
-                        O email está inválido.
+
+                    <div class="form-group">
+                        <label for="description">Descrição da vaga:</label>
+                        <textarea required [(ngModel)]="job.description" rows="5" 
+                            #description="ngModel" placeholder="Coloque a descriçao da vaga" 
+                            class="form-control" type="text" id="description" name="description">
+                        </textarea>
+                        <div *ngIf="description.errors && description.dirty" 
+                            class="alert alert-danger">
+                            <div [hidden]="!description.errors.required">
+                                A descrição da vaga é obrigatória
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="howToSubscribe">Como se inscrever:</label>
+                        <textarea required [(ngModel)]="job.howToSubscribe" rows="5" #howToSubscribe="ngModel" 
+                            placeholder="Coloque como se inscrever" class="form-control" type="text" id="howToSubscribe" 
+                            name="howToSubscribe">
+                        </textarea>
+                        <div *ngIf="howToSubscribe.errors && howToSubscribe.dirty" 
+                            class="alert alert-danger">
+                            <div [hidden]="!howToSubscribe.errors.required">
+                                É obrigatóriao explicar como se increver.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="salaryRange">Range do salário:</label>
+                        <select required [(ngModel)]="job.salaryRange" #salaryRange="ngModel" name="salaryRange" id="salaryRange" 
+                            class="form-control">
+                            <option value="0-2000">0-2000</option>
+                            <option value="2000-4000">2000-4000</option>
+                            <option value="4000-6000">4000-6000</option>
+                            <option value="6000-8000">6000-8000</option>
+                            <option value="+8000">+8000</option>
+                        </select>
+                        <div *ngIf="salaryRange.errors && salaryRange.dirty" class="alert alert-danger">
+                            <div [hidden]="!salaryRange.errors.required">
+                                Range do salário é obrigatório.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="opportunityType">Tipo da vaga:</label>
+                        <select required [(ngModel)]="job.opportunityType" #opportunityType="ngModel" name="opportunityType" 
+                            id="opportunityType" class="form-control">
+                            <option value="freelance">Freelance</option>
+                            <option value="meio">Meio Período</option>
+                            <option value="integral">Período Integral</option>
+                            <option value="estagio">Estágio</option>
+                        </select>
+                        <div *ngIf="opportunityType.errors && opportunityType.dirty" 
+                            class="alert alert-danger">
+                            <div [hidden]="!opportunityType.errors.required">
+                                O tipo da vaga é obrigatório.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contractType">O tipo de contrato:</label>
+                        <select required [(ngModel)]="job.contractType" #contractType="ngModel" name="contractType" 
+                            id="contractType" class="form-control">
+                            <option value="CLT">CLT</option>
+                            <option value="JP">JP</option>
+                            <option value="Cooperado">Cooperado</option>
+                            <option value="Freelance">Freelance</option>
+                        </select>
+                        <div *ngIf="contractType.errors && contractType.dirty" class="alert alert-danger">
+                            <div [hidden]="!contractType.errors.required">
+                                Tipo de contrataçao é obrigatória.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="state">O estado da vaga:</label>
+                        <select required [(ngModel)]="job.state" #state="ngModel" name="state" id="state" class="form-control">
+                            <option value="sp">Sao Paulo</option>
+                            <option value="rj">Rio de Janeiro</option>
+                            <option value="rs">Porto Alegre</option>
+                            <option value="mg">Minas Gerais</option>
+                        </select>
+                        <div *ngIf="state.errors && state.dirty" class="alert alert-danger">
+                            <div [hidden]="!state.errors.required">
+                                O estado é obrigatório.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="city">A cidade da vaga:</label>
+                        <select required [(ngModel)]="job.city" #city="ngModel" name="city" id="city" class="form-control">
+                            <option value="SP">Sao Paulo</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RS">Porto Alegre</option>
+                            <option value="MG">Belo Horizonte</option>
+                        </select>
+                        <div *ngIf="city.errors && city.dirty" class="alert alert-danger">
+                            <div [hidden]="!city.errors.required">
+                                A cidade é obrigatória.
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label for="contactName">Nome de alguém da empresa:</label>
-                <input required [(ngModel)]="job.contact.name" #contactName="ngModel" placeholder="Coloque o nome" 
-                    class="form-control" type="text" id="contactName" name="contactName"/>
-                <div *ngIf="contactName.errors && (contactName.dirty || contactName.touched)" class="alert alert-danger">
-                    <div [hidden]="!contactName.errors.required">
-                        O nome de alguém da empresa é obrigatória.
-                    </div>
+                <div>
+                    <button (click)="goBack()" class="btn btn-secondary">Cancelar</button>
+                    <button (click)="save(jobForm)" class="btn btn-primary" [disabled]="!jobForm.form.valid">Salvar</button>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label for="contactPhone">Telefone de alguém da empresa:</label>
-                <input required [(ngModel)]="job.contact.phone" #contactPhone="ngModel" placeholder="Coloque o telefone" 
-                    class="form-control" type="tel" pattern="\([0-9]{2}\) [0-9]{4,6}-[0-9]{3,4}$" id="contactPhone" name="contactPhone"
-                    ui-mask="(999) 999-9999"/>
-                <div *ngIf="contactPhone.errors && (contactPhone.dirty || contactPhone.touched)" class="alert alert-danger">
-                    <div [hidden]="!contactPhone.errors.required">
-                        O contato da empresa é obrigatória
-                    </div>
-
-                    <div [hidden]="!contactPhone.errors.pattern">
-                        O formato do contato está errado.
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="salaryRange">Range do salário:</label>
-                <select required [(ngModel)]="job.salaryRange" #salaryRange="ngModel" name="salaryRange" id="salaryRange" 
-                    class="form-control">
-                    <option value="0-2000">0-2000</option>
-                    <option value="2000-4000">2000-4000</option>
-                    <option value="4000-6000">4000-6000</option>
-                    <option value="6000-8000">6000-8000</option>
-                    <option value="+8000">+8000</option>
-                </select>
-                <div *ngIf="salaryRange.errors && (salaryRange.dirty || salaryRange.touched)" class="alert alert-danger">
-                    <div [hidden]="!salaryRange.errors.required">
-                        Range do salário é obrigatório.
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="opportunityType">Tipo da vaga:</label>
-                <select required [(ngModel)]="job.opportunityType" #opportunityType="ngModel" name="opportunityType" 
-                    id="opportunityType" class="form-control">
-                    <option value="freelance">Freelance</option>
-                    <option value="meio">Meio Período</option>
-                    <option value="integral">Período Integral</option>
-                    <option value="estagio">Estágio</option>
-                </select>
-                <div *ngIf="opportunityType.errors && (opportunityType.dirty || opportunityType.touched)" 
-                    class="alert alert-danger">
-                    <div [hidden]="!opportunityType.errors.required">
-                        O tipo da vaga é obrigatório.
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="contractType">O tipo de contrato:</label>
-                <select required [(ngModel)]="job.contractType" #contractType="ngModel" name="contractType" 
-                    id="contractType" class="form-control">
-                    <option value="CLT">CLT</option>
-                    <option value="JP">JP</option>
-                    <option value="Cooperado">Cooperado</option>
-                    <option value="Freelance">Freelance</option>
-                </select>
-                <div *ngIf="contractType.errors && (contractType.dirty || contractType.touched)" class="alert alert-danger">
-                    <div [hidden]="!contractType.errors.required">
-                        Tipo de contrataçao é obrigatória.
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="city">A cidade da vaga:</label>
-                <select required [(ngModel)]="job.city" #city="ngModel" name="city" id="city" class="form-control">
-                    <option value="SP">Sao Paulo</option>
-                    <option value="RJ">Rio de Janeiro</option>
-                    <option value="RS">Porto Alegre</option>
-                    <option value="MG">Belo Horizonte</option>
-                </select>
-                <div *ngIf="city.errors && (city.dirty || city.touched)" class="alert alert-danger">
-                    <div [hidden]="!city.errors.required">
-                        A cidade é obrigatória.
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="state">O estado da vaga:</label>
-                <select required [(ngModel)]="job.state" #state="ngModel" name="state" id="state" class="form-control">
-                    <option value="sp">Sao Paulo</option>
-                    <option value="rj">Rio de Janeiro</option>
-                    <option value="rs">Porto Alegre</option>
-                    <option value="mg">Minas Gerais</option>
-                </select>
-                <div *ngIf="state.errors && (state.dirty || state.touched)" class="alert alert-danger">
-                    <div [hidden]="!state.errors.required">
-                        O estado é obrigatório.
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div>
-            <button (click)="goBack()" class="btn btn-secondary">Cancelar</button>
-            <button (click)="save(jobForm)" class="btn btn-primary" [disabled]="!jobForm.form.valid">Salvar</button>
-        </div>
-    </form>
+            </fieldset>
+        </form>
+    </div>
 </div>
