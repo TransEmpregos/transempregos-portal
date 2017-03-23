@@ -1,8 +1,8 @@
-import { CompanyService } from './../company.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { JobService } from '../job.service';
 import { Job } from '../job';
+import { CompanyService } from './../company.service';
 
 @Component({
     moduleId: module.id,
@@ -21,13 +21,13 @@ export class JobDetailsComponent implements OnInit {
         this.route.params
         .switchMap((params: Params) => this.jobService.getJobAsync(params['id']))
         .subscribe(job => {
-        this.job = job;
-        let empresa = this.companyService.getCompanyAsync(job.companyId.toString());
+            this.job = job;
+            let empresa = this.companyService.getCompanyAsync(job.companyId.toString());
 
-        empresa.then(data => {
-            this.empresa = (data.companyName);
-            });
-    });
+            empresa.then(data => {
+                this.empresa = (data.companyName);
+                });
+        });
     }
 
     goBack() {

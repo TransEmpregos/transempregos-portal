@@ -8,7 +8,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
     moduleId: module.id,
     selector: 'trans-admin-companies-list',
-    templateUrl: 'companies-list.component.html'
+    templateUrl: 'companies-list.component.html',
+    styleUrls: ['base-test.component.css']
 })
 export class CompaniesListComponent implements OnInit {
     companies: Company[] = [];

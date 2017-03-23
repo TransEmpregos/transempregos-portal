@@ -7,7 +7,7 @@ import { Company } from '../company';
     moduleId: module.id,
     selector: 'trans-admin-company-details',
     templateUrl: 'company-details.component.html',
-    //styleUrls: ['form.component.css']
+    styleUrls: ['base-test.component.css']
 })
 export class CompanyDetailsComponent implements OnInit {
     company: Company;
