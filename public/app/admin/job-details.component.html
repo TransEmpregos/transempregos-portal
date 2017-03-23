@@ -1,0 +1,18 @@
+<div class="container page-min-height">
+    <div *ngIf="job">
+        <ul>
+            <li>Empresa: {{empresa}}</li>
+            <li>Vaga: {{job.name}}</li>
+            <li>Descrição: {{job.description}}</li>
+            <li>Como se increver: {{job.howToSubscribe}}</li>
+            <li>Salário: {{job.salaryRange}}</li>
+            <li>Tipo de vaga: {{job.opportunityType}}</li>
+            <li>Tipo de contrato: {{job.contractType}}</li>
+            <li>Estado: {{job.state}}</li>
+            <li>Cidade: {{job.city}}</li>
+        </ul>
+
+        <button (click)="goBack()" class="btn btn-secondary">Voltar</button>
+        <button class="btn btn-success">Candidatar</button>
+    </div>
+</div>
