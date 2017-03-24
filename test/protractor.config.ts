@@ -9,7 +9,7 @@ exports.config = {
     specs: ['**/*.feature.js'],
     mochaOpts: {
         reporter: 'spec',
-        slow: 3000,
+        slow: 23000,
         timeout: 38000
     },
     plugins: [{
