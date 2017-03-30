@@ -3,8 +3,8 @@ describe('Home', () => {
     it('should have find jobs call', async () => {
         browser.get('/');
 
-        let title = element.all(by.css('.title-aside-description'));
+        let title = element.all(by.css('.home-text-for-candidate'));
 
-        await title.get(0).getText().should.eventually.equal('Diversidade de talentos para um mundo de oportunidades');
+        await title.get(0).getText().should.eventually.equal('Encontre vagas para o seu talento');
     });
 });

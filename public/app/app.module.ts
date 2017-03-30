@@ -1,3 +1,10 @@
+import { CompanyDetailsComponent } from './admin/company-details.component';
+import { CompaniesListComponent } from './admin/companies-list.component';
+import { CompanyService } from './company.service';
+import { CompanyCreateComponent } from './admin/company-create.component';
+import { CompanyEditComponent } from './admin/company-edit.componet';
+import { JobDetailsComponent } from './admin/job-details.component';
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -44,10 +51,15 @@ import './rxjs-extensions';
         JobEditComponent,
         JobsListComponent,
         JobCreateComponent,
+        JobDetailsComponent,
+        CompanyEditComponent,
+        CompanyCreateComponent,
+        CompaniesListComponent,
+        CompanyDetailsComponent,
         ModalYesNoComponent,
         ModalOkComponent
     ],
-    providers: [HttpAuth, JobService, UserService, AdminGuard, LoggedInGuard, RecruiterGuard],
+    providers: [HttpAuth, JobService, CompanyService, UserService, AdminGuard, LoggedInGuard, RecruiterGuard],
     entryComponents: [ModalYesNoComponent, ModalOkComponent],
     bootstrap: [AppComponent]
 })
