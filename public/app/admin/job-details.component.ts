@@ -8,7 +8,6 @@ import { Job } from '../job';
     moduleId: module.id,
     selector: 'trans-admin-job-details',
     templateUrl: 'job-details.component.html',
-    //styleUrls: ['form.component.css']
     styleUrls: ['base-test.component.css']
 })
 export class JobDetailsComponent implements OnInit {
