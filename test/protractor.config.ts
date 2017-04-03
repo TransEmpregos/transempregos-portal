@@ -22,7 +22,7 @@ exports.config = {
             treatWarningsAsFailures: true,
             auditConfiguration: {
                 auditRulesToRun: [
-                    /*'ariaOnReservedElement',
+                    'ariaOnReservedElement',
                     'ariaOwnsDescendant',
                     'ariaRoleNotScoped',
                     'audioWithoutControls',
@@ -39,9 +39,9 @@ exports.config = {
                     'elementsWithMeaningfulBackgroundImage',
                     'multipleAriaOwners',
                     'multipleLabelableElementsPerLabel',
-                    'nonExistentRelatedElement',*/
+                    'nonExistentRelatedElement',
                     // 'nonExistentAriaLabelledbyElement', -> is on the docs, but does not exist
-                    'pageWithoutTitle',
+                    /*'pageWithoutTitle',
                     'requiredAriaAttributeMissing',
                     'requiredOwnedAriaRoleMissing',
                     'roleTooltipRequiresDescribedby',
@@ -50,7 +50,7 @@ exports.config = {
                     'uncontrolledTabpanel',
                     'unfocusableElementsWithOnClick',
                     'unsupportedAriaAttribute',
-                    'videoWithoutCaptions'
+                    'videoWithoutCaptions'*/
                 ],
                 auditRulesToIgnore: []
             }
