@@ -31,7 +31,7 @@ exports.config = {
                     'badAriaRole',
                     'controlsWithoutLabel',
                     'duplicateId',
-                    'focusableElementNotVisibleAndNotAriaHidden',
+                    /*'focusableElementNotVisibleAndNotAriaHidden',
                     'humanLangMissing',
                     'imagesWithoutAltText',
                     'linkWithUnclearPurpose',
@@ -39,7 +39,7 @@ exports.config = {
                     'elementsWithMeaningfulBackgroundImage',
                     'multipleAriaOwners',
                     'multipleLabelableElementsPerLabel',
-                    'nonExistentRelatedElement',
+                    'nonExistentRelatedElement',*/
                     // 'nonExistentAriaLabelledbyElement', -> is on the docs, but does not exist
                     /*'pageWithoutTitle',
                     'requiredAriaAttributeMissing',
