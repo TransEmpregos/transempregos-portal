@@ -28,6 +28,12 @@ export class JobsListComponent implements OnInit {
             companies[i].jobs = companyJobs;
         }
 
+        // testando a ordenação
+        companies.sort((a, b) => a.companyName.localeCompare(b.companyName.toString()));
+        for(let i = 0; i < companies.length; i++){
+            companies[i].jobs.sort((a, b) => a.name.localeCompare(b.name.toString()));
+        }
+
         this.companies = companies;
     }
 
