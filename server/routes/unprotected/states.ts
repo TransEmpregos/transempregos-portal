@@ -9,7 +9,7 @@ router.get('/', async ctx => {
 });
 router.get('/:id', async ctx => {
     const state = await State
-                            .filter( a => a.ID == ctx.params.id)
+                            .filter( a => a.Nome == ctx.params.id)
                             .map(a => a);
     ctx.body = state;
 });

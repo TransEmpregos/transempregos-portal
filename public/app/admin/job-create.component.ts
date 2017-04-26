@@ -5,7 +5,6 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JobService } from '../job.service';
 import { StateService } from '../state.service';
-import { CityService } from '../city.service';
 import { Job } from '../job';
 import { State } from '../state';
 import { City } from '../city';
@@ -33,14 +32,11 @@ export class JobCreateComponent implements OnInit {
     constructor(private jobService: JobService,
         private companyService: CompanyService,
         private stateService: StateService,
-        private cityService: CityService,
         private router: Router) {
      }
 
      async loadCitiesOfState(id: string): Promise<void>{
          this.cities = await this.stateService.getAllStatetCitiesAsync(id);
-         //this.cities = await this.cityService.getAllStatetCitiesAsync("1");
-         console.log("Aqui "+id);
      }
 
     async save(form: NgForm) {
