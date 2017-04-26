@@ -4,7 +4,11 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JobService } from '../job.service';
+import { StateService } from '../state.service';
+import { CityService } from '../city.service';
 import { Job } from '../job';
+import { State } from '../state';
+import { City } from '../city';
 
 @Component({
     moduleId: module.id,
@@ -16,14 +20,20 @@ export class JobCreateComponent implements OnInit {
 
     private job: Job;
     companies: Company[] = [];
+    states: State[];
 
     async ngOnInit(): Promise<void> {
         const companies = await this.companyService.getAllAsync();
         this.companies = companies;
         this.job = new Job();
+        this.states = await this.stateService.getStatesAsync();
     }
 
-    constructor(private jobService: JobService, private companyService: CompanyService, private router: Router) {
+    constructor(private jobService: JobService,
+        private companyService: CompanyService,
+        private stateService: StateService,
+        private cityService: CityService,
+        private router: Router) {
      }
 
     async save(form: NgForm) {
