@@ -21,6 +21,7 @@ export class JobCreateComponent implements OnInit {
     private job: Job;
     companies: Company[] = [];
     states: State[];
+    cities: City[];
 
     async ngOnInit(): Promise<void> {
         const companies = await this.companyService.getAllAsync();
@@ -34,6 +35,12 @@ export class JobCreateComponent implements OnInit {
         private stateService: StateService,
         private cityService: CityService,
         private router: Router) {
+     }
+
+     async loadCitiesOfState(id: string): Promise<void>{
+         this.cities = await this.stateService.getAllStatetCitiesAsync(id);
+         //this.cities = await this.cityService.getAllStatetCitiesAsync("1");
+         console.log("Aqui "+id);
      }
 
     async save(form: NgForm) {

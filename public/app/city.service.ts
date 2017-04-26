@@ -11,7 +11,7 @@ export class CityService {
 
     constructor(private http: HttpAuth) {}
 
-    async getStatesAsync(): Promise<City[]>{
+    async getCitiesAsync(): Promise<City[]>{
         try {
             const response = await this.http.get(this.citiesUrl).toPromise();
             const cities = response.json() as City[];
@@ -22,24 +22,12 @@ export class CityService {
         }
     }
 
-    async getStateAsync(id: string): Promise<City> {
+    async getCityAsync(id: string): Promise<City> {
         const url = `${this.citiesUrl}/${id}`;
         try {
             const response = await this.http.get(url).toPromise();
             const city = response.json() as City;
             return city;
-        } catch (error) {
-            console.error(`An error ocurred: ${error}`);
-            throw error;
-        }
-    }
-
-    async getAllStatetCitiesAsync(id: string): Promise<City[]> {
-        const url = `${this.citiesUrl}/${id}/jobs`;
-        try {
-            const response = await this.http.get(url).toPromise();
-            const stateCities = response.json() as City[];
-            return stateCities;
         } catch (error) {
             console.error(`An error ocurred: ${error}`);
             throw error;
