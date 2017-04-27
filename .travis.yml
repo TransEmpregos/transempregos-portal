@@ -1,0 +1,40 @@
+language: node_js
+node_js:
+  - "node"
+  - "iojs"
+  - "7"
+cache: yarn
+
+install:
+  - yarn #because we use yarn, we dont use "npm install"
+
+before_script:
+  - npm install -g gulp
+
+script:
+  - node_modules/.bin/gulp
+  - gulp ci:quick
+
+services:
+  - mongodb
+
+deploy:
+  - ssh-agent bash -c 'ssh-add /var/go/transempregos-release; /bin/bash ./deploy.sh -d'
+#  provider: azure_web_apps
+#  skip_cleanup: false
+#  verbose: true
+#  username: userName                          #default: azure_deployment_user - If AZURE_WA_USERNAME isn't set
+#  password: userPWD                           #default: azure_deployment_password - If AZURE_WA_PASSWORD isn't set
+#  site: destinationAppUrl                     #default: azure_deployment_sitename - If AZURE_WA_SITE isn't set
+#  slot: production                            #default: azure_deployment_slotname - (optional) If AZURE_WA_SLOT isn't set
+#  on: master                                  #default: branch to deploy from
+
+notifications:
+  slack: slackChanel #| travis encrypt "slackChanel" --add notifications.slack # defaultChannel: transempregos
+    on_success: change # default: always
+    on_failure: always # default: always
+    template:
+      - "%{branch} (%{commit}) : %{result} %{build_number} "
+      - "Build details: %{build_url}"
+      - "Commit Author: %{author}"
+      - "Commit Message: %{commit_message}"

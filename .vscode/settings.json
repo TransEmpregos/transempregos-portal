@@ -14,5 +14,6 @@
         "**/bower_components": true,
         ".vscode/chrome/**": true
     },
-    "typescript.tsdk": "./node_modules/typescript/lib"
+    "typescript.tsdk": "./node_modules/typescript/lib",
+    "vsicons.presets.angular": true
 }
