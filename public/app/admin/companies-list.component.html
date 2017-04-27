@@ -1,0 +1,13 @@
+<div class="container page-min-height">
+    <h2>Empresas</h2>
+    <a class="btn btn-primary" role="button" routerLink="/admin/company/create">Nova empresa</a>
+    <div class="col-md-12">
+        <ul>
+            <li *ngFor="let company of companies">
+                <a [routerLink]="['/admin/company/details', company._id]">{{company.companyName}}</a>
+                <a [routerLink]="['/admin/company', company._id]" class="btn btn-secondary" role="button">Editar</a>
+                <button (click)="delete(company)" class="btn btn-danger">Excluir</button>
+            </li>
+        </ul>
+    </div>
+</div>

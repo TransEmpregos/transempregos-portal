@@ -1,0 +1,13 @@
+<div class="container page-min-height">
+    <div *ngIf="company">
+        <ul>
+            <li>Nome da empresa: {{company.companyName}}</li>
+            <li>Nome fantasia da empresa: {{company.comercialName}}</li>
+            <li>Email da empresa: {{company.contactEmail}}</li>
+            <li>Nome: {{company.contactName}}</li>
+            <li>Telefone da empresa: {{company.contactPhone}}</li>
+        </ul>
+
+        <button (click)="goBack()" class="btn btn-secondary">Voltar</button>
+    </div>
+</div>
