@@ -2,7 +2,10 @@
 
 [![Build Status](https://travis-ci.org/alexgwasp/transempregos-portal.svg?branch=master)](https://travis-ci.org/alexgwasp/transempregos-portal)
 
-# TEmpregos
+[![Build Status](https://alexgwasp.visualstudio.com/_apis/public/build/definitions/630555c2-be2f-4ec7-8e2d-bad28c06128f/32/badge)
+
+
+# TransEmpregos
 
 Projeto de reformulação do site que tem como objetivo trazer empregos para o público TRANS (transexuais, travestis, homens trans e trans não bináries). Esse projeto é público e conta com a ajuda de voluntários para a sua conclusão.
 
