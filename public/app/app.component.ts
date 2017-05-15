@@ -22,14 +22,11 @@ export class AppComponent {
   }
 
   async logoutAsync() {
-    await this.userService.logout(); 
-    
+    await this.userService.logout();
     this.tryToGoHome();
-
-    console.log("olá");
   }
 
-   private tryToGoHome() {
+  private tryToGoHome() {
     this.router.navigate(['']);
   }
 }

@@ -11,11 +11,11 @@ export class CityService {
 
     constructor(private http: HttpAuth) {}
 
-    async getCitiesAsync(): Promise<City[]>{
+    async getCitiesAsync(): Promise<City[]> {
         try {
             const response = await this.http.get(this.citiesUrl).toPromise();
             const cities = response.json() as City[];
-            return cities; 
+            return cities;
         } catch (error) {
             console.error(`An error ocurred: ${error}`);
             throw error;

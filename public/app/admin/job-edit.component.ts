@@ -31,7 +31,7 @@ export class JobEditComponent implements OnInit {
     ngOnInit() {
         this.route.params
         .switchMap((params: Params) => this.jobService.getJobAsync(params['id']))
-        .subscribe(job => {this.job = job, this.loadCitiesOfState(job.state.toString())});
+        .subscribe(job => { this.job = job, this.loadCitiesOfState( job.state.toString()); });
         this.loadCompanies();
     }
 
@@ -43,7 +43,7 @@ export class JobEditComponent implements OnInit {
         this.states = states;
     }
 
-    async loadCitiesOfState(id: string): Promise<void>{
+    async loadCitiesOfState(id: string): Promise<void> {
          this.cities = await this.stateService.getAllStatetCitiesAsync(id);
      }
 

@@ -35,7 +35,7 @@ export class JobCreateComponent implements OnInit {
         private router: Router) {
      }
 
-     async loadCitiesOfState(id: string): Promise<void>{
+     async loadCitiesOfState(id: string): Promise<void> {
          this.cities = await this.stateService.getAllStatetCitiesAsync(id);
      }
 

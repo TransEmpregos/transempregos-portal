@@ -12,11 +12,11 @@ export class StateService {
 
     constructor(private http: HttpAuth) {}
 
-    async getStatesAsync(): Promise<State[]>{
+    async getStatesAsync(): Promise<State[]> {
         try {
             const response = await this.http.get(this.statesUrl).toPromise();
             const states = response.json() as State[];
-            return states; 
+            return states;
         } catch (error) {
             console.error(`An error ocurred: ${error}`);
             throw error;
