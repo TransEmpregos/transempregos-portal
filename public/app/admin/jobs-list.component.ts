@@ -25,21 +25,12 @@ export class JobsListComponent implements OnInit {
 
     async ngOnInit(): Promise<void> {
         const companies = await this.companyService.getAllAsync();
-        //  this.stateService.getStates()
-        //      .subscribe(resStateData => this.states = resStateData);
          this.states = this.stateService.getStatesAsync();
 
         for (let i = 0; i < companies.length; i++) {
             const companyJobs = await this.companyService.getAllCompanyJobsAsync(companies[i]._id);
             companies[i].jobs = companyJobs;
         }
-
-        // testando a ordenação
-        companies.sort((a, b) => a.companyName.localeCompare(b.companyName.toString()));
-        for(let i = 0; i < companies.length; i++){
-            companies[i].jobs.sort((a, b) => a.name.localeCompare(b.name.toString()));
-        }
-
         this.companies = companies;
     }
 

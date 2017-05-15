@@ -16,7 +16,6 @@ export class CompaniesListComponent implements OnInit {
     constructor(private companyService: CompanyService, private modalService: NgbModal) { }
     async ngOnInit(): Promise<void> {
         const companies = await this.companyService.getAllAsync();
-        companies.sort((a, b) => a.companyName.localeCompare(b.companyName.toString()));
         this.companies = companies;
     }
     async delete(company: Company) {
