@@ -27,6 +27,8 @@ import { LoginCandidateComponent } from './login/login-candidate.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AdminGuard, LoggedInGuard, RecruiterGuard } from './route.guards';
 import { UserService } from './user.service';
+import { StateService } from './state.service';
+import { CityService } from './city.service';
 import './rxjs-extensions';
 
 
@@ -59,7 +61,8 @@ import './rxjs-extensions';
         ModalYesNoComponent,
         ModalOkComponent
     ],
-    providers: [HttpAuth, JobService, CompanyService, UserService, AdminGuard, LoggedInGuard, RecruiterGuard],
+    providers: [HttpAuth, JobService, CompanyService, UserService, StateService, CityService,
+    AdminGuard, LoggedInGuard, RecruiterGuard],
     entryComponents: [ModalYesNoComponent, ModalOkComponent],
     bootstrap: [AppComponent]
 })

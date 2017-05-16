@@ -23,13 +23,16 @@
                             </li>
 
                             <li>
-                                <div ngbDropdown class="dropdown">
+                                <div *ngIf="!isLoggedIn" ngbDropdown class="dropdown">
                                     <div class="dropdown-divider hidden-sm-up"></div>
                                     <button ngbDropdownToggle>Acesse</button>
                                     <div class="dropdown-menu">
                                         <a routerLink="/login/candidate" class="dropdown-item">Candidato(a)</a>
                                         <a routerLink="/login/recruiter" class="dropdown-item">Recrutador(a)</a>
                                     </div>
+                                </div>
+                                <div *ngIf="isLoggedIn">
+                                     <button (click)="logoutAsync()">logout</button>
                                 </div>
                             </li>
                         </ul>

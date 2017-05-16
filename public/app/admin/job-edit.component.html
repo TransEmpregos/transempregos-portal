@@ -110,11 +110,8 @@
 
                     <div class="form-group">
                         <label for="state">O estado da vaga:</label>
-                        <select required [(ngModel)]="job.state" #state="ngModel" name="state" id="state" class="form-control">
-                            <option value="sp">Sao Paulo</option>
-                            <option value="rj">Rio de Janeiro</option>
-                            <option value="rs">Porto Alegre</option>
-                            <option value="mg">Minas Gerais</option>
+                        <select #idState (change)="loadCitiesOfState(idState.value)" required [(ngModel)]="job.state" #state="ngModel" name="state" id="state" class="form-control">
+                            <option *ngFor="let state of states"  [value]="state.Nome">{{state.Nome}}</option>
                         </select>
                         <div *ngIf="state.errors && state.dirty" class="alert alert-danger">
                             <div [hidden]="!state.errors.required">
@@ -126,10 +123,7 @@
                     <div class="form-group">
                         <label for="city">A cidade da vaga:</label>
                         <select required [(ngModel)]="job.city" #city="ngModel" name="city" id="city" class="form-control">
-                            <option value="SP">Sao Paulo</option>
-                            <option value="RJ">Rio de Janeiro</option>
-                            <option value="RS">Porto Alegre</option>
-                            <option value="MG">Belo Horizonte</option>
+                            <option *ngFor="let city of cities" value="{{city.Nome}}">{{city.Nome}}</option>
                         </select>
                         <div *ngIf="city.errors && city.dirty" class="alert alert-danger">
                             <div [hidden]="!city.errors.required">
