@@ -1,6 +1,6 @@
 Pull to VSTS: [![Pull to VSTS Status](https://alexgwasp.visualstudio.com/_apis/public/build/definitions/630555c2-be2f-4ec7-8e2d-bad28c06128f/34/badge)](https://alexgwasp.visualstudio.com/_apis/public/build/definitions/630555c2-be2f-4ec7-8e2d-bad28c06128f/34/badge)
 
-Build CI: [![Build CI](https://alexgwasp.visualstudio.com/_apis/public/build/definitions/630555c2-be2f-4ec7-8e2d-bad28c06128f/33/badgee)](https://alexgwasp.visualstudio.com/_apis/public/build/definitions/630555c2-be2f-4ec7-8e2d-bad28c06128f/33/badge)
+Build CI: [![Build CI](https://alexgwasp.visualstudio.com/_apis/public/build/definitions/630555c2-be2f-4ec7-8e2d-bad28c06128f/33/badge)](https://alexgwasp.visualstudio.com/_apis/public/build/definitions/630555c2-be2f-4ec7-8e2d-bad28c06128f/33/badge)
 
 # TransEmpregos
 
