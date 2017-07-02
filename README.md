@@ -1,8 +1,8 @@
-[![Build Status](https://alexgwasp.visualstudio.com/_apis/public/build/definitions/630555c2-be2f-4ec7-8e2d-bad28c06128f/32/badge)](https://alexgwasp.visualstudio.com/_apis/public/build/definitions/630555c2-be2f-4ec7-8e2d-bad28c06128f/32/badge)
+[![Build Status](https://alexgwasp.visualstudio.com/_apis/public/build/definitions/630555c2-be2f-4ec7-8e2d-bad28c06128f/34/badge)](https://alexgwasp.visualstudio.com/_apis/public/build/definitions/630555c2-be2f-4ec7-8e2d-bad28c06128f/34/badge)
 
-[![Build Status](https://snap-ci.com/TransEmpregos/transempregos-portal/branch/master/build_image)](https://snap-ci.com/TransEmpregos/transempregos-portal/branch/master)
+[comment]: <> ([![Build Status](https://snap-ci.com/TransEmpregos/transempregos-portal/branch/master/build_image)](https://snap-ci.com/TransEmpregos/transempregos-portal/branch/master))
 
-[![Build Status](https://travis-ci.org/alexgwasp/transempregos-portal.svg?branch=master)](https://travis-ci.org/alexgwasp/transempregos-portal)
+[comment]: <> ([![Build Status](https://travis-ci.org/alexgwasp/transempregos-portal.svg?branch=master)](https://travis-ci.org/alexgwasp/transempregos-portal))
 
 
 # TransEmpregos
